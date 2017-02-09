@@ -11,39 +11,37 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <wchar.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
-/*
-t_list		get_params(const char *format)
+int		ft_vfprintf(const int fd, const char *format, va_list ag_lst)
 {
-	t_list	agv_lst;
-	t_param	*av;
 	size_t	count;
 
-	agv_lst = ft_lstnew(666, 420);
-	return agv_lst;
+	count = 0;
+	if (format)
+	{
+		while (*format)
+			if (*format == '%')
+				//->check syntax->convert->print->count print
+			else
+				//print->count print
+			format += *format ? 1 : 0;
+	}
+	return (count);
 }
-*/
 
-int	ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
-	char	*str = "this is test";
-	char	*s2 = ft_strdup(str);
-	int 	i = 0;
-	int		nb[5];
-	va_list agv;
-	//t_list	ag_lst;
+	size_t	count;
+	va_list	agv;
 
-	(void)va_start(agv, format);
-	ft_putendl(s2);
-	while ( i < 5 )
-		nb[i++] = va_arg(agv, int);
-	i = 0;
-	while (i < 5)
-	 	{ printf("nb[%d] = %d\n", i, nb[i]); i++; }
-	free(s2);
-	return 0;
+	va_start(agv, format);
+	count = ft_vfprintf(1, format, agv);
+	va_end(agv);
+	return (count);
 }
 
 
@@ -65,12 +63,16 @@ void va_copy(va_list dest, va_list src);
 */
 
 /*
-1. create list of agvs
-2. read input format string, validation
-3. create list of params, count current # of params, populate format struct
-4. read format struct, convert data to str, point [t_param list->av] to str
-5. merge base_str + av[n] + base_str + av[n + 1] ...
-6. print the string & free it
+1 loop format string, print characters.
+2 if (*format == '%')
+	2.1 check format syntax
+		2.1.2 check format order
+	2.2 get format modifiers (prec, width, base)
+	2.3 convert (var type)->(char *) using specified format
+		2.3.1 (var type)->
+	2.4 print converted variable->add count
+3 else
+	3.1 print current char(*format)->add count
 */
 
 /*
