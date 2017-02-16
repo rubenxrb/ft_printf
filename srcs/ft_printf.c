@@ -11,39 +11,64 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <wchar.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 
-int		ft_vfprintf(const int fd, const char *format, va_list ag_lst)
+const char	*skip_fmt(const char *format)
 {
-	size_t	count;
+	char	*conv = "%sSpdDioOuUxXcCeEfFgGaAn";
+	char	*p;
+	int		i;
 
-	count = 0;
+	p = (char *)format + 1;
+	while (*p)
+	{
+		i = 0;
+		while (conv[i])
+			if (*p == conv[i++])
+				return (p);
+		p++;
+	}
+	return (0);
+}
+
+int		ft_vfprintf(const int fd, const char *format, va_list av_lst)
+{
+	f_agv	*av;
+	size_t	c;
+
+	c = 0;
 	if (format)
 	{
+		av = ft_memalloc(sizeof(*av));
 		while (*format)
+		{
 			if (*format == '%')
-				//->check syntax->convert->print->count print
+			{
+				get_var(format, av, av_lst);
+				c += print_var(av, fd);
+				format = skip_fmt(format);
+			}
 			else
-				//print->count print
-			format += *format ? 1 : 0;
+				c += ft_putchar_fd(*format, fd);
+			format++;
+		}
+		free(av);
 	}
-	return (count);
+	return (c);
 }
 
 int		ft_printf(const char *format, ...)
 {
 	size_t	count;
-	va_list	agv;
+	va_list	av_lst;
 
-	va_start(agv, format);
-	count = ft_vfprintf(1, format, agv);
-	va_end(agv);
+	va_start(av_lst, format);
+	count = ft_vfprintf(1, format, av_lst);
+	va_end(av_lst);
 	return (count);
 }
-
 
 /*
 1st argument always has the # of agv as parameters

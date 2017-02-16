@@ -12,24 +12,26 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# define MAX(a, b) (a > b ? a : b)
+# define MIN(a, b) (a < b ? a : b)
 
 # include <stdarg.h>
+# include <wchar.h>
 # include "get_next_line.h"
 
-typedef struct	s_format
+typedef struct	s_agv //data in list
 {
-	void		*data; //stack data
-	char		*f_str; //format string (%-5.0f)
-	char		*f_type; //ptr to f_str data type
-}				t_avf;
-
-typedef struct	s_param //data in list
-{
-	size_t		av_n; //current var #
-	t_avf		*av_f; //format struct
-	char		*av; //converted string
-}				t_param;
+	size_t		vnum;
+	char		type;
+	size_t		size;
+	int			width;
+	int			prec;
+	short		base;
+	char		*printf_str;
+}				f_agv;
 
 int				ft_printf(const char *format, ...);
+void 			get_var(const char *format, f_agv *av, va_list av_lst);
+size_t			print_var(f_agv *av, const int fd);
 
 #endif
