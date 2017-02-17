@@ -16,6 +16,7 @@
 # define MIN(a, b) (a < b ? a : b)
 
 # include <stdarg.h>
+# include <stdlib.h>
 # include <wchar.h>
 # include "get_next_line.h"
 
@@ -26,12 +27,27 @@ typedef struct	s_agv //data in list
 	size_t		size;
 	int			width;
 	int			prec;
+	int			length;
 	short		base;
 	char		*printf_str;
 }				f_agv;
 
+/* ft_printf.c */
 int				ft_printf(const char *format, ...);
-void 			get_var(const char *format, f_agv *av, va_list av_lst);
+
+/* get_var.c */
+void			get_var(const char *format, f_agv *av, va_list av_lst);
+
+/* read_var.c */
+void			manage_flags(const char *format, f_agv *av);
+void			manage_width(const char *format, f_agv *av);
+void			manage_prec(const char *format, f_agv *av);
+void			length_modifier(const char *format, f_agv *av);
+
+/* print_var.c */
 size_t			print_var(f_agv *av, const int fd);
+
+/* helpers.c */
+int				isSpecifier(char c);
 
 #endif

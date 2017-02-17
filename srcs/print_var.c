@@ -16,6 +16,6 @@ size_t	print_var(f_agv *av, const int fd)
 {
 	(void)av;
 	(void)fd;
-	ft_putchar_fd('*', fd);
+	//ft_putchar_fd('*', fd);
 	return 1;
 }

@@ -11,29 +11,15 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
 
-const char	*skip_fmt(const char *format)
+static const char	*skip_fmt(const char *format)
 {
-	char	*conv = "%sSpdDioOuUxXcCeEfFgGaAn";
-	char	*p;
-	int		i;
-
-	p = (char *)format + 1;
-	while (*p)
-	{
-		i = 0;
-		while (conv[i])
-			if (*p == conv[i++])
-				return (p);
-		p++;
-	}
-	return (0);
+	if (isSpecifier(*format))
+		return format;
+	return skip_fmt(++format);
 }
 
-int		ft_vfprintf(const int fd, const char *format, va_list av_lst)
+static int		ft_vfprintf(const int fd, const char *format, va_list av_lst)
 {
 	f_agv	*av;
 	size_t	c;
@@ -51,7 +37,7 @@ int		ft_vfprintf(const int fd, const char *format, va_list av_lst)
 				format = skip_fmt(format);
 			}
 			else
-				c += ft_putchar_fd(*format, fd);
+				//c += ft_putchar_fd(*format, fd);
 			format++;
 		}
 		free(av);
