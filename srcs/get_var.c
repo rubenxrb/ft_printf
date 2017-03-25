@@ -28,12 +28,12 @@ static char	*get_format(const char *_format)
 	char	*p;
 	size_t	size;
 
-	size = 0;
-	p = (char *)_format;
+	printf("_format is: [%c]\n", *_format);
+	size = ((p = (char *)_format) ? 1 : 0);
 	while (!(isSpecifier(*p++)))
 		size++;
 	format = ft_strnew(size);
-	return (ft_strncpy(format, _format, size + 1));
+	return (ft_strncpy(format, _format, size));
 }
 static void	default_format(f_agv *av)
 {
