@@ -18,7 +18,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <wchar.h>
-# include "get_next_line.h"
+# include "libft.h"
 
 typedef struct	s_agv //data in list
 {

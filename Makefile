@@ -1,46 +1,51 @@
-PRNTF	= ft_printf
-MAIN	= main.c
-NAME	= libftprintf.a
+MAIN = main.c
+NAME = libftprintf.a
 
-SRC		= ft_printf.c	\
-		get_var.c		\
-		read_var.c		\
-		helpers.c		\
-		print_var.c
+CC = gcc
+CFLGS = -Wall -Wextra -Werror
 
-ODIR	= ./obj/
-SDIR	= ./srcs/
-IDIR	= ./includes/
-OBJ		= $(addprefix $(ODIR),$(SRC:.c=.o))
+SDIR = ./src/
+ODIR = ./obj/
+IDIR = -I./inc/
+LDIR = ./src/libft/
+LINC = -I$(LDIR)inc/
+GNL = $(LDIR)src/get_next_line/
+IGNL = -I$(GNL)inc/
+LBFT = $(LDIR)libft.a
 
-LDIR	= $(SDIR)libft/
-LIB		= $(LDIR)libft.a
-
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+SRCN =	ft_printf.c get_var.c read_var.c helpers.c	\
+	print_var.c
+SRC = $(addprefix $(SDIR),$(SRCN))
+OBJ = $(addprefix $(ODIR),$(SRCN:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(ODIR) $(LIB) $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	$(CC) $(CFLAGS) main.c $(NAME) $(LIB) -I$(IDIR) -o $(PRNTF)
+test:
+	@$(CC) $(CFLAGS) $(NAME) $(MAIN) $(IDIR) $(LINC) $(IGNL) -o test
 
-$(ODIR):
-	mkdir -p $(ODIR)
+$(NAME): src
+	@ar rc $(NAME) $(OBJ)
+	@printf "\x1b[32m[./libftprintf.a] <compiled>\n\x1b[0m"
 
-$(LIB):
-	make -C $(LDIR)
-
+src: lib mkobj $(OBJ)
 $(ODIR)%.o:$(SDIR)%.c
-	$(CC) $(CFLAGS) -I$(IDIR) -c -o $@ $^
+	@$(CC) $(CFLAGS) $(LINC) $(IDIR) -o $@ -c $<
+
+lib:
+	@make -s -C $(LDIR)
+
+mkobj:
+	@mkdir -p $(ODIR)
 
 clean:
-	make clean -C $(LDIR)
-	rm -rf $(ODIR)
+	@make -s -C $(LDIR) clean
+	@$(RM) -rf $(ODIR)
+	@echo "[ ./obj/ ] removed"
 
 fclean: clean
-	make fclean -C $(LDIR)
-	rm -rf $(NAME)
-	rm -rf $(PRNTF)
+	@make -s -C $(LDIR) fclean
+	@$(RM) -rf $(NAME)
+	@echo "[ ./libftprintf.a ] removed"
 
-make re: fclean $(NAME)
+re: fclean all
+.PHONY: all clean fclean re
