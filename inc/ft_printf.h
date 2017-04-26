@@ -12,8 +12,8 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# define MAX(a, b) (a > b ? a : b)
-# define MIN(a, b) (a < b ? a : b)
+# define
+# define NULL_S "(null)"
 
 # include <stdarg.h>
 # include <stdlib.h>

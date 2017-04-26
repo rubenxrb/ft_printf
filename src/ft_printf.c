@@ -12,48 +12,46 @@
 
 #include "ft_printf.h"
 
-static const char	*skip_fmt(const char *format)
+static const char	*skip_fmt(const char *s)
 {
-	if (isSpecifier(*format))
-		return format;
-	return skip_fmt(++format);
+	if (isSpecifier(*s))
+		return (s);
+	return (skip_fmt(++s));
 }
 
-static int		ft_vfprintf(const int fd, const char *format, va_list av_lst)
+int		printf_fd(const int fd, const char *s, ...)
 {
-	f_agv	*av;
-	size_t	c;
-
-	c = 0;
-	if (format)
-	{
-		av = ft_memalloc(sizeof(*av));
-		while (*format)
-		{
-			if (*format == '%')
-			{
-				get_var(format, av, av_lst);
-				c += print_var(av, fd);
-				format = skip_fmt(format);
-			}
-			else
-				//c += ft_putchar_fd(*format, fd);
-			format++;
-		}
-		free(av);
-	}
-	return (c);
-}
-
-int		ft_printf(const char *format, ...)
-{
-	size_t	count;
 	va_list	av_lst;
+	t_lst	*cv_lst;
+	size_t	len;
 
-	va_start(av_lst, format);
-	count = ft_vfprintf(1, format, av_lst);
+	va_start(av_lst, s);
+	cv_lst = convert_vars(s);
+	if (!cv_lst && ft_strchr(s, '%'))
+		return (0);
+	len = 0;
+	while (*s)
+	{
+		if (*s == '%')
+		{
+			s = skip_fmt(s);
+			len += ft_putstr((t_array *)cv_lst->data->data);
+			cv_lst = cv_lst->next;
+		}
+		else
+			len += ft_putchar(*s++);
+	}
 	va_end(av_lst);
-	return (count);
+	destroy_lst(cv_lst);
+	return (len);
+}
+
+int		ft_printf(const char *s, ...)
+{
+	size_t	done;
+
+	done = printf_fd(1, s);
+	return (done);
 }
 
 /*

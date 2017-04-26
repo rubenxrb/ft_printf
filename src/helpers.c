@@ -2,12 +2,10 @@
 /* if type specifier found, return it, else char != specifier */
 int		isSpecifier(char c)
 {
-	char conv[] = "%sSpdDioOuUxXcCeEfFgGaAn";
-	int		i;
+	char conv[] = "sSpdDioOuUxXcCeEfFgGaAn%";
 
-	i = 0;
-	while (conv[i])
-		if (c == conv[i++])
+	while (*conv)
+		if (c == *conv++)
 			return (c);
 	return (0);
 }
