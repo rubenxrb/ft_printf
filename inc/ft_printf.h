@@ -33,7 +33,8 @@ typedef struct	s_agv //data in list
 }				f_agv;
 
 /* ft_printf.c */
-int				ft_printf(const char *format, ...);
+int				ft_printf(const char *s, ...);
+int				printf_fd(const int fd, const char *s, ...);
 
 /* get_var.c */
 void			get_var(const char *format, f_agv *av, va_list av_lst);
