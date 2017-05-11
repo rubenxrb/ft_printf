@@ -35,7 +35,7 @@ char	isModif(char c)
 /* if type specifier found, return it, else char != specifier */
 char isSpecifier(char c)
 {
-	char valid[] = "sSpdDioOuUxXcCeEfFgGaAn%";
+	char valid[] = "sSpdDioOuUxXcCeEfFgGaAn%~k";
 	char	*p;
 
 	p = valid;

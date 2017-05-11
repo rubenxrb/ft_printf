@@ -3,7 +3,9 @@ MAIN	= main.c
 NAME = libftprintf.a
 
 SRC =	ft_printf.c get_var.c read_var.c		\
-		helpers.c print_var.c conv.c
+		helpers.c print_var.c conv.c			\
+		make_dec.c make_hex.c make_int.c		\
+		make_str.c make_utils.c				
 
 ODIR	= ./obj/
 SDIR	= ./src/

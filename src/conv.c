@@ -42,28 +42,37 @@ g, G = max # of number as chars
 POINTER: (none)
 p = void *
 
+'yyyy'-'MM'-'dd'-'T'-'HH':'mm':'ss'.
+
+type var = va_arg(lst, type);
+
 */
 
 static t_array convert_format(t_agv *fmt, va_list *ap)
 {
 	t_array	new;
 	char	t;
+	char	lmod;
 
-	new.data = ft_strdup("lol");
 	t = fmt->type;
+	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
 	if (t == 's')
-		new.data = (t == 'l') ? make_wstr(fmt) : make_str(fmt);
+		new.data = (lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
 	else if (t == 'c' || t == 'd' || t == 'i' || t == 'n')
-		new.data = make_signed(fmt, t);
+		new.data = make_signed(fmt, t, ap);
 	else if (t == 'o' || t == 'O' || t == 'x' || t == 'X' || t == 'u')
-		new.data = make_unsigned(fmt, t);
-	else if (t == 'f' || t == 'F' || t == 'e' || t == 'E' || t == 'g' ||
-			t == 'G')
-		new.data = make_decimal(fmt, t);
+		new.data = make_unsigned(fmt, t, ap);
+	else if (t == 'f' || t == 'F' || t == 'e' || t == 'E' ||
+			t == 'g' || t == 'G')
+		new.data = make_decimal(fmt, t, ap);
 	else if (t == 'a' || t == 'A')
-		new.data = make_fhex(fmt);
-	else if (t == 'p')
-		new.data = make_ptr(fmt);
+		new.data = make_fhex(fmt, ft_islower(t), ap);
+	else if (t == 'p' || t == '%')
+		new.data = t == 'p' ? make_ptr(fmt, ap) : ft_strdup("%");
+	else if (t == 'k')
+		new.data = (lmod == 'l') ? make_cwstr(fmt, ap) : make_cstr(fmt, ap);
+	else if (t == '~')
+		new.data =	make_npstr(fmt, ap);
 	return (new);
 }
 
@@ -107,8 +116,10 @@ t_lst	listof_vars(const char *s, va_list *ap)
 		{
 			ft_bzero(&current, sizeof(t_array));
 			fmt = extract_fmt(s);
+			printf("EXTRACTED\n");
 			testing_agv(fmt);
 			current = convert_format(fmt, ap);
+			printf("CONVERTED\n");
 			lst_addstr(&vars, current.data);
 			ft_memdel(&current.data);
 			ft_strdel(&fmt->flgs);
