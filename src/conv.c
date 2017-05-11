@@ -89,7 +89,7 @@ static t_agv *extract_fmt(const char *s)
 		t += set_flags(ret, t);				//<free@listof_vars()>
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
-	if (*t == '.' && ((*t == '*') || (ft_isdigit(*(t + 1)))))
+	if (*t == '.' && ((*(t + 1) == '*') || (ft_isdigit(*(t + 1)))))
 		t += set_prec(ret, t) + 1;
 	if (isModif(*t))
 		t += set_lmod(ret, t);				//<free@listof_vars()>
@@ -116,10 +116,10 @@ t_lst	listof_vars(const char *s, va_list *ap)
 		{
 			ft_bzero(&current, sizeof(t_array));
 			fmt = extract_fmt(s);
-			printf("EXTRACTED\n");
+			fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
+			fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
 			testing_agv(fmt);
 			current = convert_format(fmt, ap);
-			printf("CONVERTED\n");
 			lst_addstr(&vars, current.data);
 			ft_memdel(&current.data);
 			ft_strdel(&fmt->flgs);

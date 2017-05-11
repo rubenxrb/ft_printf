@@ -1,23 +1,24 @@
 #include "ft_printf.h"
-#include <stdlib.h>
 
 void	*make_str(t_agv *fmt, va_list *ap)
 {
 	char	*str;
-//	size_t	s_len;
 	char	*agv;
-	//char	*tmp;	//<free@bottom>
 	size_t	spc;
+	int		size;
 
-	spc = 0;
 	agv = va_arg(*ap, char *);
-//	tmp = ft_strsub(agv, 0, s_len);
-	if (fmt->width > fmt->prec)
-		spc = fmt->width - fmt->prec;
-	//s_len = spc - ft_strlen(agv);
-	(void)agv;
-	printf("spaces: '%zu', tocpy '%d'\n", spc, );
-	exit(1);
+	size = ft_strlen(agv);
+	if (!fmt->prec || (fmt->prec > size))
+		fmt->prec = size;
+	spc = fmt->width > fmt->prec ? fmt->width - fmt->prec : 0;
+	str = ft_strnew(spc + fmt->prec);
+	if (spc)
+		str = ft_memset(str, ' ', spc + fmt->prec);
+	if (fmt->flgs && fmt->flgs[0] == '-')
+		ft_strncpy(str, agv, fmt->prec);
+	else
+		ft_strncpy(str + spc, agv, fmt->prec);
 	return (str);
 }
 
