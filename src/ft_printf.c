@@ -12,37 +12,31 @@
 
 #include "ft_printf.h"
 
-static const char	*skip_fmt(const char *s)
-{
-	if (isSpecifier(*s))
-		return (s);
-	return (skip_fmt(++s));
-}
-
 int		printf_fd(const int fd, const char *s, ...)
 {
 	va_list	av_lst;
-	t_lst	*cv_lst;
+	t_lst	cv_lst;
+	t_node	*curr;
 	size_t	len;
 
 	va_start(av_lst, s);
-	cv_lst = convert_vars(s);
-	if (!cv_lst && ft_strchr(s, '%'))
+	cv_lst = listof_vars(s, &av_lst);							//format check
+	if (!(curr = cv_lst.head) && ft_strchr(s, '%'))
 		return (0);
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
-			s = skip_fmt(s);
-			len += ft_putstr((t_array *)cv_lst->data->data);
-			cv_lst = cv_lst->next;
+			s = skip_fmt(s + 1);
+			len += print_var(curr, fd);
+			curr = curr->next;
 		}
 		else
 			len += ft_putchar(*s++);
 	}
 	va_end(av_lst);
-	destroy_lst(cv_lst);
+	ft_lstdel((t_node **)&cv_lst.head, ft_bzero);
 	return (len);
 }
 

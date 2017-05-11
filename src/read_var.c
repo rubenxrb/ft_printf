@@ -12,26 +12,75 @@
 
 #include "ft_printf.h"
 
-void			manage_flags(const char *format, f_agv *av)
+size_t			set_flags(t_agv *ret, const char *fmt)
 {
-	(void)format;
-	(void)av;
+	char	*tmp;
+	size_t	size;
+
+	size = 0;
+	tmp = (char *)fmt;
+	ret->flgs = 0;
+	while (*tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#')
+	{
+		tmp++;
+		size++;
+	}
+	if (size)
+	{
+
+		ret->flgs = ft_strnew(size);
+		ret->flgs = ft_strncpy(ret->flgs, fmt, size);
+	}
+	return (size);
 }
 
-void			manage_width(const char *format, f_agv *av)
+size_t			set_minwidth(t_agv *ret, const char *fmt)
 {
-	(void)format;
-	(void)av;
+	ret->width = 0;
+	if (*fmt == '*')
+		ret->width = -1;
+	else if (ft_isdigit(*fmt))
+		ret->width = ft_atoi(fmt);
+	return (ft_numlen(ret->width, 10));
 }
 
-void			manage_prec(const char *format, f_agv *av)
+size_t			set_prec(t_agv *ret, const char *fmt)
 {
-	(void)format;
-	(void)av;
+	if (*(fmt + 1) == '*')
+		ret->prec = -1;
+	else if (ft_isdigit(*(fmt + 1)))
+		ret->prec = ft_atoi(fmt + 1);
+	return (ft_numlen(ret->prec, 10));
 }
 
-void			length_modifier(const char *format, f_agv *av)
+
+size_t			set_lmod(t_agv *ret, const char *fmt)
 {
-	(void)format;
-	(void)av;
+	char	*tmp;
+
+	tmp = (char *)fmt;
+	if (*tmp == *(tmp + 1))
+	{
+		if (*tmp == 'l')
+			ret->l_mod = ft_strdup("ll");
+		else if (*tmp == 'h')
+			ret->l_mod = ft_strdup("hh");
+		return (2);
+	}
+	ret->l_mod = ft_strnew(1);
+	ret->l_mod[0] = *tmp;
+	return (1);
+}
+
+size_t		set_base(const char type)
+{
+	if ((type == 'o') || (type == 'O'))
+		return (8);
+	else if ((type == 'x') || (type == 'X'))
+		return (16);
+	else if ((type == 'd') || (type == 'D') || (type == 'i'))
+	{
+		return (10);
+	}
+	return (0);
 }

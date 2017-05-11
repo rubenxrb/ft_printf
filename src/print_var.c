@@ -12,10 +12,12 @@
 
 #include "ft_printf.h"
 
-size_t	print_var(f_agv *av, const int fd)
+size_t	print_var(t_node *var, const int fd)
 {
-	(void)av;
+	t_array	*str;
+	(void)var;
 	(void)fd;
-	//ft_putchar_fd('*', fd);
+	str = var->data;
+	putcstr(str->data, 92);
 	return 1;
 }

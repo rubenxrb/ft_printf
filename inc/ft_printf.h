@@ -12,43 +12,47 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# define
-# define NULL_S "(null)"
+# define MAX(a, b) (a > b ? a : b)
+# define MIN(a, b) (a < b ? a : b)
 
-# include <stdarg.h>
-# include <stdlib.h>
-# include <wchar.h>
+# include <stdarg.h>		//<...> args
+# include <wchar.h>			//wide characters
 # include "libft.h"
 
-typedef struct	s_agv //data in list
+typedef struct	s_agv		//data in list
 {
-	size_t		vnum;
-	char		type;
-	size_t		size;
-	int			width;
-	int			prec;
-	int			length;
-	short		base;
-	char		*printf_str;
-}				f_agv;
+	char		*flgs;			//string of flags [done]
+	int			width;			//0 default, -1 if wildcard [done]
+	int			prec;			//precission after '.' [done]
+	char		*l_mod;			//string with length modifier [done] <heap>
+	char		type;			//variable type [done]
+	size_t		base;			//base of number [get]
+}				t_agv;
 
 /* ft_printf.c */
-int				ft_printf(const char *s, ...);
-int				printf_fd(const int fd, const char *s, ...);
+int				ft_printf(const char *format, ...);
+
+/* conv.c	*/
+t_lst	listof_vars(const char *s, va_list *ap);
 
 /* get_var.c */
-void			get_var(const char *format, f_agv *av, va_list av_lst);
+char	*get_format(const char *_format);
 
 /* read_var.c */
-void			manage_flags(const char *format, f_agv *av);
-void			manage_width(const char *format, f_agv *av);
-void			manage_prec(const char *format, f_agv *av);
-void			length_modifier(const char *format, f_agv *av);
+size_t			set_flags(t_agv *ret, const char *fmt);
+size_t			set_minwidth(t_agv *ret, const char *fmt);
+size_t			set_prec(t_agv *ret, const char *fmt);
+size_t			set_lmod(t_agv *ret, const char *fmt);
+size_t			set_base(const char spec);
 
 /* print_var.c */
-size_t			print_var(f_agv *av, const int fd);
+size_t			print_var(t_node *var, const int fd);
 
 /* helpers.c */
-int				isSpecifier(char c);
+const char	*skip_fmt(const char *s);
+char				isSpecifier(char c);
+char	isFlag(char c);
+void	display_error(const char *s);
+char	isModif(char c);
 
 #endif
