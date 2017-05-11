@@ -47,7 +47,7 @@ char isSpecifier(char c)
 
 char	isFlag(char c)
 {
-	char valid[] = "-0+#";
+	char valid[] = "-0+# ";
 	char	*p;
 
 	p = valid;

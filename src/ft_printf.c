@@ -42,10 +42,30 @@ int		printf_fd(const int fd, const char *s, ...)
 
 int		ft_printf(const char *s, ...)
 {
-	size_t	done;
+	va_list	av_lst;
+	t_lst	cv_lst;
+	t_node	*curr;
+	size_t	len;
 
-	done = printf_fd(1, s);
-	return (done);
+	va_start(av_lst, s);
+	cv_lst = listof_vars(s, &av_lst);							//format check
+	if (!(curr = cv_lst.head) && ft_strchr(s, '%'))
+		return (0);
+	len = 0;
+	while (*s)
+	{
+		if (*s == '%')
+		{
+			s = skip_fmt(s + 1);
+			len += print_var(curr, 1);
+			curr = curr->next;
+		}
+		else
+			len += ft_putchar(*s++);
+	}
+	va_end(av_lst);
+	ft_lstdel((t_node **)&cv_lst.head, ft_bzero);
+	return (len);
 }
 
 /*

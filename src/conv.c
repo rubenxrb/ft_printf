@@ -50,7 +50,7 @@ type var = va_arg(lst, type);
 
 static t_array convert_format(t_agv *fmt, va_list *ap)
 {
-	t_array	new;
+	t_array	new;	//new.data <free@lisof_vars()>
 	char	t;
 	char	lmod;
 
@@ -68,7 +68,7 @@ static t_array convert_format(t_agv *fmt, va_list *ap)
 	else if (t == 'a' || t == 'A')
 		new.data = make_fhex(fmt, ft_islower(t), ap);
 	else if (t == 'p' || t == '%')
-		new.data = t == 'p' ? make_ptr(fmt, ap) : ft_strdup("%");
+		new.data = (t == 'p') ? make_ptr(fmt, ap) : ft_strdup("%");
 	else if (t == 'k')
 		new.data = (lmod == 'l') ? make_cwstr(fmt, ap) : make_cstr(fmt, ap);
 	else if (t == '~')
