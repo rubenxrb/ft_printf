@@ -22,14 +22,17 @@ int		printf_fd(const int fd, const char *s, ...)
 	va_start(av_lst, s);
 	cv_lst = listof_vars(s, &av_lst);							//format check
 	if (!(curr = cv_lst.head) && ft_strchr(s, '%'))
+	{
+		ft_putendl("rip");
 		return (0);
+	}
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
 			s = skip_fmt(s + 1);
-			len += print_var(curr, fd);
+			len += print_var(len, curr, fd);
 			curr = curr->next;
 		}
 		else
@@ -57,7 +60,7 @@ int		ft_printf(const char *s, ...)
 		if (*s == '%')
 		{
 			s = skip_fmt(s + 1);
-			len += print_var(curr, 1);
+			len += print_var(len, curr, 1);
 			curr = curr->next;
 		}
 		else

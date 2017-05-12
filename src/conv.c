@@ -25,8 +25,8 @@ static void testing_agv(t_agv *fmt)
 	printf("fmt->base [%zu]\n", fmt->base);
 	printf("-----------------\n");
 }
-*/
 
+*/
 /*
 
 STRING
@@ -121,7 +121,6 @@ t_lst	listof_vars(const char *s, va_list *ap)
 			fmt = extract_fmt(s);
 			fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
 			fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
-		//	testing_agv(fmt);
 			current = convert_format(fmt, ap);
 			lst_addstr(&vars, current.data);
 			ft_memdel(&current.data);

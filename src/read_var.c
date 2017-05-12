@@ -79,7 +79,7 @@ size_t		set_base(const char type)
 		return (8);
 	else if ((type == 'x') || (type == 'X'))
 		return (16);
-	else if ((type == 'd') || (type == 'D') || (type == 'i'))
+	else if ((type == 'd') || (type == 'D') || (type == 'i') || (type == 'n'))
 	{
 		return (10);
 	}

@@ -67,3 +67,8 @@ void	free_tab(char **ap)
 	while (*ap)
 		ft_strdel(&*ap++);
 }
+
+char	*ft_chardup(const int ch)
+{
+	return (ft_strdup((char *)&ch));
+}

@@ -58,9 +58,9 @@ size_t	wstrlen(const wchar_t *s)
 
 	len = 0;
 	if (s)
-		while (s)
-			len += wchar_len(*s++);
-	return (0);
+		while (s[len])
+			len++;
+	return (len);
 }
 
 wchar_t	*wstrnew(size_t len)

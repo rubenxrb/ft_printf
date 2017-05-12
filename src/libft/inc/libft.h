@@ -158,6 +158,7 @@ char				*ft_strinsrt(const char *dst, size_t n, const char *src);
 char				*get_next_word(const char *s, char **word);
 char				**split_blnk(const char *str);
 void				free_tab(char **ap);
+char				*ft_chardup(const int ch);
 
 //	prints
 size_t				ft_putchar(const char ch);				/* [ok] */
@@ -187,6 +188,7 @@ wchar_t				*wstrnew(size_t len);					/* ok [test] */
 
 //	wchars2
 wchar_t				*wstrdup(const wchar_t *src);			/* ok [test] */
+wchar_t				*wchardup(const wchar_t src);
 
 
 /* linked lst need */

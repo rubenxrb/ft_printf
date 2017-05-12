@@ -49,7 +49,7 @@ size_t			set_lmod(t_agv *ret, const char *fmt);
 size_t			set_base(const char spec);
 
 /* print_var.c */
-size_t			print_var(t_node *var, const int fd);
+size_t			print_var(size_t len, t_node *var, const int fd);
 
 /* helpers.c */
 const char		*skip_fmt(const char *s);
@@ -64,8 +64,8 @@ void			*make_wstr(t_agv *fmt, va_list *ap);
 void			*make_cstr(t_agv *fmt, va_list *ap);
 void			*make_cwstr(t_agv *fmt, va_list *ap);
 /* mkae_int.c */
-char			*make_signed(t_agv *fmt, char type, va_list *ap);
-char			*make_unsigned(t_agv *fmt, char type, va_list *ap);
+void			*make_signed(t_agv *fmt, char type, va_list *ap);
+void			*make_unsigned(t_agv *fmt, char type, va_list *ap);
 
 /* make_dec.c */
 char			*make_decimal(t_agv *fmt, char type, va_list *ap);
