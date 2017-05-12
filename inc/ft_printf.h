@@ -28,6 +28,7 @@ typedef struct	s_agv		//data in list
 	char		*l_mod;			//string with length modifier [done] <heap>
 	char		type;			//variable type [done]
 	size_t		base;			//base of number [get]
+	size_t		len;
 }				t_agv;
 
 /* ft_printf.c */

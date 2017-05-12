@@ -104,6 +104,7 @@ static t_agv *extract_fmt(const char *s)
 	return (ret);
 }
 
+//MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING 
 t_lst	listof_vars(const char *s, va_list *ap)
 {
 	t_lst	vars;			//<free@printf_fd>
@@ -122,8 +123,9 @@ t_lst	listof_vars(const char *s, va_list *ap)
 			fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
 			fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
 			current = convert_format(fmt, ap);
+			//*s == 'n' ?
 			lst_addstr(&vars, current.data);
-			ft_memdel(&current.data);
+			*s == 'n' ? (void)current.data : ft_memdel(&current.data);
 			ft_strdel(&fmt->flgs);
 			ft_strdel(&fmt->l_mod);
 			s = skip_fmt(s + 1);

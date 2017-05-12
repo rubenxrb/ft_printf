@@ -59,8 +59,8 @@ int		ft_printf(const char *s, ...)
 	{
 		if (*s == '%')
 		{
+			len += print_var((*(s + 1) == 'n' ? len : 0), curr, 1);
 			s = skip_fmt(s + 1);
-			len += print_var(len, curr, 1);
 			curr = curr->next;
 		}
 		else

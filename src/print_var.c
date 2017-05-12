@@ -19,13 +19,15 @@ size_t	print_var(size_t len, t_node *var, const int fd)
 	size_t	ln;
 	int		*n;
 
-	//ft_putendl("printvar");
+//	ft_putendl("printvar");
+	//printf("PV len: '%zu'\n", len);
 	str = var->data;
 	ln = ft_putstr_fd(str->data, fd);
-	if (!str->data)
+	if (len)
 	{
-		ft_putendl("N FLAG");
-		n = str->data;
+		//ft_putendl("N FLAG");
+		n = (int *)&str->data;
+		printf("n: '%p'\n", &*n);
 		*n = len;
 	}
 	return ln;
