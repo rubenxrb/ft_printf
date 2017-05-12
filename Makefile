@@ -5,7 +5,7 @@ NAME = libftprintf.a
 SRC =	ft_printf.c get_var.c read_var.c		\
 		helpers.c print_var.c conv.c			\
 		make_dec.c make_hex.c make_int.c		\
-		make_str.c make_utils.c				
+		make_str.c make_utils.c
 
 ODIR	= ./obj/
 SDIR	= ./src/
@@ -23,7 +23,7 @@ all: $(NAME)
 
 $(NAME): $(ODIR) $(LIB) $(OBJ)
 	ar rc $(NAME) $(OBJ)
-	$(CC) $(CFLAGS) main.c $(NAME) $(IDIR) $(INC) -L$(LDIR) -lft -o $(PRNTF)
+	#$(CC) $(CFLAGS) main.c $(NAME) $(IDIR) $(INC) -L$(LDIR) -lft -o $(PRNTF)
 
 $(ODIR):
 	mkdir -p $(ODIR)
