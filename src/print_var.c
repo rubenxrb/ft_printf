@@ -14,10 +14,5 @@
 
 size_t	print_var(t_node *var, const int fd)
 {
-	t_array	*str;
-	(void)var;
-	(void)fd;
-	str = var->data;
-	putcstr(str->data, 92);
-	return 1;
+	return ft_putstr_fd(var->data, fd);
 }

@@ -12,6 +12,7 @@
 
 #include "ft_printf.h"
 
+/*
 static void testing_agv(t_agv *fmt)
 {
 	static int count = 1;
@@ -24,6 +25,7 @@ static void testing_agv(t_agv *fmt)
 	printf("fmt->base [%zu]\n", fmt->base);
 	printf("-----------------\n");
 }
+*/
 
 /*
 
