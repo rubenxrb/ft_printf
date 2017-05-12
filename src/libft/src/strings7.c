@@ -70,5 +70,7 @@ void	free_tab(char **ap)
 
 char	*ft_chardup(const int ch)
 {
-	return (ft_strdup((char *)&ch));
+	if (ch)
+		return (ft_strdup((char *)&ch));
+	return (0);
 }
