@@ -68,11 +68,7 @@ void	free_tab(char **ap)
 		ft_strdel(&*ap++);
 }
 
-unsigned char	*ft_chardup(const int ch)
+char	*ft_chardup(const int ch)
 {
-	unsigned char	*dup;
-
-	dup = ft_memalloc(sizeof(unsigned char) * 2);
-	*dup = (unsigned char)ch;
-	return (dup);
+	return (ft_strdup((char *)&ch));
 }

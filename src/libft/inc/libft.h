@@ -159,7 +159,7 @@ char				*ft_strinsrt(const char *dst, size_t n, const char *src);
 char				*get_next_word(const char *s, char **word);
 char				**split_blnk(const char *str);
 void				free_tab(char **ap);
-unsigned char		*ft_chardup(const int ch);
+char				*ft_chardup(const int ch);
 
 //	prints
 size_t				ft_putchar(const char ch);				/* [ok] */
