@@ -38,6 +38,7 @@ all: $(NAME)
 
 $(NAME): $(ODIR) $(LIB) $(OBJ)
 	ar rc $(NAME) $(OBJ) $(LBSN)
+#	gcc $(NAME) $(MAIN) $(INC) $(IDIR)
 
 $(ODIR):
 	mkdir -p $(ODIR)
