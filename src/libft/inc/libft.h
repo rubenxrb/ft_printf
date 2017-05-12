@@ -108,6 +108,7 @@ char				*ft_itoa(int n);
 char				*ft_itoa_base(int n, int base);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+char				*ft_lltoa_base(long long n, int b);
 
 char				*ft_hextoa(int n, size_t prec); 				/* [test] */
 int					uctoutf8(const char *dest, wchar_t ch);			/* [ok] */
@@ -244,5 +245,6 @@ void 				*array_look(t_array *curr, size_t index);					//ok
 
 //	misc
 int					ft_numlen(int n, int base);
+int					ft_lnumlen(long n, int base);
 
 #endif

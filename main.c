@@ -10,11 +10,11 @@ int main()
 
 
 	putcstr("libft printf:\n", 93);
-	ft_printf("test: [%n] test2: [%s]\n", cell, test2);
+	ft_printf("test: [%n] test2: [%s] num[%lld]\n", cell, test2, num2);
 	//ft_printf("test: [%n]\n", cell);
 	//ft_printf("cell: '%d'\n", *cell);
 	//putcstr("stdlib printf:\n", 31);
 	//printf("test: [%n]\n", cell);
-	//printf("cell: '%d'\n", *cell);
+	printf(" '%lld'\n", num2);
 	return (0);
 }

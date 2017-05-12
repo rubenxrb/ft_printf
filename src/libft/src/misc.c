@@ -21,3 +21,13 @@ int					ft_numlen(int n, int base)
 		i++;
 	return (i + 1);
 }
+
+int					ft_lnumlen(long n, int base)
+{
+	int		i;
+
+	i = 0;
+	while ((n = n / base))
+		i++;
+	return (i + 1);
+}

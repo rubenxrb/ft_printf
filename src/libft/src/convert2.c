@@ -84,3 +84,27 @@ int		ft_hextoi(const char *hex)
 	}
 	return (ret);
 }
+
+char	*ft_lltoa_base(long long n, int b)
+{
+	char		*num;
+	size_t		size;
+	int			neg;
+	long		mod;
+
+	neg = 0;
+	size = ft_lnumlen(n, b);
+	if (n < 0 && b == 10)
+		neg++;
+	num = ft_strnew(size);
+	if (neg)
+		num[0] = '-';
+	num[size + neg] = 0;
+	while (size--)
+	{
+		mod = ((n % b) < 0 ? -(n % b) : (n % b));
+		num[size + neg] = ((mod > 9) ? mod + 55 : mod + '0');
+		n /= b;
+	}
+	return (num);
+}
