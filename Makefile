@@ -15,6 +15,9 @@ OBJ		= $(addprefix $(ODIR),$(SRC:.c=.o))
 LDIR	= $(SDIR)libft/
 INC		= -I$(LDIR)inc/ -I$(LDIR)src/get_next_line/inc
 LIB		= $(LDIR)libft.a
+LOD		= $(addprefix $(LDIR),obj/)
+LOBJ	:= $(shell find $(LOD) -name '*.o')
+
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
@@ -22,8 +25,8 @@ CFLAGS	= -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(ODIR) $(LIB) $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	#$(CC) $(CFLAGS) main.c $(NAME) $(IDIR) $(INC) -L$(LDIR) -lft -o $(PRNTF)
+	echo $(LOBJ)
+	ar rc $(NAME) $(OBJ) $(LOBJ)
 
 $(ODIR):
 	mkdir -p $(ODIR)
