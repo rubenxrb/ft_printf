@@ -38,7 +38,8 @@ all: $(NAME)
 
 $(NAME): $(ODIR) $(LIB) $(OBJ)
 	ar rc $(NAME) $(OBJ) $(LBSN)
-#	gcc -o $(PRNTF) $(NAME) $(MAIN) $(INC) $(IDIR)
+	gcc -c $(MAIN) $(INC) $(IDIR)
+	gcc -o $(PRNTF) main.o $(NAME)
 
 $(ODIR):
 	mkdir -p $(ODIR)
@@ -56,6 +57,7 @@ clean:
 fclean: clean
 	make fclean -C $(LDIR)
 	rm -rf $(NAME)
+	rm -rf main.o
 	rm -rf $(PRNTF)
 
 make re: fclean $(NAME)
