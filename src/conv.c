@@ -56,6 +56,7 @@ static t_array convert_format(t_agv *fmt, va_list *ap)
 
 	t = fmt->type;
 	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
+	ft_bzero(&new, sizeof(t_array));
 	if (t == 's')
 		new.data = (lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
 	else if (t == 'c' || t == 'd' || t == 'i' || t == 'n')
