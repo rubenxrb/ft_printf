@@ -73,6 +73,6 @@ char	*ft_chardup(const int ch)
 	char	*dup;
 
 	dup = ft_memalloc(sizeof(char));
-	*dup = ch;
+	*dup = (char)ch;
 	return (dup);
 }
