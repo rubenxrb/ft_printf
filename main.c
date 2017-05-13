@@ -2,17 +2,18 @@
 
 int main()
 {
-	char		*test = "agv1";
+	//work  on [%-.s]
+	wchar_t		kat = 0x30AD;
 	char		*test2 = "agv2";
 	size_t		num = 420;
 	long long 	num2 = 111222333444;
 	int			cell = 7;
 
-	printf("test: [%01.0s]\n", test);
+	printf("test: [%s] [%llo]\n", test2, num2);
 //	printf("cell '%p'\n", &cell);
 	putcstr("libft printf:\n", 93);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
-	ft_printf("test: [%01.0s]\n", test);
+	ft_printf("test: [%s] [%llo]\n", test2, num2);
 	//ft_printf("test: [%n]\n", cell);
 	//ft_printf("cell: '%d'\n", *cell);
 	//putcstr("stdlib printf:\n", 31);
@@ -20,3 +21,30 @@ int main()
 	//printf(" '%lld'\n", num2);
 	return (0);
 }
+
+/*
+t_array	*ret;
+char	*lmod;
+t_byte	wc;
+int		ch;
+
+ret = 0;
+lmod = fmt->l_mod ? fmt->l_mod : 0;
+if (ft_isletter(type, 'c'))
+{
+	wc = (lmod && lmod[0] == 'l') || ft_isupper(type);
+	ret = array_new(wc ? sizeof(wint_t) : sizeof(int), 1);
+	if (wc && (ch = va_arg(*ap, wint_t)))
+		ft_memcpy(ret->data, &ch, sizeof(wint_t));
+	else if ((ch = va_arg(*ap, int)))
+		ft_memcpy(ret->data, &ch, sizeof(int));
+}
+else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
+{
+	fmt->prec = fmt->prec ? fmt->prec : 1;
+	ret = make_sint(fmt, lmod, ap);
+}
+if (type != 'n' && ret)
+	format_integer(fmt, ret, type, 1);
+
+*/

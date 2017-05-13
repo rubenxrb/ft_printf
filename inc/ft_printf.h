@@ -66,7 +66,7 @@ t_array			*make_cwstr(t_agv *fmt, va_list *ap);
 
 /* mkae_int.c */
 t_array			*make_signed(t_agv *fmt, char type, va_list *ap);
-t_array			*make_unsigned(t_agv *fmt, char type, va_list *ap);
+t_array			*make_uint(t_agv *fmt, char *lmod, va_list *ap);
 
 /* make_dec.c */
 t_array			*make_decimal(t_agv *fmt, char type, t_byte caps, va_list *ap);

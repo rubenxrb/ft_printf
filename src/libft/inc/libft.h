@@ -112,7 +112,8 @@ char				*ft_lltoa_base(long long n, int b);
 
 char				*ft_hextoa(int n, size_t prec); 				/* [test] */
 int					uctoutf8(const char *dest, wchar_t ch);			/* [ok] */
-int					ft_hextoi(const char *hex);						/* [ok] */
+int					ft_hextoi(const char *hex);
+						/* [ok] */
 
 //	identifiers
 int					ft_isalpha(int c);

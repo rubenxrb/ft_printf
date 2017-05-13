@@ -3,89 +3,128 @@
 
 
 
-static void	*format_integer(t_agv *fmt, char type, char *num, t_byte sig)//free old integer
+static void	format_integer(t_agv *fmt, t_array *ret, char t, t_byte sig)//free old integer
 {
+	char	*ch;
+	char	sp;
+
+	sp = fmt->flgs ? fmt->flgs[0] : 0;
+	ch = ft_strnew((fmt->width > fmt->prec) ? (size_t)fmt->width : ret->len);
+//	printf("fmt:w '%d' fmt:p '%d'\n", fmt->width, fmt->prec);
+	//printf("arr:l '%zu' arr:b '%zu' arr: '%s'\n", ret->len, ret->bytes, (char *)ret->data);
+	(void)ret;
 	(void)fmt;
-	(void)type;
 	(void)sig;
-//	ft_putendl("MAKING INT");
-	return (num);
+	(void)t;
+	(void)ch;
+	(void)sp;
 }
+
+/*
+agv = ft_strdup(va_arg(*ap, char *));
+sp = fmt->flgs ? fmt->flgs[0] : 0;
+if (fmt->prec <= (int)ft_strlen(agv))
+	*(agv + fmt->prec) = 0;
+len = ft_strlen(agv);
+str = array_new(sizeof(char), (fmt->width > fmt->prec ? fmt->width : len) + 1);
+str->bytes = str->len - 1;
+ft_strcpy(str->data, agv);
+if (fmt->width > fmt->prec)
+{
+	ft_memset(str->data, ((sp == '0') ? sp : ' '), str->bytes);
+	if (sp == '-')
+		ft_strncpy(str->data, agv, ft_strlen(agv));	//check if ' '|'0' -> preappend to the right
+	else
+		ft_strncpy(str->data + (str->bytes - fmt->prec), agv, ft_strlen(agv));
+}
+ft_strdel(&agv);
+return (str);
+
+*/
 
 static void	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 {
+	t_array	tmp;
 	char	hh;
 	short	h;
-	char	*n;
 
-	n = 0;
+	tmp.d_size = 1;
 	if (!lmod)
-		n = ft_itoa_base(va_arg(*ap, int), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, int), fmt->base);
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, int)))
-		n = ft_itoa_base(hh, fmt->base);
+		tmp.data = ft_itoa_base(hh, fmt->base);
 	else if (ft_strequ(lmod, "ll"))
-		n = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
+		tmp.data = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
 	else if (*lmod == 'h' && (h = va_arg(*ap, int)))
-		n = ft_itoa_base(h, fmt->base);
+		tmp.data = ft_itoa_base(h, fmt->base);
 	else if (*lmod == 'l')
-		n = ft_itoa_base(va_arg(*ap, long), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, long), fmt->base);
 	else if (*lmod == 'j')
-		n = ft_itoa_base(va_arg(*ap, intmax_t), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, intmax_t), fmt->base);
 	else if (*lmod == 'z')
-		n = ft_itoa_base(va_arg(*ap, ssize_t), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, ssize_t), fmt->base);
 	else if (*lmod == 't')
-		n = ft_itoa_base(va_arg(*ap, ptrdiff_t), fmt->base);
-	return (n);
+		tmp.data = ft_itoa_base(va_arg(*ap, ptrdiff_t), fmt->base);
+	tmp.len = (ft_strlen(tmp.data) + 1);
+	tmp.bytes = tmp.len - 1;
+	return (array_clone(&tmp));
 }
 
 t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 {
+	t_array	*ret;
 	char	*lmod;
-	void	*ret;
+	t_byte	wc;
+	int		ch;
 
 	ret = 0;
 	lmod = fmt->l_mod ? fmt->l_mod : 0;
-	if (type == 'c')
-		if (lmod && lmod[0] == 'l')
-			ret = wchardup(va_arg(*ap, wint_t));
-		else
-			ret = ft_chardup(va_arg(*ap, int));
-	else if (type == 'd' || type == 'i')
+	if (ft_isletter(type, 'c'))
+	{
+		wc = (lmod && lmod[0] == 'l') || ft_isupper(type);
+		ret = array_new(wc ? sizeof(wint_t) : sizeof(int), 1);
+		if (wc && (ch = va_arg(*ap, wint_t)))
+			ft_memcpy(ret->data, &ch, sizeof(wint_t));
+		else if ((ch = va_arg(*ap, int)))
+			ft_memcpy(ret->data, &ch, sizeof(int));
+	}
+	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
 		fmt->prec = fmt->prec ? fmt->prec : 1;
 		ret = make_sint(fmt, lmod, ap);
 	}
-	else if (type == 'n')
-		ret = va_arg(*ap, int *);
 	if (type != 'n' && ret)
-		ret = format_integer(fmt, type, ret, 1);
+		format_integer(fmt, ret, type, 1);
 	return (ret);
 }
 
-static void	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
+t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 {
+	t_array			tmp;
 	unsigned char	hh;
 	unsigned short	h;
-	char	*n;
 
-	n = 0;
+	tmp.d_size = 1;
+	fmt->prec = fmt->prec ? fmt->prec : 1;
 	if (!lmod)
-		n = ft_itoa_base(va_arg(*ap, unsigned int), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, unsigned int), fmt->base);
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, unsigned int)))
-		n = ft_itoa_base(hh, fmt->base);						//char
+		tmp.data = ft_itoa_base(hh, fmt->base);						//char
 	else if (ft_strequ(lmod, "ll"))								//longlong
-		n = ft_lltoa_base(va_arg(*ap, unsigned long long), fmt->base);
+		tmp.data =ft_lltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (*lmod == 'h' && (h = va_arg(*ap, unsigned int)))			//short
-		n = ft_itoa_base(h, fmt->base);
+		tmp.data =ft_itoa_base(h, fmt->base);
 	else if (*lmod == 'l')										//long
-		n = ft_itoa_base(va_arg(*ap, unsigned long), fmt->base);
+		tmp.data =ft_itoa_base(va_arg(*ap, unsigned long), fmt->base);
 	else if (*lmod == 'j')										//intmax_t
-		n = ft_itoa_base(va_arg(*ap, uintmax_t), fmt->base);
+		tmp.data =ft_itoa_base(va_arg(*ap, uintmax_t), fmt->base);
 	else if (*lmod == 'z')										//signed size_t
-		n = ft_itoa_base(va_arg(*ap, size_t), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, size_t), fmt->base);
 	else if (*lmod == 't')										//ptrdiff_t
-		n = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
-	return (n);
+		tmp.data = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
+	tmp.len = (ft_strlen(tmp.data) + 1);
+	tmp.bytes = tmp.len - 1;
+	return (array_clone(&tmp));
 }
 
 /*
@@ -115,18 +154,3 @@ p = void *
 type var = va_arg(lst, type);
 
 */
-
-t_array	*make_unsigned(t_agv *fmt, char type, va_list *ap)
-{
-	char	*lmod;
-	void	*ret;
-	//size_t	n;
-
-	ret = 0;
-//	ft_putendl("MAKE UNSIGNED");
-	lmod = fmt->l_mod ? fmt->l_mod : 0;
-	fmt->prec = fmt->prec ? fmt->prec : 1;
-	ret = make_uint(fmt, lmod, ap);
-	(void)type;
-	return ret;
-}
