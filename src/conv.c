@@ -73,6 +73,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || t == 'u')
 	{
 		new = make_uint(fmt, fmt->l_mod, ap);
+		new->data = (t == 'x') ? strtolower(new->data) : new->data;
 	}
 	else if (ft_isletter(t,'f') || ft_isletter(t, 'e') || ft_isletter(t, 'g'))
 		new = make_decimal(fmt, t, ft_islower(t), ap);

@@ -9,7 +9,6 @@ static void	format_integer(t_agv *fmt, t_array *ret, char t, t_byte sig)//free o
 	char	sp;
 
 	sp = fmt->flgs ? fmt->flgs[0] : 0;
-	ch = ft_strnew((fmt->width > fmt->prec) ? (size_t)fmt->width : ret->len);
 //	printf("fmt:w '%d' fmt:p '%d'\n", fmt->width, fmt->prec);
 	//printf("arr:l '%zu' arr:b '%zu' arr: '%s'\n", ret->len, ret->bytes, (char *)ret->data);
 	(void)ret;
