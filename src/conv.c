@@ -47,11 +47,14 @@ type var = va_arg(lst, type);
 
 */
 
-static t_byte	send_length(size_t len, int *dest)
+static t_byte	send_length(int len, int *dest)
 {
+//	printf("addres dest: '%p'\n", dest);
 	if (dest)
 	{
+		printf("remplazing '%d' with '%d'\n", *dest, (int)len);
 		*dest = len;
+		//printf("dest is now '%p' -> '%d'\n", &*dest, *dest);
 		return (1);
 	}
 	return (0);
@@ -115,7 +118,7 @@ t_lst	listof_vars(const char *s, va_list *ap)
 	t_lst	vars;			//<free@printf_fd>
 	t_array	*current;
 	t_agv	*fmt;
-	size_t	i;
+	int		i;
 
 	ft_bzero(&vars, sizeof(t_lst));
 	if (!s || !ap)
@@ -128,9 +131,9 @@ t_lst	listof_vars(const char *s, va_list *ap)
 			fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
 			fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
 			current = convert_format(fmt, ap);
-			i += current->bytes;
-			if (*s == 'n' && send_length(i, current->data))
-				ft_memdel(&current->data);
+			*s == 'n' ? send_length(i, current->data) : (void)s;
+			i += current->d_size == 1 ? current->bytes : current->len;
+			s = skip_fmt (s);
 			lst_addarray(&vars, current);
 		}
 		else

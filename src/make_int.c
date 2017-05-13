@@ -41,7 +41,7 @@ return (str);
 
 */
 
-static void	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
+static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 {
 	t_array	tmp;
 	char	hh;
@@ -69,6 +69,19 @@ static void	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 	return (array_clone(&tmp));
 }
 
+static t_array	*make_nptr(va_list *ap)
+{
+	t_array	*nptr;
+	int		*num;
+
+	nptr = array_new(sizeof(int *), 1);
+	num = va_arg(*ap, int *);
+	//printf("&*num '%p'\n", &*num);
+	nptr->data = &*num;
+	//printf("nptr->data '%p'\n", nptr->data);
+	return (nptr);
+}
+
 t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 {
 	t_array	*ret;
@@ -90,7 +103,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
 		fmt->prec = fmt->prec ? fmt->prec : 1;
-		ret = make_sint(fmt, lmod, ap);
+		ret = type  == 'n' ? make_nptr(ap) : make_sint(fmt, lmod, ap);
 	}
 	if (type != 'n' && ret)
 		format_integer(fmt, ret, type, 1);

@@ -4,16 +4,23 @@ int main()
 {
 	//work  on [%-.s]
 	wchar_t		kat = 0x30AD;
-	char		*test2 = "agv2";
+	char		*test2 = "printed";
 	size_t		num = 420;
 	long long 	num2 = 111222333444;
 	int			cell = 7;
 
-	printf("test: [%-3.2s] [%2llx]\n", test2, num2);
-//	printf("cell '%p'\n", &cell);
+
 	putcstr("libft printf:\n", 93);
+	printf("addres cell : '%p' '%d'\n", &cell, cell);
+	ft_printf("bytes %.*s %llo %n\n", 2, test2, num2, &cell);
+	ft_printf("cell: '%d'\n", cell);
+
+	putcstr("stdlib printf:\n", 31);
+
+	printf("bytes %.*s %llo %n\n", 2, test2, num2, &cell);
+	printf("cell: '%d'\n", cell);
+//	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
-	ft_printf("test: [%-3.2s] [%2llx]\n", test2, num2);
 	//ft_printf("test: [%n]\n", cell);
 	//ft_printf("cell: '%d'\n", *cell);
 	//putcstr("stdlib printf:\n", 31);
