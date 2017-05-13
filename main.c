@@ -18,6 +18,6 @@ int main()
 	//putcstr("stdlib printf:\n", 31);
 	//printf("test: [%n]\n", cell);
 	printf(" '%lld'\n", num2);
-	printf(" '%0c'\n", *(test));
+	printf(" '%c'\n", *(test));
 	return (0);
 }

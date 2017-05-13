@@ -31,7 +31,7 @@ t_byte	lst_addwstr(t_lst *list, const wchar_t *name)
 	t_array		string;
 	t_node		*add;
 
-	if (!name)
+	if (!name || !list)
 		return (0);
 	string.data = wstrdup(name);
 	string.d_size = sizeof(wchar_t);
@@ -47,6 +47,28 @@ t_byte	lst_addwstr(t_lst *list, const wchar_t *name)
 		add = ft_lstnew(&string, sizeof(t_array));
 		((t_node *)(list->tail))->next = add;
 		list->tail = add;
+	}
+	list->len++;
+	return (1);
+}
+
+t_byte	lst_addarray(t_lst *list, t_array *add)
+{
+	t_node	*new;
+
+	if (!add || !list)
+		return (0);
+	new = ft_memalloc(sizeof(t_node));
+	new->data = add;
+	if (!list->head)
+	{
+		list->head = new;
+		list->tail = list->head;
+	}
+	else
+	{
+		((t_node *)(list->tail))->next = new;
+		list->tail = new;
 	}
 	list->len++;
 	return (1);

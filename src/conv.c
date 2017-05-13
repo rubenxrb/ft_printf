@@ -50,6 +50,100 @@ type var = va_arg(lst, type);
 
 */
 
+static t_byte	send_length(size_t len, int *dest)
+{
+	if (dest)
+	{
+		*dest = len;
+		return (1);
+	}
+	return (0);
+}
+
+static t_array *convert_format(t_agv *fmt, va_list *ap)
+{
+	t_array	*new;	//new.data <free@lisof_vars()>
+	char	t;
+	char	lmod;
+
+	new = 0;
+	t = fmt->type;
+	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
+	if (t == 's')
+		new = (lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
+	else if (t == 'c' || t == 'd' || t == 'i' || t == 'n')
+		new = make_signed(fmt, t, ap);
+	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || t == 'u')
+		new = make_unsigned(fmt, t, ap);
+	else if (ft_isletter(t,'f') || ft_isletter(t, 'e') || ft_isletter(t, 'g'))
+		new = make_decimal(fmt, t, ft_islower(t), ap);
+	else if (t == 'a' || t == 'A')
+		new = make_fhex(fmt, ft_islower(t), ap);
+	else if (t == 'p' || t == '%' || t == 'k' || t == '~')
+		new = make_utils(fmt, t, ap);
+	return (new);
+}
+
+static t_agv *extract_fmt(const char *s)
+{
+	t_agv	*ret;
+	char	*fmt;
+	char	*t;
+
+	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
+	fmt = get_format(s);					//<free@bottom>
+	t = fmt;
+	if (isFlag(*t))
+		t += set_flags(ret, t);				//<free@listof_vars()>
+	if ((*t == '*') || ft_isdigit(*t))
+		t += set_minwidth(ret, t);
+	if (*t == '.' && ((*(t + 1) == '*') || (ft_isdigit(*(t + 1)))))
+		t += set_prec(ret, t) + 1;
+	if (isModif(*t))
+		t += set_lmod(ret, t);				//<free@listof_vars()>
+	if (isSpecifier(*t) && (ret->type = *t))
+		ret->base = set_base(ret->type);
+	else
+		display_error(fmt);
+	ft_strdel(&fmt);
+	return (ret);
+}
+
+//MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING
+t_lst	listof_vars(const char *s, va_list *ap)
+{
+	t_lst	vars;			//<free@printf_fd>
+	t_array	*current;
+	t_agv	*fmt;
+	size_t	i;
+
+	ft_bzero(&vars, sizeof(vars));
+	if (!s || !ap)
+		return (vars);
+	i = 0;
+	while (*s)
+	{
+		if (*s++ == '%' && (fmt = extract_fmt(s)))
+		{
+			current = convert_format(fmt, ap);
+			i += current->bytes;
+			if (*s == 'n' && send_length(i, current->data))
+				ft_memdel(&current->data);
+			lst_addarray(&vars, current);
+		}
+		else
+			i++;
+	}
+	return (vars);
+}
+
+/*
+new.data = (t == 'p') ? make_ptr(fmt, ap) : ft_strdup("%");
+else if (t == 'k')
+new.data = (lmod == 'l') ? make_cwstr(fmt, ap) : make_cstr(fmt, ap);
+else if (t == '~')
+new.data =	make_npstr(fmt, ap);
+
 static t_array convert_format(t_agv *fmt, va_list *ap)
 {
 	t_array	new;	//new.data <free@lisof_vars()>
@@ -79,32 +173,6 @@ static t_array convert_format(t_agv *fmt, va_list *ap)
 	return (new);
 }
 
-static t_agv *extract_fmt(const char *s)
-{
-	t_agv	*ret;
-	char	*fmt;
-	char	*t;
-
-	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
-	fmt = get_format(s);					//<free@bottom>
-	t = fmt;
-	if (isFlag(*t))
-		t += set_flags(ret, t);				//<free@listof_vars()>
-	if ((*t == '*') || ft_isdigit(*t))
-		t += set_minwidth(ret, t);
-	if (*t == '.' && ((*(t + 1) == '*') || (ft_isdigit(*(t + 1)))))
-		t += set_prec(ret, t) + 1;
-	if (isModif(*t))
-		t += set_lmod(ret, t);				//<free@listof_vars()>
-	if (isSpecifier(*t) && (ret->type = *t))
-		ret->base = set_base(ret->type);
-	else
-		display_error(fmt);
-	ft_strdel(&fmt);
-	return (ret);
-}
-
-//MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING 
 t_lst	listof_vars(const char *s, va_list *ap)
 {
 	t_lst	vars;			//<free@printf_fd>
@@ -123,7 +191,7 @@ t_lst	listof_vars(const char *s, va_list *ap)
 			fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
 			fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
 			current = convert_format(fmt, ap);
-			//*s == 'n' ?
+			*s == 'n' ?
 			lst_addstr(&vars, current.data);
 			*s == 'n' ? (void)current.data : ft_memdel(&current.data);
 			ft_strdel(&fmt->flgs);
@@ -133,3 +201,4 @@ t_lst	listof_vars(const char *s, va_list *ap)
 	}
 	return (vars);
 }
+*/

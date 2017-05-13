@@ -1,9 +1,10 @@
 #include "ft_printf.h"
 
-char	*make_decimal(t_agv *fmt, char type, va_list *ap)
+t_array		*make_decimal(t_agv *fmt, char type, t_byte caps, va_list *ap)
 {
 	(void)fmt;
 	(void)type;
 	(void)ap;
-	return ft_strdup(&fmt->type);
+	(void)caps;
+	return 0;
 }

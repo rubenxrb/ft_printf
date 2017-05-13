@@ -18,26 +18,27 @@ static void	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 	short	h;
 	char	*n;
 
+	n = 0;
 	if (!lmod)
 		n = ft_itoa_base(va_arg(*ap, int), fmt->base);
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, int)))
-		n = ft_itoa_base(hh, fmt->base);						//char
-	else if (ft_strequ(lmod, "ll"))								//longlong
+		n = ft_itoa_base(hh, fmt->base);
+	else if (ft_strequ(lmod, "ll"))
 		n = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
-	else if (*lmod == 'h' && (h = va_arg(*ap, int)))			//short
+	else if (*lmod == 'h' && (h = va_arg(*ap, int)))
 		n = ft_itoa_base(h, fmt->base);
-	else if (*lmod == 'l')										//long
+	else if (*lmod == 'l')
 		n = ft_itoa_base(va_arg(*ap, long), fmt->base);
-	else if (*lmod == 'j')										//intmax_t
+	else if (*lmod == 'j')
 		n = ft_itoa_base(va_arg(*ap, intmax_t), fmt->base);
-	else if (*lmod == 'z')										//signed size_t
+	else if (*lmod == 'z')
 		n = ft_itoa_base(va_arg(*ap, ssize_t), fmt->base);
-	else if (*lmod == 't')										//ptrdiff_t
+	else if (*lmod == 't')
 		n = ft_itoa_base(va_arg(*ap, ptrdiff_t), fmt->base);
 	return (n);
 }
 
-void	*make_signed(t_agv *fmt, char type, va_list *ap)
+t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 {
 	char	*lmod;
 	void	*ret;
@@ -72,6 +73,7 @@ static void	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 	unsigned short	h;
 	char	*n;
 
+	n = 0;
 	if (!lmod)
 		n = ft_itoa_base(va_arg(*ap, unsigned int), fmt->base);
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, unsigned int)))
@@ -119,7 +121,7 @@ type var = va_arg(lst, type);
 
 */
 
-void	*make_unsigned(t_agv *fmt, char type, va_list *ap)
+t_array	*make_unsigned(t_agv *fmt, char type, va_list *ap)
 {
 	char	*lmod;
 	void	*ret;

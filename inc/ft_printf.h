@@ -28,7 +28,6 @@ typedef struct	s_agv		//data in list
 	char		*l_mod;			//string with length modifier [done] <heap>
 	char		type;			//variable type [done]
 	size_t		base;			//base of number [get]
-	size_t		len;
 }				t_agv;
 
 /* ft_printf.c */
@@ -50,7 +49,7 @@ size_t			set_lmod(t_agv *ret, const char *fmt);
 size_t			set_base(const char spec);
 
 /* print_var.c */
-size_t			print_var(size_t len, t_node *var, const int fd);
+size_t			print_var(t_node *var, const int fd);
 
 /* helpers.c */
 const char		*skip_fmt(const char *s);
@@ -60,24 +59,24 @@ void			display_error(const char *s);
 char			isModif(char c);
 
 /* make_str.c */
-void			*make_str(t_agv *fmt, va_list *ap);
-void			*make_wstr(t_agv *fmt, va_list *ap);
-void			*make_cstr(t_agv *fmt, va_list *ap);
-void			*make_cwstr(t_agv *fmt, va_list *ap);
+t_array			*make_str(t_agv *fmt, va_list *ap);
+t_array			*make_wstr(t_agv *fmt, va_list *ap);
+t_array			*make_cstr(t_agv *fmt, va_list *ap);
+t_array			*make_cwstr(t_agv *fmt, va_list *ap);
+
 /* mkae_int.c */
-void			*make_signed(t_agv *fmt, char type, va_list *ap);
-void			*make_unsigned(t_agv *fmt, char type, va_list *ap);
+t_array			*make_signed(t_agv *fmt, char type, va_list *ap);
+t_array			*make_unsigned(t_agv *fmt, char type, va_list *ap);
 
 /* make_dec.c */
-char			*make_decimal(t_agv *fmt, char type, va_list *ap);
+t_array			*make_decimal(t_agv *fmt, char type, t_byte caps, va_list *ap);
 
 /* make_hex.c */
-char			*make_hex(t_agv *fmt, t_byte caps, va_list *ap);
-char			*make_fhex(t_agv *fmt, t_byte caps, va_list *ap);
+t_array			*make_hex(t_agv *fmt, t_byte caps, va_list *ap);
+t_array			*make_fhex(t_agv *fmt, t_byte caps, va_list *ap);
 
 /* make_utils.c */
-char			*make_ptr(t_agv *fmt, va_list *ap);
-char			*make_npstr(t_agv *fmt, va_list *ap);
+t_array			*make_utils(t_agv *fmt, char type, va_list *ap);
 
 
 

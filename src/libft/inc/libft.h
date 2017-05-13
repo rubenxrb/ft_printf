@@ -81,10 +81,10 @@ typedef struct		s_stack
 
 typedef struct		s_array
 {
-	void			*data;
-	size_t			d_size;
-	size_t			len;
-	size_t			bytes;
+	void			*data;	//<ptr to data>
+	size_t			d_size;	//<data size>
+	size_t			len;	//<array len>
+	size_t			bytes;	//<used bytes>
 }					t_array;
 
 // memptrs
@@ -125,6 +125,7 @@ int					ft_ishex(int c);
 int					ft_ishexstr(const char *hex);
 int					ft_islower(int c);
 int					ft_isupper(int c);
+int					ft_isletter(char c1, char c2);
 
 //	strings
 size_t				ft_strlen(const char *s);
@@ -194,6 +195,7 @@ wchar_t				*wchardup(const wchar_t src);
 
 /* linked lst need */
 t_byte				lst_addstr(t_lst *list, const char *name);
+t_byte				lst_addarray(t_lst *list, t_array *add);
 
 //	linkedlst
 t_node				*ft_lstnew(void const *data, size_t d_size);				//ok

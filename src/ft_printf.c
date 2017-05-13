@@ -22,21 +22,19 @@ int		printf_fd(const int fd, const char *s, ...)
 	va_start(av_lst, s);
 	cv_lst = listof_vars(s, &av_lst);							//format check
 	if (!(curr = cv_lst.head) && ft_strchr(s, '%'))
-	{
-		ft_putendl("rip");
 		return (0);
-	}
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
+			len += print_var(curr->data, fd);
+			array_destroy(curr->data);
 			s = skip_fmt(s + 1);
-			len += print_var(len, curr, fd);
 			curr = curr->next;
 		}
 		else
-			len += ft_putchar(*s++);
+			len += ft_putchar_fd(*s++, fd);
 	}
 	va_end(av_lst);
 	ft_lstdel((t_node **)&cv_lst.head, ft_bzero);
@@ -59,7 +57,8 @@ int		ft_printf(const char *s, ...)
 	{
 		if (*s == '%')
 		{
-			len += print_var((*(s + 1) == 'n' ? len : 0), curr, 1);
+			len += print_var(curr->data, 1);
+			array_destroy(curr->data);
 			s = skip_fmt(s + 1);
 			curr = curr->next;
 		}

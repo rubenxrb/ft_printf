@@ -12,23 +12,7 @@
 
 #include "ft_printf.h"
 
-size_t	print_var(size_t len, t_node *var, const int fd)
+size_t			print_var(t_node *var, const int fd)
 {
-	//ft_putendl("printvar");
-	t_array	*str;
-	size_t	ln;
-	int		*n;
-
-//	ft_putendl("printvar");
-	//printf("PV len: '%zu'\n", len);
-	str = var->data;
-	ln = ft_putstr_fd(str->data, fd);
-	if (len)
-	{
-		//ft_putendl("N FLAG");
-		n = (int *)&str->data;
-		printf("n: '%p'\n", &*n);
-		*n = len;
-	}
-	return ln;
+	return (ft_putstr_fd(((t_array *)(var->data))->data, fd));
 }
