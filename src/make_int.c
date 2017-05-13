@@ -122,7 +122,7 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 	if (!lmod)
 	{
 		printf("klq base '%zu'\n", fmt->base);
-		tmp.data = ft_itoa_base(va_arg(*ap, unsigned int), fmt->base);
+		tmp.data = ft_lltoa_base(va_arg(*ap, unsigned int), fmt->base);
 		printf("klkt");
 	}
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, unsigned int)))
@@ -132,13 +132,13 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 	else if (*lmod == 'h' && (h = va_arg(*ap, unsigned int)))			//short
 		tmp.data =ft_itoa_base(h, fmt->base);
 	else if (*lmod == 'l')										//long
-		tmp.data =ft_itoa_base(va_arg(*ap, unsigned long), fmt->base);
+		tmp.data =ft_lltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (*lmod == 'j')										//intmax_t
-		tmp.data =ft_itoa_base(va_arg(*ap, uintmax_t), fmt->base);
+		tmp.data =ft_lltoa_base(va_arg(*ap, uintmax_t), fmt->base);
 	else if (*lmod == 'z')										//signed size_t
-		tmp.data = ft_itoa_base(va_arg(*ap, size_t), fmt->base);
+		tmp.data = ft_lltoa_base(va_arg(*ap, size_t), fmt->base);
 	else if (*lmod == 't')										//ptrdiff_t
-		tmp.data = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
+		tmp.data = ft_lltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
 	printf("WHATINS\n");
