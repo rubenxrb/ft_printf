@@ -8,11 +8,11 @@ int main()
 	long long 	num2 = 111222333444;
 	int			cell = 7;
 
-	printf("test: [%-3.1s]\n", test);
+	printf("test: [%01.0s]\n", test);
 //	printf("cell '%p'\n", &cell);
 	putcstr("libft printf:\n", 93);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
-	ft_printf("test: [%-3.1s]\n", test);
+	ft_printf("test: [%01.0s]\n", test);
 	//ft_printf("test: [%n]\n", cell);
 	//ft_printf("cell: '%d'\n", *cell);
 	//putcstr("stdlib printf:\n", 31);
