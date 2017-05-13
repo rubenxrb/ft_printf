@@ -117,7 +117,7 @@ t_lst	listof_vars(const char *s, va_list *ap)
 	t_agv	*fmt;
 	size_t	i;
 
-	ft_bzero(&vars, sizeof(vars));
+	ft_bzero(&vars, sizeof(t_lst));
 	if (!s || !ap)
 		return (vars);
 	i = 0;

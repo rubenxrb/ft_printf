@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-size_t			print_var(t_node *var, const int fd)
+size_t			print_var(t_array *str, const int fd)
 {
-	return (ft_putstr_fd(((t_array *)(var->data))->data, fd));
+	return ft_putstr_fd(str->data, fd);
 }

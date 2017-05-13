@@ -1,4 +1,5 @@
 #include "libft.h"
+#include <stdio.h>
 
 t_byte	lst_addstr(t_lst *list, const char *name)
 {
@@ -59,6 +60,8 @@ t_byte	lst_addarray(t_lst *list, t_array *add)
 	if (!add || !list)
 		return (0);
 	new = ft_memalloc(sizeof(t_node));
+	if (!new)
+		return (0);
 	new->data = add;
 	if (!list->head)
 	{

@@ -42,10 +42,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 {
 	char	*lmod;
 	void	*ret;
-	//int		*n;
-//	int *p;
 
-	//ft_putendl("MAKING SIGNED");
 	ret = 0;
 	lmod = fmt->l_mod ? fmt->l_mod : 0;
 	if (type == 'c')
@@ -62,8 +59,6 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 		ret = va_arg(*ap, int *);
 	if (type != 'n' && ret)
 		ret = format_integer(fmt, type, ret, 1);
-	ft_putendl("SIGNED MADE");
-//	exit(1);
 	return (ret);
 }
 
