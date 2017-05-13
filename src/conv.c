@@ -100,8 +100,9 @@ static t_agv *extract_fmt(const char *s)
 		t += set_flags(ret, t);				//<free@listof_vars()>
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
-	if (*t == '.' && ((*(t + 1) == '*') || (ft_isdigit(*(t + 1)))))
-		t += set_prec(ret, t) + 1;
+	if (*t == '.' && (*(t + 1) == '*' || ft_isdigit(*(t + 1)) ||
+		isSpecifier(*(t + 1))))
+		t += isSpecifier(*(t + 1)) ? 1 : set_prec(ret, t) + 1;
 	if (isModif(*t))
 		t += set_lmod(ret, t);				//<free@listof_vars()>
 	if (isSpecifier(*t) && (ret->type = *t))

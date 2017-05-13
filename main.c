@@ -11,14 +11,8 @@ int main()
 
 
 	putcstr("libft printf:\n", 93);
-	printf("addres cell : '%p' '%d'\n", &cell, cell);
-	ft_printf("bytes %.*s %llo %n\n", 2, test2, num2, &cell);
-	ft_printf("cell: '%d'\n", cell);
+	ft_printf("bytes %.d\n", 2, cell);
 
-	putcstr("stdlib printf:\n", 31);
-
-	printf("bytes %.*s %llo %n\n", 2, test2, num2, &cell);
-	printf("cell: '%d'\n", cell);
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
 	//ft_printf("test: [%n]\n", cell);
