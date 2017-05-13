@@ -11,7 +11,7 @@ int main()
 
 
 	putcstr("libft printf:\n", 93);
-	ft_printf("bytes %.d\n", 2, cell);
+	ft_printf("bytes %u\n", 2, cell);
 
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);

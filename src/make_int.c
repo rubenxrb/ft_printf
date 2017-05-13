@@ -118,8 +118,13 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 
 	tmp.d_size = 1;
 	fmt->prec = fmt->prec ? fmt->prec : 1;
+	printf("TESTING\n");
 	if (!lmod)
+	{
+		printf("klq base '%zu'\n", fmt->base);
 		tmp.data = ft_itoa_base(va_arg(*ap, unsigned int), fmt->base);
+		printf("klkt");
+	}
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, unsigned int)))
 		tmp.data = ft_itoa_base(hh, fmt->base);						//char
 	else if (ft_strequ(lmod, "ll"))								//longlong
@@ -136,6 +141,7 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 		tmp.data = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
+	printf("WHATINS\n");
 	return (array_clone(&tmp));
 }
 

@@ -75,13 +75,12 @@ size_t			set_lmod(t_agv *ret, const char *fmt)
 
 size_t		set_base(const char type)
 {
-	if ((type == 'o') || (type == 'O'))
+	if (ft_isletter(type, 'o'))
 		return (8);
-	else if ((type == 'x') || (type == 'X'))
+	else if (ft_isletter(type, 'x'))
 		return (16);
-	else if ((type == 'd') || (type == 'D') || (type == 'i') || (type == 'n'))
-	{
+	else if ((ft_isletter(type, 'd') || (type == 'i') || (type == 'n') ||
+		(type == 'u')))
 		return (10);
-	}
 	return (0);
 }
