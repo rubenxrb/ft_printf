@@ -23,6 +23,7 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 		else
 			ft_strncpy(str->data + (str->bytes - fmt->prec), agv, ft_strlen(agv));
 	}
+//	printf("%s\n", (char *)str->data);
 	ft_strdel(&agv);
 	return (str);
 }

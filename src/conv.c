@@ -137,5 +137,6 @@ t_lst	listof_vars(const char *s, va_list *ap)
 		else
 			i++;
 	}
+//	printf("lol?\n");
 	return (vars);
 }
