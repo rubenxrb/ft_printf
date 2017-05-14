@@ -33,7 +33,7 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 	else if (*lmod == 'h' && (h = va_arg(*ap, int)))
 		tmp.data = ft_itoa_base(h, fmt->base);
 	else if (*lmod == 'l')
-		tmp.data = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, long), fmt->base);
 	else if (*lmod == 'j')
 		tmp.data = ft_lltoa_base(va_arg(*ap, intmax_t), fmt->base);
 	else if (*lmod == 'z')
