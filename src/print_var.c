@@ -18,6 +18,7 @@ size_t			print_var(t_array *str, const int fd)
 	//if (str->d_size > 1)
 		//return wstrput_fd(str->data, fd, str->bytes);
 //	else
+//	printf("PRINTVAR\n");
 	if (str && str->data)
 		return ft_putstr_fd(str->data, fd);
 	return (0);

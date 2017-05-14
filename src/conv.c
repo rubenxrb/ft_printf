@@ -131,12 +131,11 @@ t_lst	listof_vars(const char *s, va_list *ap)
 			current = convert_format(fmt, ap);
 			*s == 'n' ? send_length(i, current->data) : (void)s;
 			i += current->d_size == 1 ? current->bytes : current->len;
-			s = skip_fmt (s);
+			s = skip_fmt(s);
 			lst_addarray(&vars, current);
 		}
 		else
 			i++;
 	}
-//	printf("lol?\n");
 	return (vars);
 }
