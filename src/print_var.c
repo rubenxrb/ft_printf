@@ -14,9 +14,8 @@
 
 size_t			print_var(t_array *str, const int fd)
 {
-	size_t	len;
-
-	len = ft_putstr_fd(str->data, fd);
-	
-	return len;
+	if (str->d_size > 1)
+		return wstrput_fd(str->data, fd);
+	else
+		return ft_putstr_fd(str->data, fd);
 }

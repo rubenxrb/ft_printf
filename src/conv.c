@@ -49,12 +49,9 @@ type var = va_arg(lst, type);
 
 static t_byte	send_length(int len, int *dest)
 {
-//	printf("addres dest: '%p'\n", dest);
 	if (dest)
 	{
-		printf("remplazing '%d' with '%d'\n", *dest, (int)len);
 		*dest = len;
-		//printf("dest is now '%p' -> '%d'\n", &*dest, *dest);
 		return (1);
 	}
 	return (0);

@@ -62,11 +62,7 @@ t_array	*make_wstr(t_agv *fmt, va_list *ap)
 	agv = wstrdup(va_arg(*ap, wchar_t *));
 	sp = fmt->flgs ? fmt->flgs[0] : 0;
 	if (fmt->prec <= (int)wstrlen(agv))
-	{
-		//ft_putendl("klq");
 		*(agv + fmt->prec) = 0;
-	}
-//	ft_putendl("kalaquie");
 	len = wstrlen(agv) * sizeof(wchar_t);
 	str = array_new(sizeof(wchar_t), (fmt->width > fmt->prec ? (int)sizeof(wchar_t) * fmt->width : len) + sizeof(wchar_t));
 	str->bytes = str->len - 1;
@@ -75,11 +71,10 @@ t_array	*make_wstr(t_agv *fmt, va_list *ap)
 	{
 		ft_memset(str->data, ((sp == '0') ? sp : ' '), str->bytes);
 		if (sp == '-')
-			ft_memcpy(str->data, agv, len);	//check if ' '|'0' -> preappend to the right
+			ft_memcpy(str->data, agv, len);
 		else
 			ft_memcpy(str->data + (str->bytes - (fmt->prec * sizeof(wchar_t))), agv, len);
 	}
-	//printf("len: '%zu' bytes: '%zu'\n", str->len, str->bytes);
 	ft_memdel((void **)&agv);
 	return (str);
 }

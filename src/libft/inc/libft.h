@@ -193,6 +193,8 @@ wchar_t				*wstrnew(size_t len);					/* ok [test] */
 //	wchars2
 wchar_t				*wstrdup(const wchar_t *src);			/* ok [test] */
 wchar_t				*wchardup(const wchar_t src);
+size_t				wcharput_fd(const wchar_t ch, const int fd);
+size_t				wstrput_fd(const wchar_t *src, const int fd);
 
 
 /* linked lst need */
