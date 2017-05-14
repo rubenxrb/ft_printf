@@ -28,7 +28,7 @@ size_t	wcharput_fd(const wchar_t ch, const int fd)
 {
 	wchar_t	c;
 
-	uctoutf8((char *)&c, ch);
+	//uctoutf8((char *)&c, ch);
 	if (ch < 0x80)
 		write(fd, &c, 1);
 	else if (ch < 0x800)
