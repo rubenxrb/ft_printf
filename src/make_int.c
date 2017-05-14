@@ -25,7 +25,7 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 
 	tmp.d_size = 1;
 	if (!lmod)
-		tmp.data = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, int), fmt->base);
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, int)))
 		tmp.data = ft_itoa_base(hh, fmt->base);
 	else if (ft_strequ(lmod, "ll"))
