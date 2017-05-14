@@ -66,7 +66,6 @@ t_array	*make_wstr(t_agv *fmt, va_list *ap)
 		*(agv + fmt->prec) = 0;
 	len = wstrlen(agv) * sizeof(wchar_t);
 	str = array_new(sizeof(wchar_t), (fmt->width > fmt->prec ? (int)sizeof(wchar_t) * fmt->width : len) + sizeof(wchar_t));
-	str->bytes = str->len - 1;
 	ft_memcpy(str->data, agv, len);
 	if (fmt->width > fmt->prec)
 	{
