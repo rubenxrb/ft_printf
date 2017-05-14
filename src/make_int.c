@@ -69,7 +69,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	if (ft_isletter(type, 'c'))
 	{
 		wc = (lmod && lmod[0] == 'l') || ft_isupper(type);
-		ret = array_new(wc ? sizeof(wint_t) : sizeof(int), 1);
+		ret = array_new(wc ? sizeof(wint_t) : sizeof(int), wc ? 2 : 1);
 		if (wc && (ch = va_arg(*ap, wint_t)))
 			ft_memcpy(ret->data, &ch, sizeof(wint_t));
 		else if ((ch = va_arg(*ap, int)))
