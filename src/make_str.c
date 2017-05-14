@@ -5,25 +5,26 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 	t_array	*str;
 	char	*agv;
 	int		len;
-	char	sp;
+	char	*sp;
 
 	agv = ft_strdup(va_arg(*ap, char *));
-	sp = fmt->flgs ? fmt->flgs[0] : 0;
+	sp = fmt->flgs ? fmt->flgs : 0;
+	if (sp && *sp == '-')
+		sp++;
 	if (fmt->prec && (fmt->prec <= (int)ft_strlen(agv)))
 		*(agv + fmt->prec) = 0;
 	len = ft_strlen(agv);
-	str = array_new(sizeof(char), (fmt->width > fmt->prec ? fmt->width : len) + 1);
+	str = array_new(1, (fmt->width > fmt->prec ? fmt->width : len) + 1);
 	str->bytes = str->len - 1;
 	ft_strcpy(str->data, agv);
 	if (fmt->width > fmt->prec)
 	{
-		ft_memset(str->data, ((sp == '0') ? sp : ' '), str->bytes);
-		if (sp == '-')
-			ft_strncpy(str->data, agv, ft_strlen(agv));	//check if ' '|'0' -> preappend to the right
+		ft_memset(str->data, sp && *sp == '0' ? *sp : ' ', str->bytes);
+		if (fmt->flgs && fmt->flgs[0] == '-')
+			ft_strncpy(str->data, agv, len);	//check if ' '|'0' -> preappend to the right
 		else
-			ft_strncpy(str->data + (str->bytes - fmt->prec), agv, ft_strlen(agv));
+			ft_strncpy(str->data + (str->bytes - fmt->prec), agv, len);
 	}
-//	printf("%s\n", (char *)str->data);
 	ft_strdel(&agv);
 	return (str);
 }
