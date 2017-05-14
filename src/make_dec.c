@@ -6,5 +6,5 @@ t_array		*make_decimal(t_agv *fmt, char type, t_byte caps, va_list *ap)
 	(void)type;
 	(void)ap;
 	(void)caps;
-	return 0;
+	return array_new(sizeof(char), 1);
 }

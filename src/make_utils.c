@@ -5,5 +5,5 @@ t_array	*make_utils(t_agv *fmt, char type, va_list *ap)
 	(void)fmt;
 	(void)type;
 	(void)ap;
-	return (0);
+	return array_new(sizeof(char), 1);
 }

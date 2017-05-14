@@ -9,8 +9,6 @@ static void	format_integer(t_agv *fmt, t_array *ret, char t, t_byte sig)//free o
 	char	sp;
 
 	sp = fmt->flgs ? fmt->flgs[0] : 0;
-//	printf("fmt:w '%d' fmt:p '%d'\n", fmt->width, fmt->prec);
-	//printf("arr:l '%zu' arr:b '%zu' arr: '%s'\n", ret->len, ret->bytes, (char *)ret->data);
 	(void)ret;
 	(void)fmt;
 	(void)sig;
@@ -18,28 +16,6 @@ static void	format_integer(t_agv *fmt, t_array *ret, char t, t_byte sig)//free o
 	(void)ch;
 	(void)sp;
 }
-
-/*
-agv = ft_strdup(va_arg(*ap, char *));
-sp = fmt->flgs ? fmt->flgs[0] : 0;
-if (fmt->prec <= (int)ft_strlen(agv))
-	*(agv + fmt->prec) = 0;
-len = ft_strlen(agv);
-str = array_new(sizeof(char), (fmt->width > fmt->prec ? fmt->width : len) + 1);
-str->bytes = str->len - 1;
-ft_strcpy(str->data, agv);
-if (fmt->width > fmt->prec)
-{
-	ft_memset(str->data, ((sp == '0') ? sp : ' '), str->bytes);
-	if (sp == '-')
-		ft_strncpy(str->data, agv, ft_strlen(agv));	//check if ' '|'0' -> preappend to the right
-	else
-		ft_strncpy(str->data + (str->bytes - fmt->prec), agv, ft_strlen(agv));
-}
-ft_strdel(&agv);
-return (str);
-
-*/
 
 static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 {
@@ -76,9 +52,7 @@ static t_array	*make_nptr(va_list *ap)
 
 	nptr = array_new(sizeof(int *), 1);
 	num = va_arg(*ap, int *);
-	//printf("&*num '%p'\n", &*num);
 	nptr->data = &*num;
-	//printf("nptr->data '%p'\n", nptr->data);
 	return (nptr);
 }
 
@@ -103,7 +77,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
 		fmt->prec = fmt->prec ? fmt->prec : 1;
-		ret = type  == 'n' ? make_nptr(ap) : make_sint(fmt, lmod, ap);
+		ret = (type  == 'n') ? make_nptr(ap) : make_sint(fmt, lmod, ap);
 	}
 	if (type != 'n' && ret)
 		format_integer(fmt, ret, type, 1);
@@ -118,13 +92,8 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 
 	tmp.d_size = 1;
 	fmt->prec = fmt->prec ? fmt->prec : 1;
-	printf("TESTING\n");
 	if (!lmod)
-	{
-		printf("klq base '%zu'\n", fmt->base);
 		tmp.data = ft_lltoa_base(va_arg(*ap, unsigned int), fmt->base);
-		printf("klkt");
-	}
 	else if (ft_strequ(lmod, "hh") && (hh = va_arg(*ap, unsigned int)))
 		tmp.data = ft_itoa_base(hh, fmt->base);						//char
 	else if (ft_strequ(lmod, "ll"))								//longlong
@@ -141,7 +110,6 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 		tmp.data = ft_lltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
-	printf("WHATINS\n");
 	return (array_clone(&tmp));
 }
 

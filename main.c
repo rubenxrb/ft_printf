@@ -8,12 +8,13 @@ int main()
 	size_t		num = 420;
 	long long 	num2 = 111222333444;
 	wint_t		num3 = 555666777;
+	char		num4 = 9;
 	int			cell = 7;
-
+	size_t		sz = 600500400300;
 
 	putcstr("libft printf:\n", 93);
-	ft_printf("bytes %c\n", kat);
-	printf("bytes %c\n", kat);
+	ft_printf("bytes %05.f\n", num);
+	printf("bytes %05.f\n", num);
 
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);

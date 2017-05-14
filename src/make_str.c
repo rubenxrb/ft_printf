@@ -88,7 +88,7 @@ t_array	*make_cstr(t_agv *fmt, va_list *ap)
 {
 	(void)fmt;
 	(void)ap;
-	return 0;
+	return array_new(sizeof(char), 1);
 }
 
 
@@ -96,5 +96,5 @@ t_array	*make_cwstr(t_agv *fmt, va_list *ap)
 {
 	(void)fmt;
 	(void)ap;
-	return 0;
+	return array_new(sizeof(wchar_t), 1);
 }
