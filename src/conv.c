@@ -70,7 +70,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 		new = (t == 'S'|| lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
 	else if (ft_isletter(t, 'd') || ft_isletter(t, 'c') || t == 'i' || t == 'n')
 		new = make_signed(fmt, t, ap);
-	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || t == 'u')
+	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || ft_isletter(t, 'u'))
 	{
 		new = make_uint(fmt, fmt->l_mod, ap);
 		new->data = (t == 'x') ? strtolower(new->data) : new->data;

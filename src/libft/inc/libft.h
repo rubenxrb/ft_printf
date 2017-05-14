@@ -110,9 +110,15 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 char				*ft_lltoa_base(long long n, int b);
 
+//	convert2
 char				*ft_hextoa(int n, size_t prec); 				/* [test] */
 int					uctoutf8(const char *dest, wchar_t ch);			/* [ok] */
 int					ft_hextoi(const char *hex);
+char				*ft_ulltoa_base(unsigned long long n, int b);
+
+//	convert3
+char				*ulint_tostr(unsigned long long num, int b);
+char				*uint_tostr(unsigned int num, int b);
 						/* [ok] */
 
 //	identifiers
@@ -252,5 +258,6 @@ void 				*array_look(t_array *curr, size_t index);					//ok
 //	misc
 int					ft_numlen(int n, int base);
 int					ft_lnumlen(long n, int base);
+int					ft_ulnumlen(unsigned long n, int base);
 
 #endif

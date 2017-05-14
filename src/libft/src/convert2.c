@@ -108,3 +108,20 @@ char	*ft_lltoa_base(long long n, int b)
 	}
 	return (num);
 }
+
+char	*ft_ulltoa_base(unsigned long long n, int b)
+{
+	char	*num;
+	size_t	len;
+	long	mod;
+
+	len = ft_ulnumlen(n, b);
+	num = ft_strnew(len);
+	while (len--)
+	{
+		mod = n % b;
+		num[len] = ((mod > 9) ? mod + 55 : mod + '0');
+		n /= b;
+	}
+	return (num);
+}
