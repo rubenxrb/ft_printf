@@ -10,12 +10,12 @@ int main()
 	wint_t		num3 = 555666777;
 	char		num4 = 9;
 	int			cell = 7;
-	size_t		sz = 600500400300;
+	int			test = 4294959296;
 
 	putcstr("libft printf:\n", 93);
 	//wcharput_fd(kat, 1);
 	//printf("bytes { %ls }\n", &kat);
-	ft_printf("bytes [ %-06.2s ]\n", test2);
+	ft_printf("bytes [ %ld ]\n", test);
 
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
