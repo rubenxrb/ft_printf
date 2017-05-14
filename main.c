@@ -3,7 +3,7 @@
 int main()
 {
 	//work  on [%-.s]
-	wchar_t		kat;
+	wchar_t		kat = 0x3A0;
 	char		*test2 = "printed";
 	size_t		num = 420;
 	long long 	num2 = 111222333444;
@@ -13,8 +13,9 @@ int main()
 	size_t		sz = 600500400300;
 
 	putcstr("libft printf:\n", 93);
-	ft_printf("bytes %05.f\n", num);
-	printf("bytes %05.f\n", num);
+	//wcharput_fd(kat, 1);
+	printf("bytes { %lc }\n", kat);
+	ft_printf("bytes [ %lc ]\n", kat);
 
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);

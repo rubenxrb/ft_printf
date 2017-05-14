@@ -40,12 +40,11 @@ size_t	wcharput_fd(const wchar_t ch, const int fd)
 	return (wchar_len(ch));
 }
 
-size_t	wstrput_fd(const wchar_t *src, const int fd)
+size_t	wstrput_fd(const wchar_t *src, const int fd, size_t len)
 {
-	size_t	len;
+	size_t	r;
 
-	len = 0;
-	while (src)
-		len += wcharput_fd(*src++, fd);
-	return (len);
+	while (len--)
+		r += wcharput_fd(*src++, fd);
+	return (r);
 }
