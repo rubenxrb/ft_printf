@@ -2,8 +2,12 @@
 
 t_array	*make_utils(t_agv *fmt, char type, va_list *ap)
 {
+	t_array	*ret;
 	(void)fmt;
 	(void)type;
 	(void)ap;
-	return array_new(sizeof(char), 1);
+	ret = array_new(sizeof(char), 1);
+	if (type == '%')
+		ft_memcpy(ret->data, &type, 1);
+	return ret;
 }
