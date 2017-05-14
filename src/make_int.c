@@ -95,21 +95,21 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 	tmp.d_size = 1;
 	fmt->prec = fmt->prec ? fmt->prec : 1;
 	if (!lmod && !ft_isupper(fmt->type))
-		tmp.data = uint_tostr(va_arg(*ap, size_t), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, size_t), fmt->base);
 	else if (lmod && !ft_strcmp(lmod, "hh")  && (hh = va_arg(*ap, size_t)))
-		tmp.data = uint_tostr(hh, fmt->base);					//char
+		tmp.data = ft_itoa_base(hh, fmt->base);					//char
 	else if (lmod && !ft_strcmp(lmod, "ll"))								//longlong
-		tmp.data = ulint_tostr(va_arg(*ap, unsigned long long), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (ft_isupper(fmt->type) || *lmod == 'l')										//long
-		tmp.data = ulint_tostr(va_arg(*ap, unsigned long long), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (*lmod == 'h' && (h = va_arg(*ap, size_t)))			//short
-		tmp.data = uint_tostr(h, fmt->base);
+		tmp.data = ft_itoa_base(h, fmt->base);
 	else if (*lmod == 'j')										//intmax_t
-		tmp.data = ulint_tostr(va_arg(*ap, uintmax_t), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, uintmax_t), fmt->base);
 	else if (*lmod == 'z')										//signed size_t
-		tmp.data = ulint_tostr(va_arg(*ap, size_t), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, size_t), fmt->base);
 	else if (*lmod == 't')										//ptrdiff_t
-		tmp.data = ulint_tostr(va_arg(*ap, unsigned long long), fmt->base);
+		tmp.data = ft_itoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
 	return (array_clone(&tmp));
