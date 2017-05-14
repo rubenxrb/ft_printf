@@ -59,7 +59,7 @@ t_array	*make_wstr(t_agv *fmt, va_list *ap)
 	t_array	*str;
 	wchar_t	*agv;
 	int		len;
-	char	sp;
+	wchar_t	sp;
 
 	agv = wstrdup(va_arg(*ap, wchar_t *));
 	sp = fmt->flgs ? fmt->flgs[0] : 0;
