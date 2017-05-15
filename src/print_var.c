@@ -14,8 +14,6 @@
 
 size_t			print_var(t_array *str, const int fd, const char nxt)
 {
-	//wchar_t	*lol;
-
 	(void)nxt;
 	//str->bytes = (nxt == 'c') ? 1 : str->bytes;
 	//lol = str->data ? str->data : 0;
@@ -33,6 +31,6 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
 	if (str->d_size == 1)
-		return (write(fd, str->d_size, str->d_size));
+		return (write(fd, str->data, str->d_size));
 	return ft_putstr_fd(str->data, fd);
 }
