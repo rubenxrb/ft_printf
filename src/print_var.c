@@ -16,10 +16,8 @@
 size_t			print_var(t_array *str, const int fd, const char nxt)
 {
 	wchar_t	*lol;
-	char	*d;
 
 	(void)nxt;
-	d = str->data;
 	lol = str->data ? str->data : 0;
 //	printf("%d\n", *lol);
 	if (str->d_size > 1)

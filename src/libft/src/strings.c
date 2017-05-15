@@ -14,13 +14,13 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t	i;
+	const char	*p;
 
-	i = 0;
+	p = s;
 	if (s)
-		while (s[i])
-			i++;
-	return (i);
+		while (*p)
+			p++;
+	return (p - s);
 }
 
 char	*ft_strcpy(char *dst, const char *src)
