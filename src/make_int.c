@@ -73,6 +73,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 		ch = va_arg(*ap, int);
 		ret->d_size = wc ? sizeof(wchar_t) : sizeof(char);
 		ret->bytes = wchar_len(ch);
+		printf("char '%zu' '%zu' '%zu'\n", ret->len, ret->d_size, ret->bytes);
 		ft_memcpy(ret->data, &ch, wc ? sizeof(wchar_t) : sizeof(int));
 	}
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
