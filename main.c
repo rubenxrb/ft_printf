@@ -1,9 +1,12 @@
 #include "ft_printf.h"
+#include <locale.h>
 
 int main()
 {
 	//work  on [%-.s] and [%-0]
-	wchar_t		kat = 0x3A0;
+	//add locale
+	setlocale (LC_ALL, "");
+	wchar_t		kat = 256;
 	char		*test2 = "printed";
 	size_t		num = 420;
 	long long 	num2 = 111222333444;
@@ -15,9 +18,13 @@ int main()
 	putcstr("libft printf:\n", 93);
 	//wcharput_fd(kat, 1);
 //	printf("bytes { %U }\n", test);
-	ft_printf("bytes [ %c ]\n", test);
-	printf("%d\n", ft_printf("bytes [ %c ]\n", '\0'));
-	printf("%d\n", printf("bytes [ %c ]\n", '\0'));
+//	ft_printf("bytes [ %c ]\n", test);
+//printf("%d\n", ft_printf("bytes [ %s ]\n", "😀"));
+//printf("%d\n", printf("bytes [ %s ]\n", "😀"));
+	printf("%d\n", ft_printf("[%s]", 0));
+	printf("%d\n", printf("[%s]", 0));
+	//printf("%d\n", ft_printf(" tea%lldsstw wasf[%lld]", num2, test));
+	//printf("%d\n", printf(" tea%lldsstw wasf[%lld]", num2, test));
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
 	//ft_printf("test: [%n]\n", cell);
