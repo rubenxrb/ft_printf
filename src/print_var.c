@@ -30,7 +30,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//	return wstrput_fd(str->data, fd, wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
-	if (str->d_size == 1 && str->len == sizeof(int))
-		return (write(fd, str->data, str->d_size));
+//if (str->d_size == 1 && str->len == sizeof(int))
+	//	return (write(fd, str->data, str->d_size));
 	return ft_putstr_fd(str->data, fd);
 }
