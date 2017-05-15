@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
 size_t			print_var(t_array *str, const int fd, const char nxt)
 {
@@ -33,5 +32,5 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//	return wstrput_fd(str->data, fd, wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
-	return write(fd, str->data, str->bytes);
+	return ft_putstr_fd(str->data, fd);
 }
