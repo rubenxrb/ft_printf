@@ -7,7 +7,7 @@ wchar_t	*wstrdup(const wchar_t *src)
 	size_t	len;
 
 	len = wstrlen(src);
-	new = wstrnew(len);
+	new = wstrnew(len * sizeof(wchar_t));
 	if (!new)
 		return (0);
 	new = ft_memcpy(new, src, sizeof(wchar_t) * len);
