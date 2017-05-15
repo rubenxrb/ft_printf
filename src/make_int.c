@@ -74,7 +74,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 		if (wc)
 			ft_memcpy(ret->data, &ch, sizeof(int));
 		else
-			ft_memcpy(ret->data, &ch, sizeof(int));
+			ft_memcpy(ret->data, &ch, sizeof(char));
 	}
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
