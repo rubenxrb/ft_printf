@@ -31,5 +31,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//	return (1);
 	if (str->d_size == 1 && str->bytes == 1)
 		return (write(fd, str->data, str->d_size));
+	else if (str->len > 1 && str->d_size > 1)
+		return wstrput_fd(str->data, fd, str->len);
 	return ft_putstr_fd(str->data, fd);
 }
