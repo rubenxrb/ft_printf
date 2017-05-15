@@ -72,7 +72,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 		ret = array_new(wc ? sizeof(wchar_t) : sizeof(int), 1);
 		ch = va_arg(*ap, int);
 		ret->d_size = wc ? sizeof(wchar_t) : sizeof(char);
-		ft_memcpy(ret->data, &ch, wc ? sizeof(wchar_t) : sizeof(int);
+		ft_memcpy(ret->data, &ch, wc ? sizeof(wchar_t) : sizeof(int));
 	}
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
