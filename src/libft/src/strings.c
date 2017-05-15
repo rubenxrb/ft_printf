@@ -63,6 +63,8 @@ char	*ft_strdup(const char *s1)
 {
 	char	*p;
 
+	if (!s1)
+		return (0);
 	p = ft_strnew(ft_strlen(s1));
 	if (!p)
 		return (0);

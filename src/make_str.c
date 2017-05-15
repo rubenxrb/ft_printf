@@ -7,7 +7,7 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 	int		len;
 	char	*sp;
 
-	agv = ft_strdup(va_arg(*ap, char *));
+	agv = printfstrdup(va_arg(*ap, char *));
 	sp = fmt->flgs ? fmt->flgs : 0;
 	if ((sp) && *sp == '-')
 		sp++;
