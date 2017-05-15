@@ -64,7 +64,6 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	t_byte	wc;
 	int		ch;
 
-	ch = 0;
 	ret = 0;
 	lmod = fmt->l_mod ? fmt->l_mod : 0;
 	if (ft_isletter(type, 'c'))
