@@ -28,7 +28,7 @@ int		printf_fd(const int fd, const char *s, ...)
 	{
 		if (*s == '%')
 		{
-			len += print_var(curr->data, fd);
+			len += print_var(curr->data, fd, *(s + 1));
 			array_destroy(curr->data);
 			s = skip_fmt(s + 1);
 			curr = curr->next;
@@ -57,7 +57,7 @@ int		ft_printf(const char *s, ...)
 	{
 		if (*s == '%')
 		{
-			len += print_var(curr->data, 1);
+			len += print_var(curr->data, 1, *(s + 1));
 			*(s + 1) == 'n' ? s : array_destroy(curr->data);
 			s = skip_fmt(s + 1);
 			curr = curr->next;

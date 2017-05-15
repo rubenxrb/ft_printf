@@ -12,14 +12,16 @@
 
 #include "ft_printf.h"
 
-size_t			print_var(t_array *str, const int fd)
+size_t			print_var(t_array *str, const int fd, const char nxt)
 {
 	//printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
 	//if (str->d_size > 1)
 		//return wstrput_fd(str->data, fd, str->bytes);
 //	else
 //	printf("PRINTVAR\n");
-	if (str && str->data)
-		return ft_putstr_fd(str->data, fd);
-	return (0);
+	char	*d;
+	d = str->data;
+	if (nxt == 'c' && !*d)
+		return (1);
+	return ft_putstr_fd(str->data, fd);
 }

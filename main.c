@@ -15,8 +15,9 @@ int main()
 	putcstr("libft printf:\n", 93);
 	//wcharput_fd(kat, 1);
 //	printf("bytes { %U }\n", test);
-	ft_printf("bytes [ %llu ]\n", test);
-
+	ft_printf("bytes [ %c ]\n", test);
+	printf("%d\n", ft_printf("bytes [ %c ]\n", '\0'));
+	printf("%d\n", printf("bytes [ %c ]\n", '\0'));
 //	printf("cell '%p'\n", &cell);
 //	ft_printf("test: [%lld] test2: [%n] num[%s]\n", num2, &cell, test2 + 3);
 	//ft_printf("test: [%n]\n", cell);
