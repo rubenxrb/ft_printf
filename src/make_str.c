@@ -58,24 +58,13 @@ t_array	*make_wstr(t_agv *fmt, va_list *ap)
 {
 	t_array	*str;
 	wchar_t	*agv;
-	int		len;
-	wchar_t	sp;
+	size_t	len;
 
+	(void)fmt;
 	agv = wstrdup(va_arg(*ap, wchar_t *));
-	sp = fmt->flgs ? fmt->flgs[0] : 0;
-	if (fmt->prec <= (int)wstrlen(agv))
-		*(agv + fmt->prec) = 0;
-	len = wstrlen(agv) * sizeof(wchar_t);
-	str = array_new(sizeof(wchar_t), (fmt->width > fmt->prec ? (int)sizeof(wchar_t) * fmt->width : len) + sizeof(wchar_t));
-	ft_memcpy(str->data, agv, len);
-	if (fmt->width > fmt->prec)
-	{
-		ft_memset(str->data, ((sp == '0') ? sp : ' '), str->bytes);
-		if (sp == '-')
-			ft_memcpy(str->data, agv, len);
-		else
-			ft_memcpy(str->data + (str->bytes - (fmt->prec * sizeof(wchar_t))), agv, len);
-	}
+	len = wstrlen(agv);
+	str = array_new(sizeof(wchar_t), len);
+	ft_memcpy(str->data, agv, str->bytes);
 	ft_memdel((void **)&agv);
 	return (str);
 }
