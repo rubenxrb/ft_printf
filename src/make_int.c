@@ -69,9 +69,10 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	if (ft_isletter(type, 'c'))
 	{
 		wc = (lmod && lmod[0] == 'l') || ft_isupper(type);
-		ret = array_new(sizeof(int), 1);
+		ret = array_new(wc ? sizeof(wchar_t) : sizeof(int), 1);
 		ch = va_arg(*ap, int);
-		ft_memcpy(ret->data, &ch, sizeof(int));
+		ret->d_size = wc ? sizeof(wchar_t) : sizeof(char);
+		ft_memcpy(ret->data, &ch, wc ? sizeof(int) : sizeof(char));
 	}
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
