@@ -63,8 +63,10 @@ t_array	*make_wstr(t_agv *fmt, va_list *ap)
 	(void)fmt;
 	agv = wstrdup(va_arg(*ap, wchar_t *));
 	len = wstrlen(agv);
-	str = array_new(sizeof(wchar_t), len * sizeof(wchar_t));
-	ft_memcpy(str->data, agv, str->len);
+	str = array_new(sizeof(wchar_t), len);
+	//printf(" '%zu' '%zu' '%zu'\n", str->len, str->d_size, str->bytes);
+	ft_memcpy(str->data, agv, str->bytes);
+//	printf("[%S]", (wchar_t *)str->data);
 	ft_memdel((void **)&agv);
 	return (str);
 }
