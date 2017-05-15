@@ -21,9 +21,9 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	d = str->data;
 	lol = str->data ? str->data : 0;
 //	printf("%d\n", *lol);
-	//if (str->d_size > 1)
-		//if (*lol < 0 || (*lol > 55295 && *lol < 57344) || *lol > 1114111)
-			//exit(-1);
+	if (str->d_size > 1)
+		if (*lol < 0 || (*lol > 55295 && *lol < 57344) || *lol > 1114111)
+			exit(-1);
 //	printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 	if (str->d_size > 1)
