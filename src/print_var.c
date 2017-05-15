@@ -29,20 +29,19 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
-	if (str->len == 1)
+	if (str->len == 1 && str->d_size == 1)
 	{
-		if (str->d_size == 1)
-		{
-			if (str->bytes == 1)
-				return (write(fd, str->data, 1));
-			else
-				return(write(fd, str->data, str->bytes));
-		}
+		if (str->bytes == 1)
+			return (write(fd, str->data, 1));			//c
+		else
+			return(write(fd, str->data, str->bytes));	//s
 	}
-	else if (str->len > 1)
+	else if (str->d_size > 1 && str->bytes > 1)
 	{
-		if (str->d_size > 1)
-			write(fd, str->data, str->bytes);
+		if (str->len > 1)
+			wstrput_fd(fd, str->data, str->len);
+		else
+			return (write(fd, str->data, bytes));
 	}
 
 }
