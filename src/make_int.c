@@ -27,11 +27,11 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 	tmp.d_size = 1;
 	if (!lmod && !ft_isupper(fmt->type))
 		tmp.data = ft_itoa_base(va_arg(*ap, int), fmt->base);
-	else if (!ft_strcmp(lmod, "hh") && (hh = va_arg(*ap, int)))
+	else if (lmod && !ft_strcmp(lmod, "hh") && (hh = va_arg(*ap, int)))
 		tmp.data = ft_itoa_base(hh, fmt->base);
-	else if (!ft_strcmp(lmod, "ll"))
+	else if (lmod && !ft_strcmp(lmod, "ll"))
 		tmp.data = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
-	else if (*lmod == 'l' || ft_isupper(fmt->type))
+	else if ((lmod && *lmod == 'l') || ft_isupper(fmt->type))
 		tmp.data = ft_lltoa_base(va_arg(*ap, long long), fmt->base);
 	else if (*lmod == 'h' && (h = va_arg(*ap, int)))
 		tmp.data = ft_itoa_base(h, fmt->base);
