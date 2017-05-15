@@ -46,6 +46,9 @@ size_t	wstrput_fd(const wchar_t *src, const int fd, size_t len)
 
 	r = 0;
 	while (len--)
-		r += wcharput_fd(*src++, fd);
+	{
+		r++;
+		wcharput_fd(*src++, fd);
+	}
 	return (r);
 }

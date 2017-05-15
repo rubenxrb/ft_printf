@@ -19,6 +19,7 @@
 # include <stdio.h>			//actual printf
 # include <wchar.h>			//wide characters
 # include "libft.h"
+# include <limits.h>
 
 typedef struct	s_agv		//data in list
 {

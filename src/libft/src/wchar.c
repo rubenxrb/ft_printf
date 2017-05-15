@@ -21,9 +21,8 @@ size_t	wchar_len(wchar_t ch)
 		return (2);
 	else if (ch < 0x10000)
 		return (3);
-	else if (ch < 0x110000)
+	else
 		return (4);
-	return (0);
 }
 
 size_t	wcharput(const wchar_t ch)
@@ -67,7 +66,7 @@ wchar_t	*wstrnew(size_t len)
 {
 	wchar_t	*s;
 
-	s = ft_memalloc((sizeof(wchar_t) * len) + sizeof(wchar_t));
+	s = ft_memalloc((sizeof(wchar_t) * len));
 	if (!s)
 		return (0);
 	return (s);
