@@ -37,7 +37,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 		else
 			return(write(fd, str->data, str->bytes));	//s
 	}
-	else if (str->d_size == 4 && str->len > 1)
-		write(fd, str->data, str->bytes);
+//	else if (str->d_size == 4 && str->len > 1)
+	//	write(fd, str->data, str->bytes);
 	return ft_putstr_fd(str->data, fd);
 }
