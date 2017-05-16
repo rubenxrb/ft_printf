@@ -39,7 +39,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 			return wstrput_fd(str->data, fd, str->len); //wc
 		}
 		else if (str->len == 1 && str->bytes > 1)
-			return wcharput_fd(*lol, fd);
+			return write(fd, str->data, str->bytes);
 		else
 			return (ft_putchar_fd(*lol, fd));
 		//if (str->bytes > 1)
