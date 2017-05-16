@@ -18,7 +18,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 {
 	(void)nxt;
 	//str->bytes = (nxt == 'c') ? 1 : str->bytes;
-	wchar_t *lol = str->data ? str->data : 0;
+	//wchar_t *lol = str->data ? str->data : 0;
 //	printf("%d\n", *lol);
 	//if (str->d_size > 1)
 //		if (*lol < 0 || (*lol > 55295 && *lol < 57344) || *lol > 1114111)
@@ -26,7 +26,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 			//printf("EXITING\n");
 //			exit(-1);
 	//}
-//	printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
+	//printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
@@ -38,17 +38,19 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 		//	printf("wstr\n");
 			return wstrput_fd(str->data, fd, str->len); //wc
 		}
-		if (str->bytes > 1)
-		{
+	//	if (str->bytes > 1)
+	//	{
 	//		printf("wchar\n");
-			return(wcharput_fd(*lol, fd));	//wc
-		}
-		else if (str->bytes == 1)
-		{
+		//	return(wcharput_fd(*lol, fd));	//wc
+	//	}
+		//else if (str->bytes == 1)
+		//{
 	//		printf("char\n");
-			return (write(fd, str->data, 1));			//c
-		}
+			//return (write(fd, str->data, 1));			//c
+		//}
+		//printf("write character bytes\n");
+		return (write(fd, str->data, str->bytes));
 	}
-	//printf("last\n");
-	return ft_putstr_fd(str->data, fd);
+//	printf("last\n");
+	return (ft_putstr_fd(str->data, fd));
 }
