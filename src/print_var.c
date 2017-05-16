@@ -20,12 +20,12 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//str->bytes = (nxt == 'c') ? 1 : str->bytes;
 	wchar_t *lol = str->data ? str->data : 0;
 //	printf("%d\n", *lol);
-	if (str->d_size > 1)
-		if (*lol < 0 || (*lol > 55295 && *lol < 57344) || *lol > 1114111)
-		{
+	//if (str->d_size > 1)
+//		if (*lol < 0 || (*lol > 55295 && *lol < 57344) || *lol > 1114111)
+	//	{
 			//printf("EXITING\n");
-			exit(-1);
-	}
+//			exit(-1);
+	//}
 //	printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
@@ -41,12 +41,12 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 		if (str->len > 1 && str->bytes > 1)
 		{
 		//	printf("wstr\n");
-			return wstrput_fd(str->data, fd, str->len);
+			return wstrput_fd(str->data, fd, str->len); //wc
 		}
 		else
 		{
 	//		printf("wchar\n");
-			return(wcharput_fd(*lol, fd));	//s
+			return(wcharput_fd(*lol, fd));	//wc
 		}
 	}
 	//printf("last\n");
