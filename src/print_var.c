@@ -25,7 +25,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//		printf("EXITING\n");
 			//exit(-1);
 //	}
-	printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
+//	printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
