@@ -33,20 +33,20 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 
 	if (str->d_size > 1)
 	{
-		if (str->bytes == 1)
-		{
-	//		printf("char\n");
-			return (write(fd, str->data, 1));			//c
-		}
 		if (str->len > 1 && str->bytes > 1)
 		{
 		//	printf("wstr\n");
 			return wstrput_fd(str->data, fd, str->len); //wc
 		}
-		else
+		if (str->bytes > 1)
 		{
 	//		printf("wchar\n");
 			return(wcharput_fd(*lol, fd));	//wc
+		}
+		else if (str->bytes == 1)
+		{
+	//		printf("char\n");
+			return (write(fd, str->data, 1));			//c
 		}
 	}
 	//printf("last\n");
