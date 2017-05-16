@@ -33,7 +33,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 
 	if (str->d_size > 1)
 	{
-		if (str->bytes > 1)
+		if (str->bytes > 1 && str->len > 1)
 		{
 			//printf("wstr\n");
 			return wstrput_fd(str->data, fd, str->len); //wc
