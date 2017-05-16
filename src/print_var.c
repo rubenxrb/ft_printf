@@ -35,14 +35,10 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	{
 		if (str->bytes > 1 && str->len > 1)
 			return wstrput_fd(str->data, fd, str->len); //wc
-		else if (str->len != 1 && str->bytes < 2)
-			ft_putchar_fd(*lol, fd);
-		/*
 		else if (str->len == 1 && str->bytes > 1)
 			return ft_putstr_fd(str->data, fd);
 		else
 			return (ft_putchar_fd(*lol, fd));
-		*/
 	}
 	return ft_putstr_fd(str->data, fd);
 }
