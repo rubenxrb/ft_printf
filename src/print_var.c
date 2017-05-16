@@ -35,7 +35,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	{
 		if (str->bytes > 1 && str->len > 1)
 		{
-			printf("wstr\n");
+		//	printf("wstr\n");
 			return wstrput_fd(str->data, fd, str->len); //wc
 		}
 		else if (str->len == 1 && str->bytes == 1)
@@ -53,6 +53,6 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 		//printf("write char\n");
 		//return ft_putchar_fd(*lol, fd);
 	}
-	printf("write string\n");
+//	printf("write string\n");
 	return (write(fd, str->data, str->bytes));
 }
