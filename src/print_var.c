@@ -17,7 +17,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 {
 	(void)nxt;
 	//str->bytes = (nxt == 'c') ? 1 : str->bytes;
-	//lol = str->data ? str->data : 0;
+	wchar_t *lol = str->data ? str->data : 0;
 //	printf("%d\n", *lol);
 //	if (str->d_size > 1)
 	//	if (*lol < 0 || (*lol > 55295 && *lol < 57344) || *lol > 1114111)
@@ -37,7 +37,10 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 		else
 			return(write(fd, str->data, str->bytes));	//s
 	}
-//	else if (str->d_size == 4 && str->len > 1)
-	//	write(fd, str->data, str->bytes);
+	else if (str->d_size > 1)
+	{
+		if (str->bytes <= 4)
+			return wcharput_fd(*lol, fd);
+	}
 	return ft_putstr_fd(str->data, fd);
 }
