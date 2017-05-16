@@ -26,16 +26,16 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 			//printf("EXITING\n");
 //			exit(-1);
 	//}
-	//printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
+//	printf("bytes: '%zu' len: '%zu' d_size: '%zu'\n", str->bytes, str->len, str->d_size);
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
 
 	if (str->d_size > 1)
 	{
-		if (str->len > 1 && str->bytes > 1)
+		if (str->bytes > 1)
 		{
-		//	printf("wstr\n");
+			//printf("wstr\n");
 			return wstrput_fd(str->data, fd, str->len); //wc
 		}
 	//	if (str->bytes > 1)
@@ -48,9 +48,9 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//		printf("char\n");
 			//return (write(fd, str->data, 1));			//c
 		//}
-		//printf("write character bytes\n");
+		//printf("write char\n");
 		return (write(fd, str->data, str->bytes));
 	}
-//	printf("last\n");
+//	printf("write string\n");
 	return (ft_putstr_fd(str->data, fd));
 }
