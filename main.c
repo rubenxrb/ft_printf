@@ -6,23 +6,26 @@ int main()
 	//work  on [%-.s] and [%-0]
 	//add locale
 	setlocale (LC_ALL, "");
-	wchar_t		kat = 256;
+	wchar_t		kat = 552;
 	char		*test2 = "printed";
 	size_t		num = 420;
 	long long 	num2 = 111222333444;
 	wint_t		num3 = 555666777;
 	char		num4 = 9;
-	int			cell = 7;
+	int			cell = 0;
 	unsigned long	test = 18446744073709551491;
 
 	putcstr("libft printf:\n", 93);
+	printf("%p\n", &cell);
 	//wcharput_fd(kat, 1);
 //	printf("bytes { %U }\n", test);
 //	ft_printf("bytes [ %c ]\n", test);
-//printf("%d\n", ft_printf("bytes [ %s ]\n", "😀"));
-//printf("%d\n", printf("bytes [ %s ]\n", "😀"));
-	printf("%d\n", ft_printf("[%s]", 0));
-	printf("%d\n", printf("[%s]", 0));
+printf("%d\n", ft_printf("by%ntes cell:'%d' [123 %n] '%d'\n", &cell, cell, &cell, cell));
+printf("cell: %d\n", cell);
+printf("%d\n", printf("by%ntes cell:'%d' [123 %n] '%d'\n", &cell, cell, &cell, cell));
+printf("cell: %d\n", cell);
+//	printf("%d\n", ft_printf("[%s]", 0));
+//	printf("%d\n", printf("[%s]", 0));
 	//printf("%d\n", ft_printf(" tea%lldsstw wasf[%lld]", num2, test));
 	//printf("%d\n", printf(" tea%lldsstw wasf[%lld]", num2, test));
 //	printf("cell '%p'\n", &cell);

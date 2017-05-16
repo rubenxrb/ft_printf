@@ -49,6 +49,7 @@ type var = va_arg(lst, type);
 
 static t_byte	send_length(int len, int *dest)
 {
+	printf("Sending '%d'\n", len);
 	if (dest)
 	{
 		*dest = len;
