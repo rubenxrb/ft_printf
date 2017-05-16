@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-size_t			print_var(t_node *node, const int fd, const char nxt)
+size_t			print_var(t_node **node, const int fd, const char nxt)
 {
 	t_array	*str;
 
@@ -25,8 +25,8 @@ size_t			print_var(t_node *node, const int fd, const char nxt)
 		//node = node->next ? node->next : 0;
 		return (0);
 	}
-	str = node->data;
-	node = node->next;
+	str = (*node)->data;
+	*node = (*node)->next;
 	//node = node->next;
 //	node = node->next;
 	//str->bytes = (nxt == 'c') ? 1 : str->bytes;

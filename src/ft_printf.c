@@ -29,7 +29,7 @@ int		printf_fd(const int fd, const char *s, ...)
 	{
 		if (*s == '%')
 		{
-			len += print_var(curr, fd, *(s + 1));
+			len += print_var(&curr, fd, *(s + 1));
 			s = skip_fmt(s + 1);
 		}
 		else
@@ -56,7 +56,7 @@ int		ft_printf(const char *s, ...)
 	{
 		if (*s == '%')
 		{
-			len += print_var(curr, 1, *(s + 1));
+			len += print_var(&curr, 1, *(s + 1));
 			s = skip_fmt(s + 1);
 		}
 		else

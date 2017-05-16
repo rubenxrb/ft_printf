@@ -52,7 +52,7 @@ size_t			set_lmod(t_agv *ret, const char *fmt);
 size_t			set_base(const char spec);
 
 /* print_var.c */
-size_t			print_var(t_node *node, const int fd, const char nxt);
+size_t			print_var(t_node **node, const int fd, const char nxt);
 
 /* helpers.c */
 const char		*skip_fmt(const char *s);

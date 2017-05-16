@@ -124,9 +124,9 @@ static void var_found(t_lst *vars, int *len, char *s, va_list *ap)
 		send_length(*len, current);
 	else
 	{
-		lst_addarray(&*vars, current);
+		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
-	//	printf("added '%s'\n", (char *)current->data);
+		//printf("added '%s'\n", (char *)current->data);
 	}
 	ft_memdel((void **)&fmt);
 	/* code */
@@ -146,7 +146,7 @@ t_lst	*listof_vars(const char *s, va_list *ap)
 	{
 		if (*s++ == '%')
 		{
-			//printf("*s '%c'\n", *s);
+		//	printf("*s '%c'\n", *s);
 			var_found(vars, &i, (char *)s, ap);
 			s = skip_fmt(s);
 		}
