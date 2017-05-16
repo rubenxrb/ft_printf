@@ -22,14 +22,14 @@ int		printf_fd(const int fd, const char *s, ...)
 
 	va_start(av_lst, s);
 	cv_lst = listof_vars(s, &av_lst);							//format check
-	if (!(curr = cv_lst->head) && ft_strchr(s, '%'))
-		return (0);
+	curr = cv_lst->head;
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
-			len += print_var(&curr, fd, *(s + 1));
+			if (curr)
+				len += print_var(&curr, fd, *(s + 1));
 			s = skip_fmt(s + 1);
 		}
 		else
@@ -49,14 +49,14 @@ int		ft_printf(const char *s, ...)
 
 	va_start(av_lst, s);
 	cv_lst = listof_vars(s, &av_lst);							//format check
-	if (!(curr = cv_lst->head) && ft_strchr(s, '%'))
-		return (0);
+	curr = cv_lst->head;
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
-			len += print_var(&curr, 1, *(s + 1));
+			if (curr)
+				len += print_var(&curr, 1, *(s + 1));
 			s = skip_fmt(s + 1);
 		}
 		else

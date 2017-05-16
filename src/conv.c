@@ -55,7 +55,7 @@ static void		send_length(int len, t_array *var)
 	//printf("dest : '%p'\n", dest);
 	*dest = len;
 //	printf("*dest '%d'\n", *dest);
-	ft_memdel((void **)&var);
+//	ft_memdel((void **)&var);
 }
 
 static t_array *convert_format(t_agv *fmt, va_list *ap)
@@ -120,13 +120,12 @@ static void var_found(t_lst *vars, int *len, char *s, va_list *ap)
 	fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
 	fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
 	current = convert_format(fmt, ap);
-	if (*s == 'n')
+	if (fmt->type == 'n')
 		send_length(*len, current);
 	else
 	{
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
-		//printf("added '%s'\n", (char *)current->data);
 	}
 	ft_memdel((void **)&fmt);
 	/* code */
@@ -146,7 +145,6 @@ t_lst	*listof_vars(const char *s, va_list *ap)
 	{
 		if (*s++ == '%')
 		{
-		//	printf("*s '%c'\n", *s);
 			var_found(vars, &i, (char *)s, ap);
 			s = skip_fmt(s);
 		}
