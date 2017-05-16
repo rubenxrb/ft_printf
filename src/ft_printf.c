@@ -11,62 +11,59 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 int		printf_fd(const int fd, const char *s, ...)
 {
 	va_list	av_lst;
-	t_lst	cv_lst;
+	t_lst	*cv_lst;
 	t_node	*curr;
 	size_t	len;
 
 	va_start(av_lst, s);
 	cv_lst = listof_vars(s, &av_lst);							//format check
-	if (!(curr = cv_lst.head) && ft_strchr(s, '%'))
+	if (!(curr = cv_lst->head) && ft_strchr(s, '%'))
 		return (0);
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
-			len += print_var(curr->data, fd, *(s + 1));
-			array_destroy(curr->data);
+			len += print_var(curr, fd, *(s + 1));
 			s = skip_fmt(s + 1);
-			curr = curr->next;
 		}
 		else
-			len += ft_putchar_fd(*s++, fd);
+			len += ft_putchar(*s++);
 	}
 	va_end(av_lst);
-	ft_lstdel((t_node **)&cv_lst.head, ft_bzero);
+	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
 	return (len);
 }
 
 int		ft_printf(const char *s, ...)
 {
 	va_list	av_lst;
-	t_lst	cv_lst;
+	t_lst	*cv_lst;
 	t_node	*curr;
 	size_t	len;
 
 	va_start(av_lst, s);
 	cv_lst = listof_vars(s, &av_lst);							//format check
-	if (!(curr = cv_lst.head) && ft_strchr(s, '%'))
+	if (!(curr = cv_lst->head) && ft_strchr(s, '%'))
 		return (0);
 	len = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
-			len += print_var(curr->data, 1, *(s + 1));
-			*(s + 1) == 'n' ? s : array_destroy(curr->data);
+			len += print_var(curr, 1, *(s + 1));
 			s = skip_fmt(s + 1);
-			curr = curr->next;
 		}
 		else
 			len += ft_putchar(*s++);
 	}
 	va_end(av_lst);
-	ft_lstdel((t_node **)&cv_lst.head, ft_bzero);
+	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
 	return (len);
 }
 

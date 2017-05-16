@@ -47,15 +47,15 @@ type var = va_arg(lst, type);
 
 */
 
-static t_byte	send_length(int len, int *dest)
+static void		send_length(int len, t_array *var)
 {
-	printf("Sending '%d'\n", len);
-	if (dest)
-	{
-		*dest = len;
-		return (1);
-	}
-	return (0);
+	int	*dest;
+
+	dest = var->data;
+	//printf("dest : '%p'\n", dest);
+	*dest = len;
+//	printf("*dest '%d'\n", *dest);
+	ft_memdel((void **)&var);
 }
 
 static t_array *convert_format(t_agv *fmt, va_list *ap)
@@ -111,32 +111,50 @@ static t_agv *extract_fmt(const char *s)
 	return (ret);
 }
 
-//MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING
-t_lst	listof_vars(const char *s, va_list *ap)
+static void var_found(t_lst *vars, int *len, char *s, va_list *ap)
 {
-	t_lst	vars;			//<free@printf_fd>
-	t_array	*current;
 	t_agv	*fmt;
+	t_array	*current;
+
+	fmt = extract_fmt(s);
+	fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
+	fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
+	current = convert_format(fmt, ap);
+	if (*s == 'n')
+		send_length(*len, current);
+	else
+	{
+		lst_addarray(&*vars, current);
+		*len += SUM_SIZE(current->d_size);
+	//	printf("added '%s'\n", (char *)current->data);
+	}
+	ft_memdel((void **)&fmt);
+	/* code */
+}
+
+//MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING
+t_lst	*listof_vars(const char *s, va_list *ap)
+{
+	t_lst	*vars;			//<free@printf_fd>
 	int		i;
 
-	ft_bzero(&vars, sizeof(t_lst));
 	if (!s || !ap)
-		return (vars);
+		return (0);
+	vars = ft_memalloc(sizeof(t_lst));
 	i = 0;
 	while (*s)
 	{
-		if (*s++ == '%' && (fmt = extract_fmt(s)))
+		if (*s++ == '%')
 		{
-			fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
-			fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
-			current = convert_format(fmt, ap);
-			*s == 'n' ? send_length(i, current->data) : (void)s;
-			i += current->d_size == 1 ? current->bytes : current->len;
-			s = skip_fmt(s + 1);
-			lst_addarray(&vars, current);
+			//printf("*s '%c'\n", *s);
+			var_found(vars, &i, (char *)s, ap);
+			s = skip_fmt(s);
 		}
 		else
 			i++;
 	}
+	//printf("vars :%p\n", vars);
+//	printf("var.head '%p'\n", vars->head);
+	//printf("var.tail '%p' len: '%zu'\n", vars->tail, vars->len);
 	return (vars);
 }

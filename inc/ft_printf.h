@@ -21,6 +21,8 @@
 # include "libft.h"
 # include <limits.h>
 
+# define SUM_SIZE(d_size) (d_size == 1 ? current->bytes : current->len)
+
 typedef struct	s_agv		//data in list
 {
 	char		*flgs;			//string of flags [done]
@@ -37,7 +39,7 @@ int				printf_fd(const int fd, const char *s, ...);
 int				printf_buf(void **dest, const char *s, ...);
 
 /* conv.c	*/
-t_lst			listof_vars(const char *s, va_list *ap);
+t_lst			*listof_vars(const char *s, va_list *ap);
 
 /* get_var.c */
 char			*get_format(const char *_format);
@@ -50,7 +52,7 @@ size_t			set_lmod(t_agv *ret, const char *fmt);
 size_t			set_base(const char spec);
 
 /* print_var.c */
-size_t			print_var(t_array *str, const int fd, const char nxt);
+size_t			print_var(t_node *node, const int fd, const char nxt);
 
 /* helpers.c */
 const char		*skip_fmt(const char *s);

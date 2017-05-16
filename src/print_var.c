@@ -14,9 +14,21 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-size_t			print_var(t_array *str, const int fd, const char nxt)
+size_t			print_var(t_node *node, const int fd, const char nxt)
 {
+	t_array	*str;
+
 	(void)nxt;
+	if (nxt == 'n')
+	{
+		//printf("ret 0\n");
+		//node = node->next ? node->next : 0;
+		return (0);
+	}
+	str = node->data;
+	node = node->next;
+	//node = node->next;
+//	node = node->next;
 	//str->bytes = (nxt == 'c') ? 1 : str->bytes;
 	wchar_t *lol = str->data ? str->data : 0;
 //	printf("%d\n", *lol);
@@ -30,9 +42,7 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 	//printf("wchar_len: '%zu'\n", wchar_len(*lol));
 //	else if (nxt == 'c' && !*d)
 	//	return (1);
-
-	if (nxt == 'n')
-		return (0);
+	//printf("ENTERING PRINT_VAR node '%p'\n", node);
 	if (str->d_size > 1)//not str
 	{
 		if (str->bytes > 1 && str->len > 1)
@@ -43,4 +53,5 @@ size_t			print_var(t_array *str, const int fd, const char nxt)
 			return (ft_putchar_fd(*lol, fd));
 	}
 	return ft_putstr_fd(str->data, fd);
+	array_destroy(str->data);
 }

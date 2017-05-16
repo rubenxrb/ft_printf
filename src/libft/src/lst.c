@@ -62,6 +62,7 @@ t_byte	lst_addarray(t_lst *list, t_array *add)
 	new = ft_memalloc(sizeof(t_node));
 	if (!new)
 		return (0);
+	//printf("adding element to list! '%p'\n", new);
 	new->data = add;
 	if (!list->head)
 	{

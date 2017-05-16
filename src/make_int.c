@@ -41,6 +41,7 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 		tmp.data = ft_lltoa_base(va_arg(*ap, ssize_t), fmt->base);
 	else if (*lmod == 't')
 		tmp.data = ft_lltoa_base(va_arg(*ap, ptrdiff_t), fmt->base);
+//	printf("SEG '%s'\n", (char *)tmp.data);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
 	return (array_clone(&tmp));
@@ -51,9 +52,15 @@ static t_array	*make_nptr(va_list *ap)
 	t_array	*nptr;
 	int		*num;
 
-	nptr = array_new(sizeof(int *), 1);
-	num = va_arg(*ap, int *);
-	nptr->data = &*num;
+	if (!(num = va_arg(*ap, int *)))
+		return (0);
+	nptr = ft_memalloc(sizeof(t_array));
+	nptr->d_size = 0;
+	nptr->len = 1;
+	nptr->bytes = sizeof(int *);
+	//printf("ptr made '%p'\n", num);
+	nptr->data = num;
+//	printf("nptr->data : '%p'\n", nptr->data);
 	return (nptr);
 }
 
@@ -66,6 +73,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 
 	ret = 0;
 	lmod = fmt->l_mod ? fmt->l_mod : 0;
+//	printf("Making signed [%c]\n", type);
 	if (ft_isletter(type, 'c'))
 	{
 		wc = (lmod && lmod[0] == 'l') || ft_isupper(type);
