@@ -35,7 +35,7 @@ char	isModif(char c)
 /* if type specifier found, return it, else char != specifier */
 char isSpecifier(char c)
 {
-	char valid[] = "sSpdDioOuUxXcCeEfFgGaAn%~$k";
+	char valid[] = "sSpdDioOuUxXcCeEfFgGaAn%~k";
 	char	*p;
 
 	p = valid;
@@ -47,7 +47,7 @@ char isSpecifier(char c)
 
 char	isFlag(char c)
 {
-	char valid[] = "-0+# ";
+	char valid[] = "-0+# $";
 	char	*p;
 
 	p = valid;
