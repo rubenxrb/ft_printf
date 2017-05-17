@@ -9,17 +9,21 @@
 /*   Updated: 2017/02/16 21:33:37 by rromero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+//hola%2$-6.4ldl%1$n
 #include "ft_printf.h"
 
 size_t			set_flags(t_agv *ret, const char *fmt)
 {
 	char	*tmp;
 	size_t	size;
+	int		skip;
 
 	size = 0;
-	tmp = (char *)fmt;
 	ret->flgs = 0;
+	tmp = (char *)fmt;
+	ret->param = ft_isdigit(*tmp) ? ft_atoi(tmp) : 1;
+	skip = ft_numlen(ret->param, 10);
+	tmp = ft_isdigit(*tmp) ? tmp + skip : tmp;
 	while (*tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
 			*tmp == ' ' || *tmp == '$')
 	{
@@ -28,11 +32,10 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 	}
 	if (size)
 	{
-
 		ret->flgs = ft_strnew(size);
-		ret->flgs = ft_strncpy(ret->flgs, fmt, size);
+		ft_strncpy(ret->flgs, fmt + skip, size);
 	}
-	return (size);
+	return (size + skip);
 }
 
 size_t			set_minwidth(t_agv *ret, const char *fmt)

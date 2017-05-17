@@ -12,17 +12,21 @@ int main()
 	long long 	num2 = 111222333444;
 	wint_t		num3 = 555666777;
 	char		num4 = 9;
-	int			cell = 0;
-	unsigned long	test = 18446744073709551491;
+	int			cell = 3;
+//	unsigned long	test = 18446744073709551491;
 
 	putcstr("libft printf:\n", 93);
-	printf("%p\n", &cell);
+	printf("addr cell: %p\n", &cell);
+	printf("addr num: %p\n", &num);
 	//wcharput_fd(kat, 1);
 //	printf("bytes { %U }\n", test);
 //	ft_printf("bytes [ %c ]\n", test);
-printf("%d\n", ft_printf("by%ntes cell:'%d' [123 %n] '%d'\n", &cell, cell, &cell, cell));
+//printf("%d\n", printf("$LOLO00tes% nn cell:'%d' '%d' [123 %n] '%d'\n%n", &cell,cell, num, &cell, cell, &cell));
+printf("%d\n", printf("%4$s hola%2$-6.4ldld%1$n\n", &cell, num, num4, test2));
 printf("cell: %d\n", cell);
-printf("%d\n", printf("by%ntes cell:'%d' [123 %n] '%d'\n", &cell, cell, &cell, cell));
+cell = 3; //test $0
+//printf("%d\n", ft_printf("$LOLO00tes% nn cell:'%d' '%d' [123 %n] '%d'\n%n", &cell, cell, num, &cell, cell, &cell));
+printf("%d\n", ft_printf("%4$s hola%2$-6.4ldld%1$n\n", &cell, num, num4, test2));
 printf("cell: %d\n", cell);
 //	printf("%d\n", ft_printf("[%s]", 0));
 //	printf("%d\n", printf("[%s]", 0));

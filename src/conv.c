@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdlib.h>
 
 /*
 static void testing_agv(t_agv *fmt)
@@ -23,6 +24,7 @@ static void testing_agv(t_agv *fmt)
 	printf("fmt->l_mod [%s]\n", fmt->l_mod);
 	printf("fmt->type [%c]\n", fmt->type);
 	printf("fmt->base [%zu]\n", fmt->base);
+	printf("fmt->param [%d]\n", fmt->param);
 	printf("-----------------\n");
 }
 
@@ -52,10 +54,7 @@ static void		send_length(int len, t_array *var)
 	int	*dest;
 
 	dest = var->data;
-	//printf("dest : '%p'\n", dest);
 	*dest = len;
-//	printf("*dest '%d'\n", *dest);
-//	ft_memdel((void **)&var);
 }
 
 static t_array *convert_format(t_agv *fmt, va_list *ap)
@@ -94,7 +93,7 @@ static t_agv *extract_fmt(const char *s)
 	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
 	fmt = get_format(s);					//<free@bottom>
 	t = fmt;
-	if (isFlag(*t))
+	if (isFlag(*t) || ft_isdigit(*t))
 		t += set_flags(ret, t);				//<free@listof_vars()>
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
@@ -107,52 +106,58 @@ static t_agv *extract_fmt(const char *s)
 		ret->base = set_base(ret->type);
 	else
 		display_error(fmt);
+	ret->param = ret->param ? ret->param : 1;
 	ft_strdel(&fmt);
 	return (ret);
 }
 
-static void var_found(t_lst *vars, int *len, char *s, va_list *ap)
+static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 {
-	t_agv	*fmt;
 	t_array	*current;
+	va_list	tmp;
 
-	fmt = extract_fmt(s);
-	fmt->prec = fmt->prec < 0 ? va_arg(*ap, int) : fmt->prec;
-	fmt->width = fmt->width < 0 ? va_arg(*ap, int) : fmt->width;
-	current = convert_format(fmt, ap);
+	va_copy(tmp, ap);
+	while (fmt->param > 1)
+	{
+		va_arg(tmp, void *);
+		fmt->param--;
+	}
+	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
+	fmt->width = fmt->width < 0 ? va_arg(ap, int) : fmt->width;
+	current = convert_format(fmt, (va_list *)tmp);
 	if (fmt->type == 'n')
 		send_length(*len, current);
-	else
+	else if (fmt->param == 1)
 	{
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}
-	ft_memdel((void **)&fmt);
-	/* code */
+	else
+		array_destroy(current);
 }
 
 //MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING
-t_lst	*listof_vars(const char *s, va_list *ap)
+t_lst	*listof_vars(const char *s, va_list ap)
 {
 	t_lst	*vars;			//<free@printf_fd>
+	t_agv	*fmt;
 	int		i;
 
-	if (!s || !ap)
+	if (!s || !ap || !(vars = ft_memalloc(sizeof(t_lst))))
 		return (0);
-	vars = ft_memalloc(sizeof(t_lst));
 	i = 0;
 	while (*s)
 	{
-		if (*s++ == '%')
+		if (*s++ == '%' && (fmt = extract_fmt(s)))
 		{
-			var_found(vars, &i, (char *)s, ap);
+			var_found(vars, &i, fmt, ap);
 			s = skip_fmt(s);
+			ft_strdel(&fmt->l_mod);
+			ft_strdel(&fmt->flgs);
+			ft_memdel((void **)&fmt);
 		}
 		else
 			i++;
 	}
-	//printf("vars :%p\n", vars);
-//	printf("var.head '%p'\n", vars->head);
-	//printf("var.tail '%p' len: '%zu'\n", vars->tail, vars->len);
 	return (vars);
 }

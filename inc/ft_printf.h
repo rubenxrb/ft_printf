@@ -31,6 +31,7 @@ typedef struct	s_agv		//data in list
 	char		*l_mod;			//string with length modifier [done] <heap>
 	char		type;			//variable type [done]
 	size_t		base;			//base of number [get]
+	int			param;			//1 to default current
 }				t_agv;
 
 /* ft_printf.c */
@@ -39,7 +40,7 @@ int				printf_fd(const int fd, const char *s, ...);
 int				printf_buf(void **dest, const char *s, ...);
 
 /* conv.c	*/
-t_lst			*listof_vars(const char *s, va_list *ap);
+t_lst			*listof_vars(const char *s, va_list ap);
 
 /* get_var.c */
 char			*get_format(const char *_format);

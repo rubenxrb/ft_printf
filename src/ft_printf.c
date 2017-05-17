@@ -21,7 +21,7 @@ int		printf_fd(const int fd, const char *s, ...)
 	size_t	len;
 
 	va_start(av_lst, s);
-	cv_lst = listof_vars(s, &av_lst);							//format check
+	cv_lst = listof_vars(s, av_lst);							//format check
 	curr = cv_lst->head;
 	len = 0;
 	while (*s)
@@ -48,7 +48,7 @@ int		ft_printf(const char *s, ...)
 	size_t	len;
 
 	va_start(av_lst, s);
-	cv_lst = listof_vars(s, &av_lst);							//format check
+	cv_lst = listof_vars(s, av_lst);							//format check
 	curr = cv_lst->head;
 	len = 0;
 	while (*s)
