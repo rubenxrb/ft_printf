@@ -26,11 +26,13 @@ int		printf_fd(const int fd, const char *s, ...)
 	len = 0;
 	while (*s)
 	{
-		if (*s == '%')
+		if (*s == '%' && curr->data)
 		{
-			if (curr)
+			if (curr->data)
+			{
 				len += print_var(&curr, fd, *(s + 1));
-			s = skip_fmt(s + 1);
+				s = skip_fmt(s + 1);
+			}
 		}
 		else
 			len += ft_putchar(*s++);
