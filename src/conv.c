@@ -125,8 +125,8 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	va_list	tmp;
 
 	current = 0;
-	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
 	fmt->width = fmt->width < 0 ? va_arg(ap, int) : fmt->width;
+	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
 	if (fmt->param > 1)
 	{
 		va_copy(tmp, ap);
