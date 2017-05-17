@@ -111,7 +111,7 @@ int					ft_tolower(int c);
 char				*ft_lltoa_base(long long n, int b);
 
 //	convert2
-char				*ft_hextoa(int n, size_t prec); 				/* [test] */
+char				*ft_hextoa(size_t n, size_t prec); 				/* [test] */
 int					uctoutf8(const char *dest, wchar_t ch);			/* [ok] */
 int					ft_hextoi(const char *hex);
 char				*ft_ulltoa_base(unsigned long long n, int b);
