@@ -41,6 +41,7 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 		tmp.data = ft_lltoa_base(va_arg(*ap, ssize_t), fmt->base);
 	else if (*lmod == 't')
 		tmp.data = ft_lltoa_base(va_arg(*ap, ptrdiff_t), fmt->base);
+//	printf("rip? tmp.data '%s'\n", (char *)tmp.data);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
 	return (array_clone(&tmp));
@@ -82,7 +83,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	else if (ft_isletter(type, 'd') || type == 'i' || type == 'n')
 	{
 		fmt->prec = fmt->prec ? fmt->prec : 1;
-		ret = (type  == 'n') ? make_nptr(ap) : make_sint(fmt, lmod, ap);
+		ret = (type  == 'n') ? make_nptr(ap) : make_sint(fmt, lmod, &*ap);
 	}
 	if (type != 'n' && ret)
 		format_integer(fmt, ret, type, 1);

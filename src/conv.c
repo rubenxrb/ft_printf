@@ -93,8 +93,12 @@ static t_agv *extract_fmt(const char *s)
 	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
 	fmt = get_format(s);					//<free@bottom>
 	t = fmt;
-	if (isFlag(*t) || (ft_isdigit(*t) && (*(t + 1) == '$')))
+	if (isFlag(*t) || ft_isdigit(*t))
+	{
+		printf("t : [%s]\n", t);
 		t += set_flags(ret, t);				//<free@listof_vars()>
+		printf("t : [%s]\n", t);
+	}
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
 	if (*t == '.' && (*(t + 1) == '*' || ft_isdigit(*(t + 1)) ||
@@ -104,8 +108,12 @@ static t_agv *extract_fmt(const char *s)
 		t += set_lmod(ret, t);				//<free@listof_vars()>
 	if (isSpecifier(*t) && (ret->type = *t))
 		ret->base = set_base(ret->type);
-	else
+	else if (!isFlag(*t))
+	{
+		printf("error: '%c'\n", *t);
 		display_error(fmt);
+	}
+	testing_agv(ret);
 	ret->param = ret->param ? ret->param : 1;
 	ft_strdel(&fmt);
 	return (ret);
@@ -116,24 +124,29 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	t_array	*current;
 	va_list	tmp;
 
-	va_copy(tmp, ap);
-	while (fmt->param > 1)
-	{
-		va_arg(tmp, void *);
-		fmt->param--;
-	}
 	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
 	fmt->width = fmt->width < 0 ? va_arg(ap, int) : fmt->width;
-	current = convert_format(fmt, (va_list *)tmp);
+	if (fmt->param > 1)
+	{
+		va_copy(tmp, ap);
+		while (fmt->param > 1)
+		{
+			va_arg(tmp, void *);
+			fmt->param--;
+		}
+		current = convert_format(fmt, &tmp);
+	}
 	if (fmt->type == 'n')
 		send_length(*len, current);
 	else if (fmt->param == 1)
 	{
-		lst_addarray(vars, current);
+		printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
+		lst_addarray(vars, current ? current : convert_format(fmt, (va_list *)ap));
 		*len += SUM_SIZE(current->d_size);
 	}
 	else
 		array_destroy(current);
+	va_end(tmp);
 }
 
 //MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING

@@ -12,6 +12,7 @@
 //hola%2$-6.4ldl%1$n
 #include "ft_printf.h"
 
+/* FIX $ ADDING MORE TO POINTERS */
 size_t			set_flags(t_agv *ret, const char *fmt)
 {
 	char	*tmp;
@@ -21,21 +22,26 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 	size = 0;
 	ret->flgs = 0;
 	tmp = (char *)fmt;
-	ret->param = (ft_isdigit(*tmp) && *(tmp + 1) == '$') ? ft_atoi(tmp) : 1;
+	ret->param = ft_strchr(tmp, '$') ? ft_atoi(tmp) : 1;
 	skip = ret->param > 1 ? ft_numlen(ret->param, 10) : 0;
-	tmp = ft_isdigit(*tmp) ? tmp + skip : tmp;
+	printf("skip '%d'\n", skip);
+	tmp = (ft_isdigit(*tmp) && skip) ? tmp + skip: tmp + 1;
+	printf("*tmp '%c'\n", *tmp);
 	while (*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
 			*tmp == ' ')
 	{
+		printf("loop : [%c]\n", *tmp);
 		tmp++;
-		size++;
+		size += *(tmp - 1) == *tmp ? 0: 1;
 	}
 	if (size)
 	{
 		ret->flgs = ft_strnew(size);
-		ft_strncpy(ret->flgs, fmt + skip, size);
+		ft_strncpy(ret->flgs, fmt + ft_numlen(ret->param, 10), size);
 	}
-	return (size + skip);
+	printf("size + skip '%zu'\n", size + skip);
+	printf("ret->flgs '%s'\n", ret->flgs);
+	return (size + ft_numlen(ret->param, 10));
 }
 
 size_t			set_minwidth(t_agv *ret, const char *fmt)
