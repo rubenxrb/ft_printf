@@ -54,7 +54,7 @@ static void		send_length(int len, t_array *var)
 	int	*dest;
 
 	dest = var->data;
-	printf("sending '%d'\n", len);
+	//printf("sending '%d'\n", len);
 	*dest = len;
 }
 
@@ -142,10 +142,10 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	}
 	if (fmt->param == 1)
 	{
-		if (fmt->type == 'n')
-			send_length(*len, current);
 		if (!current)
 			current = convert_format(fmt, (va_list *)ap);
+		if (fmt->type == 'n')
+			send_length(*len, current);
 		//printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
