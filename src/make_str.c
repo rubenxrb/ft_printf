@@ -23,7 +23,7 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 		if (ft_strchr(fmt->flgs, '-'))
 			ft_strncpy(str->data, agv, len);	//check if ' '|'0' -> preappend to the right
 		else
-			ft_strncpy(str->data + (str->bytes - fmt->prec), agv, len);
+			ft_strncpy(str->data + (str->bytes - len), agv, len);
 	}
 	ft_strdel(&agv);
 	return (str);
