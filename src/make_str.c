@@ -11,7 +11,7 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 	sp = fmt->flgs ? fmt->flgs : 0;
 	if ((sp) && *sp == '-')
 		sp++;
-	if (fmt->prec <= (int)ft_strlen(agv) && fmt->prec > 0)
+	if (fmt->prec < (int)ft_strlen(agv) && fmt->prec > 0)
 		*(agv + fmt->prec) = 0;
 	len = ft_strlen(agv);
 	str = array_new(1, (fmt->width > fmt->prec ? fmt->width : len) + 1);

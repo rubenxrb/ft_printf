@@ -17,31 +17,26 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 {
 	char	*tmp;
 	size_t	size;
-	int		skip;
 
 	size = 0;
 	ret->flgs = 0;
-	tmp = (char *)fmt;
-	ret->param = ft_strchr(tmp, '$') ? ft_atoi(tmp) : 1;
-	skip = ret->param > 1 ? ft_numlen(ret->param, 10) : 0;
-	//printf("skip '%d'\n", skip);
-	tmp = (ft_isdigit(*tmp) && skip) ? tmp + skip: tmp + 1;
-//	printf("*tmp '%c'\n", *tmp);
-	while (*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
-			*tmp == ' ')
+	ret->param = 1;
+	if ((tmp = ft_strchr(fmt, '$')))
+		ret->param = ft_atoi(fmt);
+	if (!tmp)
+		tmp = (char *)fmt;
+	while ((tmp) && (*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
+			*tmp == ' '))
 	{
-		//printf("loop : [%c]\n", *tmp);
 		tmp++;
-		size += *(tmp - 1) == *tmp ? 0: 1;
+		size++;
 	}
 	if (size)
 	{
 		ret->flgs = ft_strnew(size);
-		ft_strncpy(ret->flgs, fmt + ft_numlen(ret->param, 10), size);
+		ft_strncpy(ret->flgs, fmt, size);
 	}
-//	printf("size + skip '%zu'\n", size + skip);
-//	printf("ret->flgs '%s'\n", ret->flgs);
-	return (size + ft_numlen(ret->param, 10));
+	return (size);
 }
 
 size_t			set_minwidth(t_agv *ret, const char *fmt)

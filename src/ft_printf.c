@@ -53,6 +53,7 @@ int		ft_printf(const char *s, ...)
 	len = 0;
 	while (*s)
 	{
+	//	printf("len :'%zu'\n", len);
 		if (*s == '%')
 		{
 		//printf("b - *s [%s]\n", s);
