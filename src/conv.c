@@ -137,12 +137,12 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		}
 		current = convert_format(fmt, &tmp);
 	}
-	if (fmt->type == 'n')
-		send_length(*len, current);
 	else if (fmt->param == 1)
 	{
 		if (!current)
 			current = convert_format(fmt, (va_list *)ap);
+		if (fmt->type == 'n')
+			send_length(*len, current);
 		//printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
