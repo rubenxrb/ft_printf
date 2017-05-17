@@ -20,7 +20,7 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 	if (fmt->width > fmt->prec)
 	{
 		ft_memset(str->data, sp && *sp == '0' ? *sp : ' ', str->bytes);
-		if (fmt->flgs && fmt->flgs[0] == '-')
+		if (ft_strchr(fmt->flgs, '-'))
 			ft_strncpy(str->data, agv, len);	//check if ' '|'0' -> preappend to the right
 		else
 			ft_strncpy(str->data + (str->bytes - fmt->prec), agv, len);

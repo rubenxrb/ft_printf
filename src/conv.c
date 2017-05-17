@@ -54,6 +54,7 @@ static void		send_length(int len, t_array *var)
 	int	*dest;
 
 	dest = var->data;
+	printf("sending '%d'\n", len);
 	*dest = len;
 }
 
@@ -66,6 +67,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	new = 0;
 	t = fmt->type;
 	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
+	//fmt->flgs = (fmt->flgs && fmt->flgs[0] == '$') ? fmt->flgs + 1 : fmt->flgs;
 	if (ft_isletter(t, 's'))
 		new = (t == 'S'|| lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
 	else if (ft_isletter(t, 'd') || ft_isletter(t, 'c') || t == 'i' || t == 'n')
@@ -81,6 +83,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 		new = make_fhex(fmt, ft_islower(t), ap);
 	else if (t == 'p' || t == '%' || t == 'k' || t == '~')
 		new = make_utils(fmt, t, ap);
+	//fmt->flgs = fmt->flgs && fmt->flgs[0] ? &fmt->flgs[0] : fmt->flgs;
 	return (new);
 }
 
@@ -137,12 +140,12 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		}
 		current = convert_format(fmt, &tmp);
 	}
-	else if (fmt->param == 1)
+	if (fmt->param == 1)
 	{
-		if (!current)
-			current = convert_format(fmt, (va_list *)ap);
 		if (fmt->type == 'n')
 			send_length(*len, current);
+		if (!current)
+			current = convert_format(fmt, (va_list *)ap);
 		//printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);

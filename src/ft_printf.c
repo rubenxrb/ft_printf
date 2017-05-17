@@ -55,9 +55,11 @@ int		ft_printf(const char *s, ...)
 	{
 		if (*s == '%')
 		{
+		//printf("b - *s [%s]\n", s);
 			if (curr)
 				len += print_var(&curr, 1, *(s + 1));
 			s = skip_fmt(s + 1);
+			//printf("a - *s [%s]\n", s);
 		}
 		else
 			len += ft_putchar(*s++);
