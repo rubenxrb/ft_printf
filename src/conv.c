@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 #include <stdlib.h>
 
-
+/*
 static void testing_agv(t_agv *fmt)
 {
 	static int count = 1;
@@ -27,7 +27,7 @@ static void testing_agv(t_agv *fmt)
 	printf("fmt->param [%d]\n", fmt->param);
 	printf("-----------------\n");
 }
-/*
+
 STRING
 s, S[l] = char * , wchar *
 
@@ -95,9 +95,9 @@ static t_agv *extract_fmt(const char *s)
 	t = fmt;
 	if (isFlag(*t) || ft_isdigit(*t))
 	{
-		printf("t : [%s]\n", t);
+		//printf("t : [%s]\n", t);
 		t += set_flags(ret, t);				//<free@listof_vars()>
-		printf("t : [%s]\n", t);
+		//printf("t : [%s]\n", t);
 	}
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
@@ -110,10 +110,10 @@ static t_agv *extract_fmt(const char *s)
 		ret->base = set_base(ret->type);
 	else if (!isFlag(*t))
 	{
-		printf("error: '%c'\n", *t);
+		//printf("error: '%c'\n", *t);
 		display_error(fmt);
 	}
-	testing_agv(ret);
+	//testing_agv(ret);
 	ret->param = ret->param ? ret->param : 1;
 	ft_strdel(&fmt);
 	return (ret);
@@ -124,6 +124,7 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	t_array	*current;
 	va_list	tmp;
 
+	current = 0;
 	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
 	fmt->width = fmt->width < 0 ? va_arg(ap, int) : fmt->width;
 	if (fmt->param > 1)
@@ -140,8 +141,10 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		send_length(*len, current);
 	else if (fmt->param == 1)
 	{
-		printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
-		lst_addarray(vars, current ? current : convert_format(fmt, (va_list *)ap));
+		if (!current)
+			current = convert_format(fmt, (va_list *)ap);
+		//printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
+		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}
 	else
@@ -163,6 +166,8 @@ t_lst	*listof_vars(const char *s, va_list ap)
 	{
 		if (*s++ == '%' && (fmt = extract_fmt(s)))
 		{
+			if (!fmt->type)
+				return (vars);
 			var_found(vars, &i, fmt, ap);
 			s = skip_fmt(s);
 			ft_strdel(&fmt->l_mod);

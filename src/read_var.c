@@ -24,7 +24,7 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 	tmp = (char *)fmt;
 	ret->param = ft_strchr(tmp, '$') ? ft_atoi(tmp) : 1;
 	skip = ret->param > 1 ? ft_numlen(ret->param, 10) : 0;
-	printf("skip '%d'\n", skip);
+	//printf("skip '%d'\n", skip);
 	tmp = (ft_isdigit(*tmp) && skip) ? tmp + skip: tmp + 1;
 	printf("*tmp '%c'\n", *tmp);
 	while (*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
@@ -39,8 +39,8 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 		ret->flgs = ft_strnew(size);
 		ft_strncpy(ret->flgs, fmt + ft_numlen(ret->param, 10), size);
 	}
-	printf("size + skip '%zu'\n", size + skip);
-	printf("ret->flgs '%s'\n", ret->flgs);
+//	printf("size + skip '%zu'\n", size + skip);
+//	printf("ret->flgs '%s'\n", ret->flgs);
 	return (size + ft_numlen(ret->param, 10));
 }
 
