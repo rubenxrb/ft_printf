@@ -94,21 +94,19 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 {
 	t_array			tmp;
-	unsigned char	hh;
-	unsigned short	h;
 
 	tmp.d_size = 1;
 	fmt->prec = fmt->prec ? fmt->prec : 1;
 	if (!lmod && !ft_isupper(fmt->type))
-		tmp.data = ft_ulltoa_base(va_arg(*ap, size_t), fmt->base);
-	else if (lmod && !ft_strcmp(lmod, "hh")  && (hh = va_arg(*ap, size_t)))
-		tmp.data = ft_uitoa_base(hh, fmt->base);					//char
+		tmp.data = ft_uitoa_base(va_arg(*ap, size_t), fmt->base);
+	else if (lmod && !ft_strcmp(lmod, "hh"))
+		tmp.data = ft_uitoa_base(va_arg(*ap, size_t), fmt->base);					//char
 	else if (lmod && !ft_strcmp(lmod, "ll"))								//longlong
 		tmp.data = ft_ulltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (ft_isupper(fmt->type) || *lmod == 'l')										//long
 		tmp.data = ft_ulltoa_base(va_arg(*ap, unsigned long long), fmt->base);
-	else if (*lmod == 'h' && (h = va_arg(*ap, size_t)))			//short
-		tmp.data = ft_uitoa_base(h, fmt->base);
+	else if (*lmod == 'h')			//short
+		tmp.data = ft_uitoa_base(va_arg(*ap, size_t), fmt->base);
 	else if (*lmod == 'j')										//intmax_t
 		tmp.data = ft_ulltoa_base(va_arg(*ap, uintmax_t), fmt->base);
 	else if (*lmod == 'z')										//signed size_t
