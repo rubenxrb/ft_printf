@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 #include <stdlib.h>
-/*
+
 
 static void testing_agv(t_agv *fmt)
 {
@@ -27,7 +27,7 @@ static void testing_agv(t_agv *fmt)
 	printf("fmt->param [%d]\n", fmt->param);
 	printf("-----------------\n");
 }
-
+/*
 STRING
 s, S[l] = char * , wchar *
 
@@ -106,7 +106,6 @@ static t_agv *extract_fmt(const char *s)
 		ret->base = set_base(ret->type);
 	else
 		display_error(fmt);
-//	testing_agv(ret);
 	ret->param = ret->param ? ret->param : 1;
 	ft_strdel(&fmt);
 	return (ret);
