@@ -24,8 +24,8 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 	ret->param = ft_isdigit(*tmp) ? ft_atoi(tmp) : 1;
 	skip = ft_numlen(ret->param, 10);
 	tmp = ft_isdigit(*tmp) ? tmp + skip : tmp;
-	while (*tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
-			*tmp == ' ' || *tmp == '$')
+	while (*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
+			*tmp == ' ')
 	{
 		tmp++;
 		size++;

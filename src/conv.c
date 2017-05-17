@@ -12,8 +12,8 @@
 
 #include "ft_printf.h"
 #include <stdlib.h>
-
 /*
+
 static void testing_agv(t_agv *fmt)
 {
 	static int count = 1;
@@ -93,7 +93,7 @@ static t_agv *extract_fmt(const char *s)
 	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
 	fmt = get_format(s);					//<free@bottom>
 	t = fmt;
-	if (isFlag(*t) || ft_isdigit(*t))
+	if (isFlag(*t) || (ft_isdigit(*t) && (*(t + 1) == '$')))
 		t += set_flags(ret, t);				//<free@listof_vars()>
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
@@ -106,6 +106,7 @@ static t_agv *extract_fmt(const char *s)
 		ret->base = set_base(ret->type);
 	else
 		display_error(fmt);
+//	testing_agv(ret);
 	ret->param = ret->param ? ret->param : 1;
 	ft_strdel(&fmt);
 	return (ret);
