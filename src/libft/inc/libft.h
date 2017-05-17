@@ -109,6 +109,7 @@ char				*ft_itoa_base(int n, int base);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 char				*ft_lltoa_base(long long n, int b);
+char				*ft_uitoa_base(unsigned int n, int b);
 
 //	convert2
 char				*ft_hextoa(size_t n, size_t prec); 				/* [test] */
@@ -260,5 +261,6 @@ void 				*array_look(t_array *curr, size_t index);					//ok
 int					ft_numlen(int n, int base);
 int					ft_lnumlen(long n, int base);
 int					ft_ulnumlen(unsigned long n, int base);
+int					ft_unumlen(unsigned int n, int base);
 
 #endif

@@ -24,3 +24,20 @@ char	*ulint_tostr(unsigned long long num, int b)
 	//printf("ulint size : %zu\n", size);
 	return (0);
 }
+
+char	*ft_uitoa_base(unsigned int n, int b)
+{
+	char	*num;
+	size_t	len;
+	size_t	mod;
+
+	len = ft_unumlen(n, b);
+	num = ft_strnew(len);
+	while (len--)
+	{
+		mod = n % b;
+		num[len] = ((mod > 9) ? mod + 55 : mod + '0');
+		n /= b;
+	}
+	return (num);
+}

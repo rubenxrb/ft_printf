@@ -41,3 +41,13 @@ int					ft_ulnumlen(unsigned long n, int base)
 		i++;
 	return (i + 1);
 }
+
+int					ft_unumlen(unsigned int n, int base)
+{
+	int		i;
+
+	i = 0;
+	while ((n = n / base))
+		i++;
+	return (i + 1);
+}

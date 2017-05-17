@@ -102,13 +102,13 @@ t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 	if (!lmod && !ft_isupper(fmt->type))
 		tmp.data = ft_ulltoa_base(va_arg(*ap, size_t), fmt->base);
 	else if (lmod && !ft_strcmp(lmod, "hh")  && (hh = va_arg(*ap, size_t)))
-		tmp.data = ft_ulltoa_base(hh, fmt->base);					//char
+		tmp.data = ft_uitoa_base(hh, fmt->base);					//char
 	else if (lmod && !ft_strcmp(lmod, "ll"))								//longlong
 		tmp.data = ft_ulltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (ft_isupper(fmt->type) || *lmod == 'l')										//long
 		tmp.data = ft_ulltoa_base(va_arg(*ap, unsigned long long), fmt->base);
 	else if (*lmod == 'h' && (h = va_arg(*ap, size_t)))			//short
-		tmp.data = ft_ulltoa_base(h, fmt->base);
+		tmp.data = ft_uitoa_base(h, fmt->base);
 	else if (*lmod == 'j')										//intmax_t
 		tmp.data = ft_ulltoa_base(va_arg(*ap, uintmax_t), fmt->base);
 	else if (*lmod == 'z')										//signed size_t
