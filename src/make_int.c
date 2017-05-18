@@ -38,7 +38,8 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 		*nbr == '-' ? nbr + 1 : nbr, ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 	//	ft_memcpy((*ret)->data + (fmt->width - (*ret)->bytes), nbr, ft_strlen(nbr) - 1);
 	}
-	ft_memset((*ret)->data, *nbr == '-' ? '-' : '+', 1);
+	if (pl)
+		ft_memset((*ret)->data, *nbr == '-' ? '-' : '+', 1);
 //	printf(" |%s|\n", (char *)(*ret)->data);
 	/* manage adding 0 to str->data if needed as prec */
 	/* if width > len append min width */
