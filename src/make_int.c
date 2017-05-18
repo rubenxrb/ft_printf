@@ -29,7 +29,7 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 		ft_memcpy((*ret)->data + pl + sp, nbr && *nbr == '-' ? nbr + 1 : nbr,
 		ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 	}
-	if (*f == ' ' && (*ret)->data)
+	if (f && *f == ' ' && (*ret)->data)
 		ft_memset((*ret)->data, ' ', 1);
 	if (fmt->width > (int)(*ret)->bytes)
 	{
