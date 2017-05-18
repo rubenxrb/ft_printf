@@ -35,6 +35,7 @@ void	uint_prefix(t_array **hex, char type)
 	char	*tmp;
 	size_t	old;
 
+	tmp = 0;
 	if (ft_isletter(type, 'x'))
 	{
 		old = (*hex)->bytes;
@@ -44,7 +45,7 @@ void	uint_prefix(t_array **hex, char type)
 		ft_memcpy((*hex)->data, ft_isupper(type) ? "0X" : "0x", 2);
 		ft_memcpy((*hex)->data + 2, tmp, old);
 	}
-	else if ((*hex)->bytes > 1)
+	else if (ft_atoi((*hex)->data))
 	{
 		old = (*hex)->bytes;
 		tmp = ft_strdup((*hex)->data);
