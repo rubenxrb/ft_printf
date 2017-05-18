@@ -19,7 +19,7 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 //	printf("nbr '%s'\n", nbr);
 	if ((sp && fmt->width) || pl)//if need to append sign, prec spaces or first '0'/' '
 	{
-		printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
+		//printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
 		*ret = array_resize(*ret, (*ret)->len + sp + pl);
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("resized bytes [%zu]\n", (*ret)->bytes);
