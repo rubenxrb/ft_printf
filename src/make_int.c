@@ -27,7 +27,7 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t, t_byte sig)//free 
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("yea 1\n");
 		ft_memset((*ret)->data, (fl && *fl == '0') ? '0' : ' ', fmt->width);
-		//printf("memset: '%s'	len: '%zu'\n", (char *)(*ret)->data, len);
+	//	printf("memset: '%s'	len: '%zu'\n", (char *)(*ret)->data, len);
 		if (fmt->flgs && fmt->flgs[0] == '-')
 		{
 			//printf("case 1\n");
@@ -36,7 +36,7 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t, t_byte sig)//free 
 		else
 		{
 			//printf("case 2\n");
-			ft_memcpy((*ret)->data + len, nbrs, len);
+			ft_memcpy((*ret)->data + (fmt->width - len), nbrs, len);
 		}
 	}
 	//printf("last : '%s'\n", (char *)(*ret)->data);
