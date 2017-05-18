@@ -25,11 +25,12 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 		*ret = array_resize(*ret, (*ret)->len + sp + pl);
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("resized bytes [%zu]\n", (*ret)->bytes);
-		ft_memset((*ret)->data, ' ', (*ret)->bytes);
-		ft_memset((*ret)->data + ((*ret)->bytes - ft_strlen(nbr)), '0', sp);
+		ft_memset((*ret)->data, '0', (*ret)->bytes);
 		ft_memcpy((*ret)->data + pl + sp, nbr && *nbr == '-' ? nbr + 1 : nbr,
 		ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 	}
+	if (*f == ' ')
+		ft_memset((*ret)->data, ' ', 1);
 	if (fmt->width > (int)(*ret)->bytes)
 	{
 		//printf("appending width '%zu'\n", fmt->width - (*ret)->bytes);
