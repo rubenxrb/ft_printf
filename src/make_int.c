@@ -26,7 +26,7 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("resized bytes [%zu]\n", (*ret)->bytes);
 		ft_memset((*ret)->data, ' ', (*ret)->bytes);
-		ft_memset((*ret)->data + pl + sp, '0', sp);
+		ft_memset((*ret)->data + ((*ret)->bytes - ft_strlen(nbr)), '0', sp);
 		ft_memcpy((*ret)->data + pl + sp, nbr && *nbr == '-' ? nbr + 1 : nbr,
 		ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 	}
