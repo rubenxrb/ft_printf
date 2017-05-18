@@ -32,16 +32,21 @@ t_array	*make_utils(t_agv *fmt, char type, va_list *ap)
 /*	appends 0x or 0X to type, append 0 to octal if len > 1 || oc != '0'*/
 void	uint_prefix(t_array **hex, char type)
 {
+	size_t	old;
+
 	if (ft_isletter(type, 'x'))
 	{
+		old = (*hex)->bytes;
 		*hex = array_resize(*hex, (*hex)->len + 2);
-		ft_memmove((*hex)->data + 2, (*hex)->data, (*hex)->bytes);
+		(*hex)->bytes = (*hex)->len - 1;
+		ft_memcpy((*hex)->data + 2, (*hex)->data, old);
 		ft_memcpy((*hex)->data, ft_isupper(type) ? "0X" : "0x", 2);
 	}
 	else if ((*hex)->bytes > 1)
 	{
+		old = (*hex)->bytes;
 		*hex = array_resize(*hex, (*hex)->len + 1);
-		ft_memmove((*hex)->data + 1, (*hex)->data, (*hex)->bytes);
+		ft_memcpy((*hex)->data + 1, (*hex)->data, old);
 		ft_memcpy((*hex)->data, "0", 1);
 	}
 }
