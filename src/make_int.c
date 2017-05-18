@@ -11,26 +11,28 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 	char	pl;
 
 	(void)t;
+//	printf("flgs: '%s'\n", fmt->flgs);
 	f = fmt->flgs && fmt->flgs[0] == '-' ? fmt->flgs + 1 : fmt->flgs;	//f is flag after '-' or 0
 	nbr = ft_strdup((*ret)->data);	//get copy of nbr, with '-' if neg
 	pl = (ft_strchr(f, '+') && ft_atoi((*ret)->data)) ? 1 : 0;	//just 1 if sign needed
 	sp = (int)(*ret)->bytes > fmt->prec ? 0: (fmt->prec - (*ret)->bytes);	//sp is now # of 0 needed for prec
 	sp = (f && (*f == '0' || *f == ' ')) ? sp + 1: sp;	//sp + 1 if need to append based on *f '0' or ' '
 //	printf("nbr '%s'\n", nbr);
-	if ((sp && fmt->width) || pl)//if need to append sign, prec spaces or first '0'/' '
+//	printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
+	if ((sp) || pl)//if need to append sign, prec spaces or first '0'/' '
 	{
-		//printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
+	//	printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
 		*ret = array_resize(*ret, (*ret)->len + sp + pl);
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("resized bytes [%zu]\n", (*ret)->bytes);
-		ft_memset((*ret)->data + pl, '0', sp);
+		ft_memset((*ret)->data + pl, f && *f == '0' ? '0' : ' ', sp);
 		ft_memcpy((*ret)->data + pl + sp, nbr && *nbr == '-' ? nbr + 1 : nbr,
 		ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 	}
 	if (fmt->width > (int)(*ret)->bytes)
 	{
 		//printf("appending width '%zu'\n", fmt->width - (*ret)->bytes);
-		(*ret) = array_resize(*ret, (*ret)->len + fmt->width - (*ret)->bytes);
+		(*ret) = array_resize(*ret, (*ret)->len + sp + fmt->width - (*ret)->bytes);
 		(*ret)->bytes = (*ret)->len - 1;
 		//printf("resized bytes [%zu]\n", (*ret)->bytes);
 		//printf("at : '%zu'\n", pl + ((*ret)->bytes - fmt->width));
