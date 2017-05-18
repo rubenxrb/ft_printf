@@ -3,7 +3,7 @@
 
 
 
-static void	format_integer(t_agv *fmt, t_array *ret, char t, t_byte sig)//free old integer
+static void	format_integer(t_agv *fmt, t_array **ret, char t, t_byte sig)//free old integer
 {
 	size_t	len;
 	char	*nbrs;
@@ -13,30 +13,30 @@ static void	format_integer(t_agv *fmt, t_array *ret, char t, t_byte sig)//free o
 	(void)sig;
 	//printf("flgs: '%s'\n", fmt->flgs);
 	//printf("wid: '%d'\n", fmt->width);
-	//printf("ret '%s' by'%zu' ln'%zu' ds'%zu'\n", (char *)ret->data, ret->bytes, ret->len, ret->d_size);
+//	printf("ret '%s' by'%zu' ln'%zu' ds'%zu'\n", (char *)(*ret)->data, (*ret)->bytes, (*ret)->len, (*ret)->d_size);
 	fl = fmt->flgs ? fmt->flgs : 0;
 	if (fl && *fl == '-')
 		fl++;
-	len = ret->bytes;
-	nbrs = ft_strdup(ret->data);
-	if (fmt->width > (int)ret->bytes)
+	len = (*ret)->bytes;
+	nbrs = ft_strdup((*ret)->data);
+	if (fmt->width > (int)(*ret)->bytes)
 	{
-		ret = array_resize(ret, fmt->width +  1);
-		ret->bytes = ret->len - 1;
-		ft_memset(ret->data, *fl == '0' ? '0' : ' ', fmt->width);
+		*ret = array_resize(*ret, fmt->width +  1);
+		(*ret)->bytes = (*ret)->len - 1;
+		ft_memset((*ret)->data, *fl == '0' ? '0' : ' ', fmt->width);
 	//	printf("memset: '%s'	len: '%zu'\n", (char *)ret->data, len);
 		if (fmt->flgs && fmt->flgs[0] == '-')
 		{
 			//printf("case 1\n");
-			ft_memcpy(ret->data, nbrs, len);
+			ft_memcpy((*ret)->data, nbrs, len);
 		}
 		else
 		{
 			//printf("case 2\n");
-			ft_memcpy(ret->data + len, nbrs, len);
+			ft_memcpy((*ret)->data + len, nbrs, len);
 		}
 	}
-	//printf("last : '%s'\n", (char *)ret->data);
+	//printf("last : '%s'\n", (char *)(*ret)->data);
 	ft_strdel(&nbrs);
 }
 
@@ -134,8 +134,8 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 		fmt->prec = fmt->prec ? fmt->prec : 1;
 		ret = (type  == 'n') ? make_nptr(ap) : make_sint(fmt, lmod, &*ap);
 	}
-	if (type != 'n' && ret)
-		format_integer(fmt, ret, type, 1);	//check if integer needs to be formated, ex: 0
+	if (type != 'n' && ret && (ft_atoi(ret->data)))
+		format_integer(fmt, &ret, type, 1);	//check if integer needs to be formated, ex: 0
 	return (ret);
 }
 
