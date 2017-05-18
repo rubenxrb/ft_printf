@@ -21,10 +21,13 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t, t_byte sig)//free 
 	nbrs = ft_strdup((*ret)->data);
 	if (fmt->width > (int)(*ret)->bytes)
 	{
+		//printf("yea 1\n");
 		*ret = array_resize(*ret, fmt->width +  1);
+		//printf("yea 1\n");
 		(*ret)->bytes = (*ret)->len - 1;
-		ft_memset((*ret)->data, *fl == '0' ? '0' : ' ', fmt->width);
-	//	printf("memset: '%s'	len: '%zu'\n", (char *)ret->data, len);
+	//	printf("yea 1\n");
+		ft_memset((*ret)->data, (fl && *fl == '0') ? '0' : ' ', fmt->width);
+		//printf("memset: '%s'	len: '%zu'\n", (char *)(*ret)->data, len);
 		if (fmt->flgs && fmt->flgs[0] == '-')
 		{
 			//printf("case 1\n");
