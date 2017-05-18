@@ -24,7 +24,8 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("resized bytes [%zu]\n", (*ret)->bytes);
 		ft_memset((*ret)->data + pl, '0', sp);
-		ft_memcpy((*ret)->data + pl + sp, nbr, ft_strlen(nbr));
+		ft_memcpy((*ret)->data + pl + sp, nbr && *nbr == '-' ? nbr + 1 : nbr,
+		ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 	}
 	if (fmt->width > (int)(*ret)->bytes)
 	{
