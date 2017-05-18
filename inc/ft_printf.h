@@ -81,6 +81,7 @@ t_array			*make_fhex(t_agv *fmt, t_byte caps, va_list *ap);
 
 /* make_utils.c */
 t_array			*make_utils(t_agv *fmt, char type, va_list *ap);
+void			uint_prefix(t_array **hex, char type);
 
 
 

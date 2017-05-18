@@ -5,42 +5,47 @@
 
 static void	format_integer(t_agv *fmt, t_array **ret, char t, t_byte sig)//free old integer
 {
+	/*
 	size_t	len;
 	char	*nbrs;
-	char	*fl;
+	char	fl;
+	*/
 
+	(void)ret;
+	(void)fmt;
 	(void)t;
 	(void)sig;
 	//printf("flgs: '%s'\n", fmt->flgs);
 	//printf("wid: '%d'\n", fmt->width);
 //	printf("ret '%s' by'%zu' ln'%zu' ds'%zu'\n", (char *)(*ret)->data, (*ret)->bytes, (*ret)->len, (*ret)->d_size);
-	fl = fmt->flgs ? fmt->flgs : 0;
-	if (fl && *fl == '-')
-		fl++;
+/*
+	fl = fmt->flgs && fmt->flgs[0] == '-' ? fmt->flgs[1] : 0;
 	len = (*ret)->bytes;
-	nbrs = ft_strdup((*ret)->data);
-	if (fmt->width > (int)(*ret)->bytes)
+	//fmt->width = fl && *fl == ' ' ? fmt->width + 1 : fmt->width;
+	if (fmt->width > (int)(*ret)->bytes || ((nbrs = ft_strdup((*ret)->data)) ||
+ 		(fmt->flgs[0] == ' ')))
 	{
-		//printf("yea 1\n");
-		*ret = array_resize(*ret, fmt->width +  1);
+		printf("yea 1\n");
+		*ret = array_resize(*ret, (fmt->width + 1) + fmt->flgs[0] == ' ' ? 1 : 0);
 		//printf("yea 1\n");
 		(*ret)->bytes = (*ret)->len - 1;
 	//	printf("yea 1\n");
-		ft_memset((*ret)->data, (fl && *fl == '0') ? '0' : ' ', fmt->width);
+		ft_memset((*ret)->data, fl == '0' ? '0' : ' ', fmt->width);
 	//	printf("memset: '%s'	len: '%zu'\n", (char *)(*ret)->data, len);
 		if (fmt->flgs && fmt->flgs[0] == '-')
 		{
 			//printf("case 1\n");
-			ft_memcpy((*ret)->data, nbrs, len);
+			ft_memcpy((*ret)->data + ((fl == ' ') ? 1 : 0), nbrs, len);
 		}
 		else
 		{
-			//printf("case 2\n");
+			printf("case 2\n");
 			ft_memcpy((*ret)->data + (fmt->width - len), nbrs, len);
 		}
+		ft_strdel(&nbrs);
 	}
-	//printf("last : '%s'\n", (char *)(*ret)->data);
-	ft_strdel(&nbrs);
+	*/
+//	printf("last : '%s'\n", (char *)(*ret)->data);
 }
 
 

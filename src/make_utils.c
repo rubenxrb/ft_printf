@@ -28,3 +28,20 @@ t_array	*make_utils(t_agv *fmt, char type, va_list *ap)
 	}
 	return ret;
 }
+
+/*	appends 0x or 0X to type, append 0 to octal if len > 1 || oc != '0'*/
+void	uint_prefix(t_array **hex, char type)
+{
+	if (ft_isletter(type, 'x'))
+	{
+		*hex = array_resize(*hex, (*hex)->len + 2);
+		ft_memmove((*hex)->data + 2, (*hex)->data, (*hex)->bytes);
+		ft_memcpy((*hex)->data, ft_isupper(type) ? "0X" : "0x", 2);
+	}
+	else if ((*hex)->bytes > 1)
+	{
+		*hex = array_resize(*hex, (*hex)->len + 1);
+		ft_memmove((*hex)->data + 1, (*hex)->data, (*hex)->bytes);
+		ft_memcpy((*hex)->data, "0", 1);
+	}
+}
