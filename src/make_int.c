@@ -40,7 +40,7 @@ static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
 		}
 		else
 		{
-			ft_memcpy((*ret)->data + (*ret)->bytes - (ft_strlen(nbr && *nbr
+			ft_memcpy((*ret)->data + pl + (*ret)->bytes - (ft_strlen(nbr && *nbr
 			== '-' ? nbr + 1 : nbr)), nbr && *nbr == '-' ? nbr + 1 : nbr,
 			ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
 		}
