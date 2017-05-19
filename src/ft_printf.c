@@ -21,7 +21,7 @@ int		printf_fd(const int fd, const char *s, ...)
 	size_t	len;
 
 	va_start(av_lst, s);
-	cv_lst = listof_vars(s, av_lst);							//format check
+	cv_lst = listof_vars(s, av_lst);
 	curr = cv_lst->head;
 	len = 0;
 	while (*s)
@@ -50,7 +50,8 @@ int		ft_printf(const char *s, ...)
 	size_t	len;
 
 	va_start(av_lst, s);
-	cv_lst = listof_vars(s, av_lst);							//format check
+//	printf("lst [%p]\n", av_lst);
+	cv_lst = listof_vars(s, &*av_lst);							//format check
 	curr = cv_lst->head;
 	len = 0;
 	while (*s)
@@ -59,6 +60,7 @@ int		ft_printf(const char *s, ...)
 		{
 			if (curr)
 			{
+				//printf("curr is ok\n");
 				len += print_var(&curr, 1, *(s + 1));
 				s = skip_fmt(s + 1);
 			}
@@ -67,7 +69,9 @@ int		ft_printf(const char *s, ...)
 			len += ft_putchar(*s++);
 	}
 	va_end(av_lst);
-	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
+	//printf("returning\n");
+	//if (cv_lst)
+		ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
 	return (len);
 }
 

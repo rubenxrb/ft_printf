@@ -59,10 +59,13 @@ char	isFlag(char c)
 
 void	invalid_syntx(const char *s)
 {
+	(void)s;
+	/*
 	ft_putstr("ft_printf: ");
 	putcstr("error", 91);
 	ft_putstr(" invalid '");
 	ft_putstr(s);
 	ft_putendl("'");
+	*/
 //	exit(-1);
 }

@@ -20,22 +20,23 @@ size_t			set_flags(t_agv *ret, char *fmt)
 
 	size = 0;
 	tmp = 0;
-	if (*(fmt + 1) == '$')
+	//printf("fmt '%s'\n", fmt);
+	if (fmt && *(fmt + 1) == '$')
 	{
 		ret->param = ft_atoi(fmt);
 		tmp = (char *)fmt + 2;
 		fmt = tmp;
 	}
-	while ((*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' ||
-		*tmp == '#' || *tmp == ' '))
+	tmp = fmt;
+	if (tmp)
 	{
-		tmp++;
-		size++;
-	}
-	if (size)
-	{
-		ret->flgs = ft_strnew(size);
-		ft_strncpy(ret->flgs, fmt, size);
+		while (isFlag(*tmp))
+		{
+			tmp++;
+			size++;
+		}
+		if (size && (ret->flgs = ft_strnew(size)))
+			ft_strncpy(ret->flgs, fmt, size);
 	}
 	return (size);
 }

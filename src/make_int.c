@@ -90,6 +90,7 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 	short	h;
 
 	tmp.d_size = 1;
+	//printf("entering signed int\n");
 	if (!lmod && !ft_isupper(fmt->type))
 		tmp.data = ft_itoa_base(va_arg(*ap, int), fmt->base);
 	else if (lmod && !ft_strcmp(lmod, "hh") && (hh = va_arg(*ap, int)))
@@ -106,7 +107,7 @@ static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 		tmp.data = ft_lltoa_base(va_arg(*ap, ssize_t), fmt->base);
 	else if (*lmod == 't')
 		tmp.data = ft_lltoa_base(va_arg(*ap, ptrdiff_t), fmt->base);
-//	printf("rip? tmp.data '%s'\n", (char *)tmp.data);
+	//printf("rip? tmp.data '%s'\n", (char *)tmp.data);
 	tmp.len = (ft_strlen(tmp.data) + 1);
 	tmp.bytes = tmp.len - 1;
 	return (array_clone(&tmp));
@@ -136,6 +137,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 
 	ret = 0;
 	lmod = fmt->l_mod ? fmt->l_mod : 0;
+//	printf("making\n");
 	if (ft_isletter(type, 'c'))
 	{
 		wc = (lmod && lmod[0] == 'l') || ft_isupper(type);

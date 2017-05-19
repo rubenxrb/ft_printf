@@ -55,6 +55,7 @@ static void		send_length(int len, t_array *var)
 
 	dest = var->data;
 	*dest = len;
+	array_destroy(&*var);
 }
 
 static t_array *convert_format(t_agv *fmt, va_list *ap)
@@ -66,6 +67,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	new = 0;
 	t = fmt->type;
 	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
+	//printf("ap '%p'\n", &*ap);
 	if (ft_isletter(t, 's'))
 		new = (t == 'S'|| lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
 	else if (ft_isletter(t, 'd') || ft_isletter(t, 'c') || t == 'i' || t == 'n')
@@ -95,10 +97,11 @@ static t_agv *extract_fmt(const char *s)
 	char	*t;
 
 	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
-	fmt = get_format(s);					//<free@bottom>
+	if (!(fmt = get_format(s)))
+		return (0);
 	ret->param = 1;
 	t = fmt;
-	if (isFlag(*t) || ft_isdigit(*t))
+	if (t && (isFlag(*t) || ft_isdigit(*t)))
 		t += set_flags(ret, t);				//<free@listof_vars()>
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
@@ -107,9 +110,10 @@ static t_agv *extract_fmt(const char *s)
 		t += isSpecifier(*(t + 1)) ? 1 : set_prec(ret, t) + 1;
 	if (isModif(*t))
 		t += set_lmod(ret, t);				//<free@listof_vars()>
-	ret->base = set_base((ret->type = *t));
-	if (!isFlag(*t))
+	ret->type = *(fmt + (ft_strlen(fmt) - 1));
+	if (!isSpecifier(ret->type))
 		ft_memdel((void **)&*ret);
+	ret->base = set_base((ret->type = *t));
 	ft_strdel(&fmt);
 	return (ret);
 }
@@ -120,6 +124,7 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	va_list	tmp;
 
 	current = 0;
+	//printf("var found!\n");
 	fmt->width = fmt->width < 0 ? va_arg(ap, int) : fmt->width;
 	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
 	if (fmt->param > 1)
@@ -128,18 +133,23 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		while (fmt->param > 1 && va_arg(tmp, void *))
 			fmt->param--;
 		current = convert_format(fmt, &tmp);
-	}
-	if (!current)
-		current = convert_format(fmt, (va_list *)ap);
-	if (fmt->type == 'n')
-	{
-		send_length(*len, current);
-		array_destroy(current);
+		va_end(tmp);
 	}
 	else
+	{
+		//printf("using og list\n");
+		//printf("lst '%p'\n", ap);
+		current = convert_format(fmt, (va_list *)ap);
+		//printf("from og '%s'\n", (char *)current->data);
+	}
+	if (fmt->type == 'n')
+		send_length(*len, current);
+	else if (current)
+	{
+		//printf("adding '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
-	*len += SUM_SIZE(current->d_size);
-	va_end(tmp);
+		*len += SUM_SIZE(current->d_size);
+	}
 }
 
 //MAKE THE LIST SO IT HOLDS A T_ARRAY PER NODE, INSTEAD OF STRING
@@ -159,6 +169,7 @@ t_lst	*listof_vars(const char *s, va_list ap)
 			if (!fmt || !fmt->type)
 				return (vars);
 			var_found(vars, &i, fmt, ap);
+		//	printf("looping more vars!\n");
 			s = skip_fmt(s);
 			ft_strdel(&fmt->l_mod);
 			ft_strdel(&fmt->flgs);
