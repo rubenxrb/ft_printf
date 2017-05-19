@@ -13,19 +13,21 @@
 #include "ft_printf.h"
 
 /* FIX $ ADDING MORE TO POINTERS */
-size_t			set_flags(t_agv *ret, const char *fmt)
+size_t			set_flags(t_agv *ret, char *fmt)
 {
 	char	*tmp;
 	size_t	size;
 
 	size = 0;
-	ret->flgs = 0;
-	if ((tmp = ft_strchr(fmt, '$')))
+	tmp = 0;
+	if (*(fmt + 1) == '$')
+	{
 		ret->param = ft_atoi(fmt);
-	if (!tmp)
-		tmp = (char *)fmt;
-	while ((tmp) && (*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' || *tmp == '#' ||
-			*tmp == ' '))
+		tmp = (char *)fmt + 2;
+		fmt = tmp;
+	}
+	while ((*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' ||
+		*tmp == '#' || *tmp == ' ') && *(tmp - 1) != *tmp)
 	{
 		tmp++;
 		size++;

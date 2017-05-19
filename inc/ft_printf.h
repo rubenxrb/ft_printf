@@ -46,7 +46,7 @@ t_lst			*listof_vars(const char *s, va_list ap);
 char			*get_format(const char *_format);
 
 /* read_var.c */
-size_t			set_flags(t_agv *ret, const char *fmt);
+size_t			set_flags(t_agv *ret, char *fmt);
 size_t			set_minwidth(t_agv *ret, const char *fmt);
 size_t			set_prec(t_agv *ret, const char *fmt);
 size_t			set_lmod(t_agv *ret, const char *fmt);

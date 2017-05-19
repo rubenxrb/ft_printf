@@ -107,9 +107,8 @@ static t_agv *extract_fmt(const char *s)
 		t += isSpecifier(*(t + 1)) ? 1 : set_prec(ret, t) + 1;
 	if (isModif(*t))
 		t += set_lmod(ret, t);				//<free@listof_vars()>
-	if (isSpecifier(*t))
-		ret->base = set_base((ret->type = *t));
-	if (!isFlag(*t) || !isSpecifier(*t))
+	ret->base = set_base((ret->type = *t));
+	if (!isFlag(*t))
 		ft_memdel((void **)&*ret);
 	ft_strdel(&fmt);
 	return (ret);
@@ -126,24 +125,20 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	if (fmt->param > 1)
 	{
 		va_copy(tmp, ap);
-		while (fmt->param > 1)
-		{
-			va_arg(tmp, void *);
+		while (fmt->param > 1 && va_arg(tmp, void *))
 			fmt->param--;
-		}
 		current = convert_format(fmt, &tmp);
 	}
-	if (fmt->param == 1)
+	if (!current)
+		current = convert_format(fmt, (va_list *)ap);
+	if (fmt->type == 'n')
 	{
-		if (!current)
-			current = convert_format(fmt, (va_list *)ap);
-		if (fmt->type == 'n')
-			send_length(*len, current);
-		lst_addarray(vars, current);
-		*len += SUM_SIZE(current->d_size);
+		send_length(*len, current);
+		array_destroy(current);
 	}
 	else
-		array_destroy(current);
+		lst_addarray(vars, current);
+	*len += SUM_SIZE(current->d_size);
 	va_end(tmp);
 }
 
