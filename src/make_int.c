@@ -1,94 +1,75 @@
 #include "ft_printf.h"
 #include <inttypes.h>
 
-
-
-static void	format_integer(t_agv *fmt, t_array **ret, char t)//free old integer
+static void append_zeroes(t_array **ret, int z, char *n)
 {
-	char	*nbr;
-	char	*f;
-	size_t	sp;
-	char	pl;
+	char	sign;
 
-	(void)t;
-//	printf("flgs: '%s'\n", fmt->flgs);
-	f = fmt->flgs && fmt->flgs[0] == '-' ? fmt->flgs + 1 : fmt->flgs;	//f is flag after '-' or 0
-	nbr = ft_strdup((*ret)->data);	//get copy of nbr, with '-' if neg
-	pl = (ft_strchr(f, '+') && ft_atoi((*ret)->data)) ? 1 : 0;	//just 1 if sign needed
-	sp = (int)(*ret)->bytes > fmt->prec ? 0: (fmt->prec - (*ret)->bytes);	//sp is now # of 0 needed for prec
-	sp = (f && (*f == '0' || *f == ' ')) ? sp + 1: sp;	//sp + 1 if need to append based on *f '0' or ' '
-//	printf("nbr '%s'\n", nbr);
-//	printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
-	if ((sp) || pl)//if need to append sign, prec spaces or first '0'/' '
-	{
-	//	printf("appending prec, 0, sp:'%zu', sign:'%d' \n", sp, pl);
-		*ret = array_resize(*ret, (*ret)->len + sp + pl);
-		(*ret)->bytes = (*ret)->len - 1;
-	//	printf("resized bytes [%zu]\n", (*ret)->bytes);
-		ft_memset((*ret)->data + pl, '0', sp);
-		ft_memcpy((*ret)->data + pl + sp, nbr,
-		ft_strlen(nbr));
-	}
-	if (fmt->width > (int)(*ret)->bytes)
-	{
-		if (f && *f == ' ' && (*ret)->data)
-			ft_memset((*ret)->data, ' ', 1);
-		//printf("appending width '%zu'\n", fmt->width - (*ret)->bytes);
-		(*ret) = array_resize(*ret, (*ret)->len + sp + fmt->width - (*ret)->bytes);
-		(*ret)->bytes = (*ret)->len - 1;
-		//printf("resized bytes [%zu]\n", (*ret)->bytes);
-		//printf("at : '%zu'\n", pl + ((*ret)->bytes - fmt->width));
-		ft_memset((*ret)->data, (f && *f == '0') ? '0' : ' ', (*ret)->bytes);
-		//printf("spaces '%s'\n", (char *)(*ret)->data);
-		if (fmt->flgs && fmt->flgs[0] == '-')
-		{
-			ft_memcpy((*ret)->data + pl, nbr, ft_strlen(nbr));
-		}
-		else
-		{
-			ft_memcpy((*ret)->data + pl + (*ret)->bytes - (ft_strlen(nbr && *nbr
-			== '-' ? nbr + 1 : nbr)), nbr && *nbr == '-' ? nbr + 1 : nbr,
-			ft_strlen(nbr && *nbr == '-' ? nbr + 1 : nbr));
-		}
-	//	ft_memcpy((*ret)->data + (fmt->width - (*ret)->bytes), nbr, ft_strlen(nbr) - 1);
-	}
-	if (pl)
-		ft_memset((*ret)->data, *nbr == '-' ? '-' : '+', 1);
-//	printf(" |%s|\n", (char *)(*ret)->data);
-	/* manage adding 0 to str->data if needed as prec */
-	/* if width > len append min width */
-		/* get value of spaces ' ' or '0' */
-		/* if '-' flag is set append spaces to the left, else; to the right*/
-	/* if pl append '+' or '-' according to sign */
-	//put = ft_strchr(fmt->flgs, '0') ? '0' : ' ';
-	ft_strdel(&nbr);
+	sign = ft_atoi(n) < 0 ? 1 : 0;
+	//printf("appending zeroes '%d'\n", z);
+	*ret = array_resize(*ret, (*ret)->len + z);
+	(*ret)->bytes = (*ret)->len - 1 - sign;
+	ft_memset((*ret)->data, '0', (*ret)->bytes);
+//	printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
+	ft_memcpy((*ret)->data + z, n + sign, ft_strlen(n + sign));
+	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
 }
 
-
-/*
-
-agv = printfstrdup(va_arg(*ap, char *));
-sp = fmt->flgs ? fmt->flgs : 0;
-if ((sp) && *sp == '-')
-	sp++;
-if (fmt->prec < (int)ft_strlen(agv) && fmt->prec > 0)
-	*(agv + fmt->prec) = 0;
-len = ft_strlen(agv);
-str = array_new(1, (fmt->width > fmt->prec ? fmt->width : len) + 1);
-str->bytes = str->len - 1;
-ft_strcpy(str->data, agv);
-if (fmt->width > fmt->prec)
+static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 {
-	ft_memset(str->data, sp && *sp == '0' ? *sp : ' ', str->bytes);
-	if (ft_strchr(fmt->flgs, '-'))
-		ft_strncpy(str->data, agv, len);	//check if ' '|'0' -> preappend to the right
+	char	sign;
+	char	*tmp;
+
+	tmp = ft_strdup((*ret)->data);
+	sign = ft_atoi(n) < 0 ? 1 : 0;
+	//printf("number width '%d'\n", sp);
+	*ret = array_resize(*ret, (*ret)->len + sp);
+	(*ret)->bytes = (*ret)->len - 1;
+	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
+	ft_memset((*ret)->data, ' ', (*ret)->bytes);
+	if (fmt->flgs && fmt->flgs[0] == '-')
+		ft_memcpy((*ret)->data + sign, tmp, ft_strlen(tmp));
 	else
-		ft_strncpy(str->data + (str->bytes - len), agv, len);
+		ft_memcpy((*ret)->data + sp + sign, tmp, ft_strlen(tmp));
+	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
+	ft_strdel(&tmp);
 }
-ft_strdel(&agv);
 
-*/
 
+static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
+{
+	char	*n;
+	char	sp;
+	int		len;
+	char	sign;
+
+	n = ft_strdup((*ret)->data);
+	sign = (ft_atoi(n) < 0) ? 1 : 0;
+	len = ft_strlen(n) - (sign);
+	if (ft_strchr(fmt->flgs, ' '))
+		sp = ' ';
+	else if (ft_strchr(fmt->flgs, '0'))
+		sp = '0';
+	if (fmt->prec > len)
+		append_zeroes(ret, fmt->prec - len, n);
+	if (fmt->width > len)
+		number_width(fmt, ret, n, fmt->width > len);
+	else if (sp && ft_atoi((*ret)->data) && !fmt->width)
+	{
+		*ret = array_resize(*ret, (*ret)->len + 1);
+		ft_memset((*ret)->data, sp ? sp : ' ', 1);
+		ft_memcpy((*ret)->data + 1, n, len);
+	}
+	if (ft_strchr(fmt->flgs, '+') || sign)
+		ft_memset((*ret)->data + sign, sign ? '-' : '+', 1);
+	ft_strdel(&n);
+}
+
+/* manage adding 0 to str->data if needed as prec */
+/* if width > len append min width */
+	/* get value of spaces ' ' or '0' */
+	/* if '-' flag is set append spaces to the left, else; to the right*/
+/* if pl append '+' or '-' according to sign */
 
 /* SIGNED INTEGERS */
 static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
@@ -159,7 +140,7 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 		ret = (type  == 'n') ? make_nptr(ap) : make_sint(fmt, lmod, &*ap);
 	}
 	if (type != 'n' && ret && (ft_atoi(ret->data)))
-		format_integer(fmt, &ret, type);	//check if integer needs to be formated, ex: 0
+		format_integer(fmt, &ret);	//check if integer needs to be formated, ex: 0
 	return (ret);
 }
 
