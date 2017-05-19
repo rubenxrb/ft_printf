@@ -47,6 +47,8 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	}
 	if (fmt->width > (int)(*ret)->bytes)
 		append_atchar(ret, skip, fmt->width - (int)(*ret)->bytes, sp);
+	if (fmt->flgs && fmt->flgs[0] == '+' && ft_atoi((*ret)->data) > 0)
+		ft_memset((*ret)->data, '+', 1);
 }
 
 /*
