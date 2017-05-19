@@ -256,13 +256,15 @@ t_array				*array_resize(t_array *old, size_t new_size);				//ok
 t_array				*array_clone(t_array *src);									//ok
 void				array_destroy(t_array *curr);								//ok
 void 				*array_look(t_array *curr, size_t index);					//ok
-void				append_char(t_array **curr, int times, char ch);
+void				append_char(t_array **curr, size_t times, char ch);
 void				cat_char(t_array **curr, size_t times, int ch);
+void				append_atchar(t_array **curr, size_t at, size_t times, char ch);
 
 //	misc
 int					ft_numlen(int n, int base);
 int					ft_lnumlen(long n, int base);
 int					ft_ulnumlen(unsigned long n, int base);
 int					ft_unumlen(unsigned int n, int base);
+char				get_sign(char *nbr);
 
 #endif

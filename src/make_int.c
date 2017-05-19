@@ -22,43 +22,58 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 }
 */
 
-void	cat_char(t_array **curr, size_t times, int ch);
-
 static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 {
-	char	*n;
+	char	skip;
 	char	sp;
-	int		len;
-	char	sign;
 
-	n = ft_strdup((*ret)->data);
-	sign = (ft_atoi(n) < 0 || ft_strchr(fmt->flgs, '+')) ? 1 : 0;
-	len = ft_strlen(n) - (ft_atoi(n) < 0 ? 1 : 0);
-	if (ft_strchr(fmt->flgs, ' '))
-		sp = ' ';
-	else if (ft_strchr(fmt->flgs, '0') && fmt->width)
-		sp = '0';
-	if (fmt->prec > len){/*printf("adding prec '%d'\n", fmt->prec - len);*/
-		append_char(ret, fmt->prec - len, '0');}
-	if (fmt->width - sign > (int)(*ret)->bytes){/*printf("adding width '%d'\n",
-		(fmt->width - sign) - (int)(*ret)->bytes);*/
-		(fmt->flgs && fmt->flgs[0] == '-') ? cat_char(ret, fmt->width -
-		(int)(*ret)->bytes, sp == '0' ? sp : ' ') : append_char(ret, (fmt->width
-	 	- sign) - (int)(*ret)->bytes, ' ');}
-	else if (sp && ft_atoi((*ret)->data) > 0 && !fmt->width)
+	skip = 0;
+	sp = ' ';
+	if (fmt->flgs && fmt->flgs[0] == '+')
 	{
-	//	printf("appending this space\n");
+		append_char(ret, 1, get_sign((*ret)->data));
+		skip++;
+	}
+	else if (fmt->flgs && fmt->flgs[0] == ' ')
+	{
 		append_char(ret, 1, ' ');
+		skip++;
 	}
-	if (sign && ft_atoi(n) > 0)
-		append_char(ret, 1, '+');
-	else if (sign)
+	if (fmt->flgs && fmt->flgs[(int)skip] == '0' && (fmt->prec == 1))
+		sp = '0';
+	if (fmt->prec >= (int)(*ret)->bytes)
 	{
-	//	printf("ret here '%s'\n", (char *)(*ret)->data);
-		ft_memset((*ret)->data, '-', 1);
+		append_atchar(ret, skip, fmt->prec - (*ret)->bytes + skip, '0');
 	}
-	ft_strdel(&n);
+	if (fmt->width > (int)(*ret)->bytes)
+		append_atchar(ret, skip, fmt->width - (int)(*ret)->bytes, sp);
 }
+
+/*
+printf("fmt flgs [%s]\n", fmt->flgs);
+n = ft_strdup((*ret)->data);
+sign = ft_strchr(fmt->flgs, '+') || (ft_atoi(n) < 0) ? 1 : 0;
+len = ft_strlen(n) - (ft_atoi(n) < 0 ? 1 : 0);
+if (ft_strchr(fmt->flgs, ' '))
+	sp = ' ';
+else if (ft_strchr(fmt->flgs, '0') && fmt->width)
+	sp = '0';
+printf("len '%d' sign '%d' sp '%c'\n", len, sign, sp);
+if (fmt->prec > len)
+{
+	printf("appending '%d'\n", fmt->prec - len);
+	append_char(ret, fmt->prec - len, '0');
+}
+if ((sp && ft_atoi((*ret)->data) > 0 && !fmt->width) || sp == ' ')
+	append_char(ret, 1, sp);
+else if (fmt->width - sign > (int)(*ret)->bytes)
+	append_width(ret, fmt, (fmt->width - sign) - (int)(*ret)->bytes);
+if (sign && ft_atoi(n) > 0)
+	append_char(ret, 1, '+');
+else if (sign)
+	ft_memset((*ret)->data, '-', 1);
+
+*/
 
 /* manage adding 0 to str->data if needed as prec */
 /* if width > len append min width */
