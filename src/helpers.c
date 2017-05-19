@@ -35,7 +35,7 @@ char	isModif(char c)
 /* if type specifier found, return it, else char != specifier */
 char isSpecifier(char c)
 {
-	char valid[] = "sSpdDioOuUxXcCeEfFgGaAn%~k";
+	char valid[] = "sSpdDioOuUxXcCeEfFgGaAn%~kr";
 	char	*p;
 
 	p = valid;
@@ -57,8 +57,12 @@ char	isFlag(char c)
 	return (0);
 }
 
-void	display_error(const char *s)
+void	invalid_syntx(const char *s)
 {
-	printf("display error: %s\n", s);
+	ft_putstr("ft_printf: ");
+	putcstr("error", 91);
+	ft_putstr(" invalid '");
+	ft_putstr(s);
+	ft_putendl("'");
 	exit(1);
 }

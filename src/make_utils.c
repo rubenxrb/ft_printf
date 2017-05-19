@@ -1,9 +1,34 @@
 #include "ft_printf.h"
 
+static t_array *make_date(t_agv *fmt, va_list *ap)
+{
+	(void)fmt;
+	(void)ap;
+	return (0);
+}
+
+static t_array *make_printable(t_agv *fmt, va_list *ap)
+{
+	(void)fmt;
+	(void)ap;
+	return (0);
+}
+
+static t_array *make_ptr(t_agv *fmt, va_list *ap)
+{
+	t_array	tmp;
+
+	tmp.data = ft_hextoa(va_arg(*ap, long), fmt->prec);
+	tmp.data = strtolower(tmp.data);
+	tmp.d_size = 1;
+	tmp.bytes = ft_strlen(tmp.data);
+	tmp.len = tmp.bytes + 1;
+	return (array_clone(&tmp));
+}
+
 t_array	*make_utils(t_agv *fmt, char type, va_list *ap)
 {
 	t_array	*ret;
-	t_array	tmp;
 
 	ret = 0;
 	if (type == '%')
@@ -12,20 +37,13 @@ t_array	*make_utils(t_agv *fmt, char type, va_list *ap)
 		ft_memcpy(ret->data, &type, 1);
 	}
 	else if (type == 'k')
-	{
-		ret = make_str(fmt, ap);
-		printf("k : '%s'\n", (char *)ret->data);
-		printf("base : '%zu'\n", fmt->base);
-	}
+		ret = make_cstr(fmt, ap);
 	else if (type == 'p')
-	{
-		tmp.data = ft_hextoa(va_arg(*ap, long), fmt->prec);
-		tmp.data = strtolower(tmp.data);
-		tmp.d_size = 1;
-		tmp.bytes = ft_strlen(tmp.data);
-		tmp.len = tmp.bytes + 1;
-		return (array_clone(&tmp));
-	}
+		ret = make_ptr(fmt, ap);
+	else if (type == '~')
+		ret = make_date(fmt, ap);
+	else if (type == 'r')
+		ret = make_printable(fmt, ap);
 	return ret;
 }
 

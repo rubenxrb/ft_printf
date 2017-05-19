@@ -1,27 +1,49 @@
 #include "libft.h"
 #include <stdio.h>
+/*
 
-char	*uint_tostr(unsigned int num, int b)
+char result[100];
+  int dVal, dec, i;
+
+  fVal += 0.005;   // added after a comment from Matt McNabb, see below.
+
+  dVal = fVal;
+  dec = (int)(fVal * 100) % 100;
+
+  memset(result, 0, 100);
+  result[0] = (dec % 10) + '0';
+  result[1] = (dec / 10) + '0';
+  result[2] = '.';
+
+  i = 3;
+  while (dVal > 0)
+  {
+	  result[i] = (dVal % 10) + '0';
+	  dVal /= 10;
+	  i++;
+  }
+
+  for (i=strlen(result)-1; i>=0; i--)
+	  putc(result[i], stdout);
+
+*/
+
+char	*doubletoa(double n)
 {
-	//char	*ret;
-	(void)num;
-	(void)b;
-//	size_t	size;
-
- //	size= ft_numlen(num, b);
-//	printf("uint size : %zu\n", size);
+	(void)n;
 	return (0);
 }
 
-char	*ulint_tostr(unsigned long long num, int b)
+char	*ft_ftoa(float number)
 {
-	//char	*ret;
-	(void)num;
-	(void)b;
-	//size_t	size;
+	int		dec;
+	int		i;
+	int		val;
 
- 	//size= ft_ulnumlen(num, b);
-	//printf("ulint size : %zu\n", size);
+	(void)	dec;
+	(void)	i;
+	(void)	val;
+	(void)	number;
 	return (0);
 }
 

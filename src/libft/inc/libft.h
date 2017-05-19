@@ -110,6 +110,8 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 char				*ft_lltoa_base(long long n, int b);
 char				*ft_uitoa_base(unsigned int n, int b);
+char				*doubletoa(double n);
+char				*ft_ftoa(float number);
 
 //	convert2
 char				*ft_hextoa(size_t n, size_t prec); 				/* [test] */

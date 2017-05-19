@@ -59,7 +59,7 @@ size_t			print_var(t_node **node, const int fd, const char nxt);
 const char		*skip_fmt(const char *s);
 char			isSpecifier(char c);
 char			isFlag(char c);
-void			display_error(const char *s);
+void			invalid_syntx(const char *s);
 char			isModif(char c);
 
 /* make_str.c */

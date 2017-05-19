@@ -54,7 +54,6 @@ static void		send_length(int len, t_array *var)
 	int	*dest;
 
 	dest = var->data;
-	//printf("sending '%d'\n", len);
 	*dest = len;
 }
 
@@ -82,7 +81,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 		new = make_decimal(fmt, t, ft_islower(t), ap);
 	else if (ft_isletter(t, 'a'))
 		new = make_fhex(fmt, ft_islower(t), ap);
-	else if (t == 'p' || t == '%' || t == 'k' || t == '~')
+	else if (t == '%' || t == 'k' || t == 'p' || t == '~' || t == 'r')
 		new = make_utils(fmt, t, ap);
 	return (new);
 }
@@ -97,11 +96,7 @@ static t_agv *extract_fmt(const char *s)
 	fmt = get_format(s);					//<free@bottom>
 	t = fmt;
 	if (isFlag(*t) || ft_isdigit(*t))
-	{
-		//printf("t : [%s]\n", t);
 		t += set_flags(ret, t);				//<free@listof_vars()>
-		//printf("t : [%s]\n", t);
-	}
 	if ((*t == '*') || ft_isdigit(*t))
 		t += set_minwidth(ret, t);
 	if (*t == '.' && (*(t + 1) == '*' || ft_isdigit(*(t + 1)) ||
@@ -111,12 +106,8 @@ static t_agv *extract_fmt(const char *s)
 		t += set_lmod(ret, t);				//<free@listof_vars()>
 	if (isSpecifier(*t) && (ret->type = *t))
 		ret->base = set_base(ret->type);
-	else if (!isFlag(*t))
-	{
-		//printf("error: '%c'\n", *t);
-		display_error(fmt);
-	}
-	//testing_agv(ret);
+	else
+		invalid_syntx(fmt);
 	ret->param = ret->param ? ret->param : 1;
 	ft_strdel(&fmt);
 	return (ret);
@@ -146,7 +137,6 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 			current = convert_format(fmt, (va_list *)ap);
 		if (fmt->type == 'n')
 			send_length(*len, current);
-		//printf("adding CURRENT->DATA '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}
