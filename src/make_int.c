@@ -34,7 +34,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		append_char(ret, 1, get_sign((*ret)->data));
 		skip++;
 	}
-	else if (fmt->flgs && fmt->flgs[0] == ' ')
+	else if (fmt->flgs && fmt->flgs[0] == ' ' && ft_atoi((*ret)->data) > 0)
 	{
 		append_char(ret, 1, ' ');
 		skip++;
