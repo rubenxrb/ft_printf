@@ -73,7 +73,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || ft_isletter(t, 'u'))
 	{
 		new = make_uint(fmt, fmt->l_mod, ap);
-		printf("uint made '%s'\n", (char *)new->data);
+	//	printf("uint made '%s'\n", (char *)new->data);
 		new->data = (t == 'x') ? strtolower(new->data) : new->data;
 		if (fmt->flgs && fmt->flgs[0] == '#')
 			uint_prefix(&new, t);
@@ -96,7 +96,7 @@ static t_agv *extract_fmt(const char *s)
 
 	ret = ft_memalloc(sizeof(t_agv));		//<free@listof_vars()>
 	fmt = get_format(s);					//<free@bottom>
-	//ret->param = 1;
+	ret->param = 1;
 	t = fmt;
 	if (isFlag(*t) || ft_isdigit(*t))
 		t += set_flags(ret, t);				//<free@listof_vars()>
@@ -109,7 +109,7 @@ static t_agv *extract_fmt(const char *s)
 		t += set_lmod(ret, t);				//<free@listof_vars()>
 	if (isSpecifier(*t) && (ret->type = *t))
 		ret->base = set_base(ret->type);
-	else if (!isSpecifier(*t))
+	else
 		ft_memdel((void **)&*ret);
 	ft_strdel(&fmt);
 	return (ret);
@@ -135,7 +135,6 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	}
 	if (fmt->param == 1)
 	{
-	//	printf("param is 1\n");
 		if (!current)
 			current = convert_format(fmt, (va_list *)ap);
 		if (fmt->type == 'n')
@@ -162,9 +161,6 @@ t_lst	*listof_vars(const char *s, va_list ap)
 	{
 		if (*s++ == '%' && (fmt = extract_fmt(s)))
 		{
-			//printf("format converted\n");
-			//printf("type '%c'\n", fmt->type);
-			//printf("param '%d'\n", fmt->param);
 			if (!fmt || !fmt->type)
 			{
 				return (vars);
