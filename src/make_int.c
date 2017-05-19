@@ -24,17 +24,19 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 
 static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 {
+	int		num;
 	size_t	skip;
 	char	sp;
 
 	skip = 0;
 	sp = ' ';
-	if (fmt->flgs && fmt->flgs[0] == '+' && ft_atoi((*ret)->data) > 0)
+	num = ft_atoi((*ret)->data);
+	if (fmt->flgs && fmt->flgs[0] == '+' && num > 0)
 	{
 		append_char(ret, 1, get_sign((*ret)->data));
 		skip++;
 	}
-	else if (fmt->flgs && fmt->flgs[0] == ' ' && ft_atoi((*ret)->data) > 0)
+	else if (fmt->flgs && fmt->flgs[0] == ' ' && num > 0)
 	{
 		append_char(ret, 1, ' ');
 		skip++;
@@ -47,7 +49,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	}
 	if (fmt->width > (int)(*ret)->bytes)
 		append_atchar(ret, skip, fmt->width - (int)(*ret)->bytes, sp);
-	if (fmt->flgs && fmt->flgs[0] == '+' && ft_atoi((*ret)->data) > 0)
+	if (fmt->flgs && fmt->flgs[0] == '+' && num >= 0)
 		ft_memset((*ret)->data, '+', 1);
 }
 
