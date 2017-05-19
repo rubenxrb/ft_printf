@@ -50,7 +50,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	if (fmt->width > (int)(*ret)->bytes)
 	{
 		if (fmt->flgs && fmt->flgs[0] == '-')
-			append_atchar(ret, skip + ((*ret)->bytes - ft_numlen(num, 10)), fmt->width - (int)(*ret)->bytes, sp);
+			cat_char(ret, fmt->width - (int)(*ret)->bytes, sp);
 		else
 			append_atchar(ret, skip, fmt->width - (int)(*ret)->bytes, sp);
 	}
