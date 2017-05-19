@@ -40,16 +40,23 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		sp = '0';
 	if (fmt->prec > len)
 		append_char(ret, fmt->prec - len, '0');
-	if (fmt->width > (int)(*ret)->bytes)
+	if (fmt->width > (int)(*ret)->bytes){
 		(fmt->flgs && fmt->flgs[0] == '-') ? cat_char(ret, fmt->width -
 		(int)(*ret)->bytes, sp == '0' ? sp : ' ') : append_char(ret, fmt->width
-		- (int)(*ret)->bytes, sp == '0' ? sp : ' ');
-	else if (sp && ft_atoi((*ret)->data))
+		- (int)(*ret)->bytes, sp == '0' ? sp : ' ');/*printf("adding '%d'\n",
+		fmt->width - (int)(*ret)->bytes);*/}
+	else if (sp && ft_atoi((*ret)->data) > 0)
+	{
+		//printf("appending this space\n");
 		append_char(ret, 1, ' ');
+	}
 	if (sign && ft_atoi(n) > 0)
 		append_char(ret, 1, '+');
 	else if (sign)
+	{
+	//	printf("ret here '%s'\n", (char *)(*ret)->data);
 		ft_memset((*ret)->data, '-', 1);
+	}
 	ft_strdel(&n);
 }
 
