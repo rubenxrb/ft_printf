@@ -44,7 +44,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		(fmt->width - sign) - (int)(*ret)->bytes);*/
 		(fmt->flgs && fmt->flgs[0] == '-') ? cat_char(ret, fmt->width -
 		(int)(*ret)->bytes, sp == '0' ? sp : ' ') : append_char(ret, (fmt->width
-	 	- sign) - (int)(*ret)->bytes, sp == '0' ? sp : ' ');}
+	 	- sign) - (int)(*ret)->bytes, ' ');}
 	else if (sp && ft_atoi((*ret)->data) > 0 && !fmt->width)
 	{
 	//	printf("appending this space\n");
