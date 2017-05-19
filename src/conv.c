@@ -49,13 +49,13 @@ type var = va_arg(lst, type);
 
 */
 
-static void		send_length(int len, t_array *var)
+static void		send_length(int len, t_array **var)
 {
 	int	*dest;
 
-	dest = var->data;
+	dest = (*var)->data;
 	*dest = len;
-	array_destroy(&*var);
+	ft_memdel((void **)&*var);
 }
 
 static t_array *convert_format(t_agv *fmt, va_list *ap)
@@ -143,7 +143,7 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		//printf("from og '%s'\n", (char *)current->data);
 	}
 	if (fmt->type == 'n')
-		send_length(*len, current);
+		send_length(*len, &current);
 	else if (current)
 	{
 		//printf("adding '%s'\n", (char *)current->data);
