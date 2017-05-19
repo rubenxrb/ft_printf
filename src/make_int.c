@@ -48,7 +48,12 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		append_atchar(ret, skip, fmt->prec - (*ret)->bytes + skip, '0');
 	}
 	if (fmt->width > (int)(*ret)->bytes)
-		append_atchar(ret, skip, fmt->width - (int)(*ret)->bytes, sp);
+	{
+		if (fmt->flgs && fmt->flgs[0] == '-')
+			append_atchar(ret, skip + ((*ret)->bytes - ft_numlen(num, 10)), fmt->width - (int)(*ret)->bytes, sp);
+		else
+			append_atchar(ret, skip, fmt->width - (int)(*ret)->bytes, sp);
+	}
 	if (fmt->flgs && fmt->flgs[0] == '+' && num >= 0)
 		ft_memset((*ret)->data, '+', 1);
 }
