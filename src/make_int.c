@@ -22,7 +22,7 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 
 	tmp = ft_strdup((*ret)->data);
 	sign = ft_atoi(n) < 0 ? 1 : 0;
-	//printf("number width '%d'\n", sp);
+	printf("number width '%d'\n", sp);
 	*ret = array_resize(*ret, (*ret)->len + sp);
 	(*ret)->bytes = (*ret)->len - 1;
 	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
@@ -52,7 +52,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		sp = '0';
 	if (fmt->prec > len)
 		append_zeroes(ret, fmt->prec - len, n);
-	if (fmt->width > len)
+	if (fmt->width > (int)(*ret)->bytes)
 		number_width(fmt, ret, n, fmt->width > len);
 	else if (sp && ft_atoi((*ret)->data) && !fmt->width)
 	{
