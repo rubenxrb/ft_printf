@@ -1,22 +1,18 @@
 #include "ft_printf.h"
 #include <inttypes.h>
 
-static void append_char(t_array **ret, int z, char *n, char ch)
+static void append_char(t_array **ret, int times, char ch)
 {
-	char	sign;
+	char	*tmp;
 
-	sign = ft_atoi(n) < 0 ? 1 : 0;
-	//printf("appending '%c' times'%d'\n", ch, z);
-	///printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-	*ret = array_resize(*ret, (*ret)->len + z);
-	(*ret)->bytes = (*ret)->len - 1 - sign;
+	tmp = ft_strdup((*ret)->data);
+	*ret = array_resize(*ret, (*ret)->len + times);
+	(*ret)->bytes = (*ret)->len - 1;
+	ft_memset((*ret)->data, ch, times);
 	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-	ft_memset((*ret)->data, ch, (*ret)->bytes);
+	ft_memcpy((*ret)->data + times, tmp, ft_strlen(tmp));
+	ft_strdel(&tmp);
 //	printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-//	printf("n '%s' len'%zu'\n", n + sign, (*ret)->bytes);
-	ft_memcpy((*ret)->data + z, n + sign, ft_strlen(n + sign));
-	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
 }
 
 static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
@@ -55,19 +51,13 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	else if (ft_strchr(fmt->flgs, '0'))
 		sp = '0';
 	if (fmt->prec > len)
-		append_char(ret, fmt->prec - len, n, '0');
+		append_char(ret, fmt->prec - len, '0');
 	if (fmt->width > (int)(*ret)->bytes)
-		number_width(fmt, ret, n, fmt->width > len);
+		number_width(fmt, ret, n, fmt->width - len);
 	else if (sp && ft_atoi((*ret)->data))
-	{
-		ft_strdel(&n);
-		n = ft_strdup((*ret)->data);
-		//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-		append_char(ret, 1, n, ' ');
-	//	printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-	}
+		append_char(ret, 1, ' ');
 	if (ft_strchr(fmt->flgs, '+') || sign)
-		ft_memset((*ret)->data + sign, sign ? '-' : '+', 1);
+		append_char(ret, 1, sign ? '-' : '+');
 	ft_strdel(&n);
 }
 
