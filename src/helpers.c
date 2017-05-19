@@ -64,5 +64,5 @@ void	invalid_syntx(const char *s)
 	ft_putstr(" invalid '");
 	ft_putstr(s);
 	ft_putendl("'");
-	exit(1);
+//	exit(-1);
 }

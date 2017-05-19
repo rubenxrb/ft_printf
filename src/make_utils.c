@@ -4,14 +4,14 @@ static t_array *make_date(t_agv *fmt, va_list *ap)
 {
 	(void)fmt;
 	(void)ap;
-	return (0);
+	return (array_new(sizeof(char), 1));
 }
 
 static t_array *make_printable(t_agv *fmt, va_list *ap)
 {
 	(void)fmt;
 	(void)ap;
-	return (0);
+	return (array_new(sizeof(char), 1));
 }
 
 static t_array *make_ptr(t_agv *fmt, va_list *ap)

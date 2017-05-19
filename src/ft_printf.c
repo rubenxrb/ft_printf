@@ -55,14 +55,13 @@ int		ft_printf(const char *s, ...)
 	len = 0;
 	while (*s)
 	{
-	//	printf("len :'%zu'\n", len);
-		if (*s == '%')
+		if (*s == '%' && curr)
 		{
-		//printf("b - *s [%s]\n", s);
 			if (curr)
+			{
 				len += print_var(&curr, 1, *(s + 1));
-			s = skip_fmt(s + 1);
-			//printf("a - *s [%s]\n", s);
+				s = skip_fmt(s + 1);
+			}
 		}
 		else
 			len += ft_putchar(*s++);
@@ -70,6 +69,12 @@ int		ft_printf(const char *s, ...)
 	va_end(av_lst);
 	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
 	return (len);
+}
+
+t_lst	*lst_printf(const char *s, ...)
+{
+	(void)s;
+	return (0);
 }
 
 /*

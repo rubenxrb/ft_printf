@@ -20,7 +20,6 @@ size_t			set_flags(t_agv *ret, const char *fmt)
 
 	size = 0;
 	ret->flgs = 0;
-	ret->param = 1;
 	if ((tmp = ft_strchr(fmt, '$')))
 		ret->param = ft_atoi(fmt);
 	if (!tmp)
