@@ -27,7 +27,7 @@ size_t			set_flags(t_agv *ret, char *fmt)
 		fmt = tmp;
 	}
 	while ((*tmp == '$' || *tmp == '-' || *tmp == '0' || *tmp == '+' ||
-		*tmp == '#' || *tmp == ' ') && *(tmp - 1) != *tmp)
+		*tmp == '#' || *tmp == ' '))
 	{
 		tmp++;
 		size++;
