@@ -42,7 +42,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		append_char(ret, fmt->prec - len, '0');}
 	if (fmt->width - sign > (int)(*ret)->bytes){/*printf("adding width '%d'\n",
 		(fmt->width - sign) - (int)(*ret)->bytes);*/
-		(fmt->flgs && fmt->flgs[0] == '-') ? cat_char(ret, (fmt->width - sign) -
+		(fmt->flgs && fmt->flgs[0] == '-') ? cat_char(ret, fmt->width -
 		(int)(*ret)->bytes, sp == '0' ? sp : ' ') : append_char(ret, (fmt->width
 	 	- sign) - (int)(*ret)->bytes, sp == '0' ? sp : ' ');}
 	else if (sp && ft_atoi((*ret)->data) > 0 && !fmt->width)
