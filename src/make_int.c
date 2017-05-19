@@ -1,20 +1,5 @@
 #include "ft_printf.h"
 #include <inttypes.h>
-
-static void append_char(t_array **ret, int times, char ch)
-{
-	char	*tmp;
-
-//	printf("appending '%c' '%d'times\n", ch, times);
-	tmp = ft_strdup((*ret)->data);
-	*ret = array_resize(*ret, (*ret)->len + times);
-	(*ret)->bytes = (*ret)->len - 1;
-	ft_memset((*ret)->data, ch, times);
-	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-	ft_memcpy((*ret)->data + times, tmp, ft_strlen(tmp));
-	ft_strdel(&tmp);
-//	printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
-}
 /*
 static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 {
@@ -37,6 +22,8 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 }
 */
 
+void	cat_char(t_array **curr, size_t times, int ch);
+
 static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 {
 	char	*n;
@@ -49,19 +36,20 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	len = ft_strlen(n) - (ft_atoi(n) < 0 ? 1 : 0);
 	if (ft_strchr(fmt->flgs, ' '))
 		sp = ' ';
-	else if (ft_strchr(fmt->flgs, '0'))
+	else if (ft_strchr(fmt->flgs, '0') && fmt->width)
 		sp = '0';
 	if (fmt->prec > len)
 		append_char(ret, fmt->prec - len, '0');
-	//printf("width '%d' bytes'%zu'\n", fmt->width, (*ret)->bytes);
 	if (fmt->width > (int)(*ret)->bytes)
-		append_char(ret, fmt->width - (int)(*ret)->bytes, sp == '0' ? sp : ' ');
+		(fmt->flgs && fmt->flgs[0] == '-') ? cat_char(ret, fmt->width -
+		(int)(*ret)->bytes, sp == '0' ? sp : ' ') : append_char(ret, fmt->width
+		- (int)(*ret)->bytes, sp == '0' ? sp : ' ');
 	else if (sp && ft_atoi((*ret)->data))
 		append_char(ret, 1, ' ');
 	if (sign && ft_atoi(n) > 0)
 		append_char(ret, 1, '+');
-	else
-		ft_memset((*ret)->data, ft_atoi(n) < 0 ? '-' : '+', 1);
+	else if (sign)
+		ft_memset((*ret)->data, '-', 1);
 	ft_strdel(&n);
 }
 

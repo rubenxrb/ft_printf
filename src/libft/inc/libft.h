@@ -256,6 +256,8 @@ t_array				*array_resize(t_array *old, size_t new_size);				//ok
 t_array				*array_clone(t_array *src);									//ok
 void				array_destroy(t_array *curr);								//ok
 void 				*array_look(t_array *curr, size_t index);					//ok
+void				append_char(t_array **curr, int times, char ch);
+void				cat_char(t_array **curr, size_t times, int ch);
 
 //	misc
 int					ft_numlen(int n, int base);

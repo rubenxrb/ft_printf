@@ -18,7 +18,7 @@ LBS = 	memptrs.c memptrs2.c memptrs3.c		\
 		btree.c	nbtree.c misc.c				\
 		stack.c stack2.c array.c			\
 		dlinkdlst2.c lst.c identifiers3.c	\
-		strings8.c convert3.c
+		strings8.c convert3.c array2.c
 
 LBSN = $(addprefix ./src/libft/obj/,$(LBS:.c=.o))
 
