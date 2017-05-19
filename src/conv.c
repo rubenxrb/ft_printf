@@ -107,9 +107,9 @@ static t_agv *extract_fmt(const char *s)
 		t += isSpecifier(*(t + 1)) ? 1 : set_prec(ret, t) + 1;
 	if (isModif(*t))
 		t += set_lmod(ret, t);				//<free@listof_vars()>
-	if (isSpecifier(*t) && (ret->type = *t))
-		ret->base = set_base(ret->type);
-	else
+	if (isSpecifier(*t))
+		ret->base = set_base((ret->type = *t));
+	if (!isFlag(*t) || !isSpecifier(*t))
 		ft_memdel((void **)&*ret);
 	ft_strdel(&fmt);
 	return (ret);
@@ -162,9 +162,7 @@ t_lst	*listof_vars(const char *s, va_list ap)
 		if (*s++ == '%' && (fmt = extract_fmt(s)))
 		{
 			if (!fmt || !fmt->type)
-			{
 				return (vars);
-			}
 			var_found(vars, &i, fmt, ap);
 			s = skip_fmt(s);
 			ft_strdel(&fmt->l_mod);
