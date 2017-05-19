@@ -58,7 +58,9 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		append_char(ret, fmt->width - (int)(*ret)->bytes, sp == '0' ? sp : ' ');
 	else if (sp && ft_atoi((*ret)->data))
 		append_char(ret, 1, ' ');
-	if (sign)
+	if (sign && ft_atoi(n) > 0)
+		append_char(ret, 1, '+');
+	else
 		ft_memset((*ret)->data, ft_atoi(n) < 0 ? '-' : '+', 1);
 	ft_strdel(&n);
 }
