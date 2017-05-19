@@ -5,6 +5,7 @@ static void append_char(t_array **ret, int times, char ch)
 {
 	char	*tmp;
 
+//	printf("appending '%c' '%d'times\n", ch, times);
 	tmp = ft_strdup((*ret)->data);
 	*ret = array_resize(*ret, (*ret)->len + times);
 	(*ret)->bytes = (*ret)->len - 1;
@@ -14,7 +15,7 @@ static void append_char(t_array **ret, int times, char ch)
 	ft_strdel(&tmp);
 //	printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
 }
-
+/*
 static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 {
 	char	sign;
@@ -22,7 +23,7 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 
 	tmp = ft_strdup((*ret)->data);
 	sign = ft_atoi(n) < 0 ? 1 : 0;
-	//printf("number width '%d'\n", sp);
+	printf("number width '%d'\n", sp);
 	*ret = array_resize(*ret, (*ret)->len + sp);
 	(*ret)->bytes = (*ret)->len - 1;
 	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
@@ -34,7 +35,7 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 	//printf("mem '%s' bytes'%zu'\n", (char *)(*ret)->data, (*ret)->bytes);
 	ft_strdel(&tmp);
 }
-
+*/
 
 static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 {
@@ -44,20 +45,21 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	char	sign;
 
 	n = ft_strdup((*ret)->data);
-	sign = (ft_atoi(n) < 0) ? 1 : 0;
-	len = ft_strlen(n) - (sign);
+	sign = (ft_atoi(n) < 0 || ft_strchr(fmt->flgs, '+')) ? 1 : 0;
+	len = ft_strlen(n) - (ft_atoi(n) < 0 ? 1 : 0);
 	if (ft_strchr(fmt->flgs, ' '))
 		sp = ' ';
 	else if (ft_strchr(fmt->flgs, '0'))
 		sp = '0';
 	if (fmt->prec > len)
 		append_char(ret, fmt->prec - len, '0');
+	//printf("width '%d' bytes'%zu'\n", fmt->width, (*ret)->bytes);
 	if (fmt->width > (int)(*ret)->bytes)
-		number_width(fmt, ret, n, fmt->width - len);
+		append_char(ret, fmt->width - (int)(*ret)->bytes, sp == '0' ? sp : ' ');
 	else if (sp && ft_atoi((*ret)->data))
 		append_char(ret, 1, ' ');
-	if (ft_strchr(fmt->flgs, '+') || sign)
-		append_char(ret, 1, sign ? '-' : '+');
+	if (sign)
+		ft_memset((*ret)->data, ft_atoi(n) < 0 ? '-' : '+', 1);
 	ft_strdel(&n);
 }
 
