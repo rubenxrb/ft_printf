@@ -24,7 +24,7 @@ static void number_width(t_agv *fmt, t_array **ret, char *n, int sp)
 
 static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 {
-	char	skip;
+	size_t	skip;
 	char	sp;
 
 	skip = 0;
@@ -39,7 +39,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		append_char(ret, 1, ' ');
 		skip++;
 	}
-	if (fmt->flgs && fmt->flgs[(int)skip] == '0' && (fmt->prec == 1))
+	if (fmt->flgs && fmt->flgs[skip] == '0' && (fmt->prec == 1))
 		sp = '0';
 	if (fmt->prec >= (int)(*ret)->bytes)
 	{
