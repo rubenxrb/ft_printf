@@ -41,7 +41,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	}
 	if (fmt->flgs && fmt->flgs[skip] == '0' && (fmt->prec == 1))
 		sp = '0';
-	if (fmt->prec >= (int)(*ret)->bytes)
+	if (fmt->prec > (int)(*ret)->bytes)
 	{
 		append_atchar(ret, skip, fmt->prec - (*ret)->bytes + skip, '0');
 	}
