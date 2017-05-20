@@ -56,14 +56,11 @@ int		ft_printf(const char *s, ...)
 	len = 0;
 	while (*s)
 	{
-		if (*s == '%' && curr)
+		if (*s == '%')
 		{
 			if (curr)
-			{
-				//printf("curr is ok\n");
 				len += print_var(&curr, 1, *(s + 1));
-				s = skip_fmt(s + 1);
-			}
+			s = skip_fmt(s + 1);
 		}
 		else
 			len += ft_putchar(*s++);
