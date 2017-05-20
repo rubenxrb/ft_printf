@@ -59,8 +59,6 @@ int		ft_printf(const char *s, ...)
 			len += print_var(&curr, 1, *++s);
 			s = skip_fmt(s);
 		}
-		else if (isModif(*s) && ft_isupper(*s))
-			s++;
 		else
 			len += ft_putchar(*s++);
 	}
