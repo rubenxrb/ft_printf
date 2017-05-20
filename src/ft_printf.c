@@ -26,15 +26,15 @@ int		printf_fd(const int fd, const char *s, ...)
 	len = 0;
 	while (*s)
 	{
-		if (*s == '%')
+		if (*s == '%' && curr)
 		{
-			if (curr)
-				len += print_var(&curr, fd, *(s + 1));
-			s = skip_fmt(s + 1);
+			len += print_var(&curr, fd, *++s);
+			s = skip_fmt(s);
 		}
+		else if (isModif(*s) && ft_isupper(*s))
+			s++;
 		else
-			len += ft_putchar(*s);
-		s++;
+			len += ft_putchar(*s++);
 	}
 	va_end(av_lst);
 	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
@@ -59,6 +59,8 @@ int		ft_printf(const char *s, ...)
 			len += print_var(&curr, 1, *++s);
 			s = skip_fmt(s);
 		}
+		else if (isModif(*s) && ft_isupper(*s))
+			s++;
 		else
 			len += ft_putchar(*s++);
 	}

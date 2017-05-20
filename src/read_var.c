@@ -65,8 +65,10 @@ size_t			set_lmod(t_agv *ret, const char *fmt)
 	char	*tmp;
 
 	tmp = (char *)fmt;
+//	printf("tmp '%s'\n", tmp);
 	if (*tmp == *(tmp + 1))
 	{
+	//	printf("setting double\n");
 		if (*tmp == 'l')
 			ret->l_mod = ft_strdup("ll");
 		else if (*tmp == 'h')

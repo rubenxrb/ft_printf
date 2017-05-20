@@ -19,7 +19,7 @@ char	*get_format(const char *_format)
 	size_t	size;
 
 	size = ((p = (char *)_format) ? 1 : 0);
-	while (!(isSpecifier(*p)) && (!(isModif(*p) && ft_isupper(*p))))
+	while (!isSpecifier(*p))
 	{
 		p++;
 		size++;

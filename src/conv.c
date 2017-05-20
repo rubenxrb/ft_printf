@@ -12,8 +12,8 @@
 
 #include "ft_printf.h"
 #include <stdlib.h>
-
 /*
+
 static void testing_agv(t_agv *fmt)
 {
 	static int count = 1;
@@ -111,6 +111,7 @@ static t_agv *extract_fmt(const char *s)
 	if (!isSpecifier(ret->type))
 		ft_memdel((void **)&*ret);
 	ret->base = set_base((ret->type = *t));
+	//testing_agv(ret);
 	ft_strdel(&fmt);
 	return (ret);
 }
@@ -137,7 +138,7 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		send_length(*len, current);
 	else if (current && current->d_size)
 	{
-		//printf("adding to list '%s'\n", (char *)current->data);
+	//	printf("adding to list '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}
