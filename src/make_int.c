@@ -38,7 +38,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	if (fmt->flgs && fmt->flgs[skip] == '0' && (fmt->prec == 1))
 		sp = '0';
 	if (fmt->prec > (int)(*ret)->bytes)
-		append_atchar(ret, skip, fmt->prec - (*ret)->bytes + skip, '0');
+		append_atchar(ret, skip + (num < 0 ? 1 : 0), fmt->prec - ((*ret)->bytes - (num < 0 ? 1 : 0)) + skip, '0');
 	if (fmt->width > (int)(*ret)->bytes)
 	{
 		if (fmt->flgs && fmt->flgs[0] == '-')
