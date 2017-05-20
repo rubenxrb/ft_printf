@@ -20,7 +20,6 @@ size_t			set_flags(t_agv *ret, char *fmt)
 
 	size = 0;
 	tmp = 0;
-	//printf("fmt '%s'\n", fmt);
 	if (fmt && *(fmt + 1) == '$')
 	{
 		ret->param = ft_atoi(fmt);
@@ -86,7 +85,7 @@ size_t		set_base(const char type)
 	else if (ft_isletter(type, 'x'))
 		return (16);
 	else if ((ft_isletter(type, 'd') || (type == 'i') || (type == 'n') ||
-		(type == 'u')))
+		(ft_isletter(type, 'u'))))
 		return (10);
 	return (0);
 }

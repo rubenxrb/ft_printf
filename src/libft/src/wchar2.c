@@ -6,7 +6,11 @@ wchar_t	*wstrdup(const wchar_t *src)
 	wchar_t	*new;
 	size_t	len;
 
+	if (!src)
+		return (0);
 	len = wstrlen(src);
+	if (!len)
+		return (0);
 	new = wstrnew(len * sizeof(wchar_t));
 	if (!new)
 		return (0);

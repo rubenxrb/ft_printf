@@ -68,7 +68,7 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	t = fmt->type;
 	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
 	if (ft_isletter(t, 's'))
-		new = (t == 'S'|| lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
+		new = (t == 'S'|| lmod == 'l') ? make_wstr(ap) : make_str(fmt, ap);
 	else if (ft_isletter(t, 'd') || ft_isletter(t, 'c') || t == 'i' || t == 'n')
 		new = make_signed(fmt, t, ap);
 	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || ft_isletter(t, 'u'))
@@ -137,6 +137,7 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		send_length(*len, current);
 	else if (current && current->d_size)
 	{
+		//printf("adding to list '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}

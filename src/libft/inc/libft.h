@@ -265,8 +265,8 @@ void				append_atchar(t_array **curr, size_t at, size_t times, char ch);
 //	misc
 int					ft_numlen(int n, int base);
 int					ft_lnumlen(long n, int base);
-int					ft_ulnumlen(unsigned long n, int base);
 int					ft_unumlen(unsigned int n, int base);
+int					ft_ulnumlen(unsigned long n, int base);
 char				get_sign(char *nbr);
 
 #endif

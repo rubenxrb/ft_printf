@@ -22,7 +22,7 @@ const char	*skip_fmt(const char *s)
 
 char	isModif(char c)
 {
-	char	valid[] = "hljztL";			//added later hh, ll, j, z, t, L
+	char	valid[] = "hlLjzZt";			//added later hh, ll, j, z, t, L
 	char	*p;
 
 	p = valid;

@@ -19,8 +19,11 @@ char	*get_format(const char *_format)
 	size_t	size;
 
 	size = ((p = (char *)_format) ? 1 : 0);
-	while (!(isSpecifier(*p++)))
+	while (!(isSpecifier(*p)) && (!(isModif(*p) && ft_isupper(*p))))
+	{
+		p++;
 		size++;
+	}
 	format = ft_strnew(size);
 	format = ft_strncpy(format, _format, size);
 	return (format);

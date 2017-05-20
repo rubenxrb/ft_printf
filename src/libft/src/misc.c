@@ -54,11 +54,5 @@ int					ft_unumlen(unsigned int n, int base)
 
 char		get_sign(char *nbr)
 {
-	int		n;
-
-	if ((n = ft_atoi(nbr)) > 0)
-		return ('+');
-	else if (n < 0)
-		return ('-');
-	return (0);
+	return (ft_atoi(nbr) >= 0 ? '+' : '-');
 }

@@ -21,21 +21,20 @@ int		printf_fd(const int fd, const char *s, ...)
 	size_t	len;
 
 	va_start(av_lst, s);
-	cv_lst = listof_vars(s, av_lst);
+	cv_lst = listof_vars(s, &*av_lst);							//format check
 	curr = cv_lst->head;
 	len = 0;
 	while (*s)
 	{
-		if (*s == '%' && curr->data)
+		if (*s == '%')
 		{
-			if (curr->data)
-			{
+			if (curr)
 				len += print_var(&curr, fd, *(s + 1));
-				s = skip_fmt(s + 1);
-			}
+			s = skip_fmt(s + 1);
 		}
 		else
-			len += ft_putchar(*s++);
+			len += ft_putchar(*s);
+		s++;
 	}
 	va_end(av_lst);
 	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
@@ -50,25 +49,21 @@ int		ft_printf(const char *s, ...)
 	size_t	len;
 
 	va_start(av_lst, s);
-//	printf("lst [%p]\n", av_lst);
 	cv_lst = listof_vars(s, &*av_lst);							//format check
 	curr = cv_lst->head;
 	len = 0;
 	while (*s)
 	{
-		if (*s == '%')
+		if (*s == '%' && curr)
 		{
-			if (curr)
-				len += print_var(&curr, 1, *(s + 1));
-			s = skip_fmt(s + 1);
+			len += print_var(&curr, 1, *++s);
+			s = skip_fmt(s);
 		}
 		else
 			len += ft_putchar(*s++);
 	}
 	va_end(av_lst);
-	//printf("returning\n");
-	//if (cv_lst)
-		ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
+	ft_lstdel((t_node **)&cv_lst->head, ft_bzero);
 	return (len);
 }
 

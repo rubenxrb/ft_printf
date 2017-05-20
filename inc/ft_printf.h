@@ -64,7 +64,7 @@ char			isModif(char c);
 
 /* make_str.c */
 t_array			*make_str(t_agv *fmt, va_list *ap);
-t_array			*make_wstr(t_agv *fmt, va_list *ap);
+t_array			*make_wstr(va_list *ap);
 t_array			*make_cstr(t_agv *fmt, va_list *ap);
 t_array			*make_cwstr(t_agv *fmt, va_list *ap);
 
