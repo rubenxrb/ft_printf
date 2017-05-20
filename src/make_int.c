@@ -125,6 +125,7 @@ static t_array	*make_nptr(va_list *ap)
 	nptr->len = 1;
 	nptr->bytes = sizeof(int *);
 	nptr->data = num;
+	//printf("num address '%p'\n", num);
 	return (nptr);
 }
 

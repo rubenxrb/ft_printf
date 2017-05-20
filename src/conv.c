@@ -49,13 +49,13 @@ type var = va_arg(lst, type);
 
 */
 
-static void		send_length(int len, t_array **var)
+static void		send_length(int len, t_array *var)
 {
 	int	*dest;
 
-	dest = (*var)->data;
+
+	dest = var->data;
 	*dest = len;
-	ft_memdel((void **)&*var);
 }
 
 static t_array *convert_format(t_agv *fmt, va_list *ap)
@@ -67,7 +67,6 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	new = 0;
 	t = fmt->type;
 	lmod = fmt->l_mod ? fmt->l_mod[0] : 0;
-	//printf("ap '%p'\n", &*ap);
 	if (ft_isletter(t, 's'))
 		new = (t == 'S'|| lmod == 'l') ? make_wstr(fmt, ap) : make_str(fmt, ap);
 	else if (ft_isletter(t, 'd') || ft_isletter(t, 'c') || t == 'i' || t == 'n')
@@ -75,7 +74,6 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 	else if (ft_isletter(t, 'o') || ft_isletter(t, 'x') || ft_isletter(t, 'u'))
 	{
 		new = make_uint(fmt, fmt->l_mod, ap);
-	//	printf("uint made '%s'\n", (char *)new->data);
 		new->data = (t == 'x') ? strtolower(new->data) : new->data;
 		if (fmt->flgs && fmt->flgs[0] == '#')
 			uint_prefix(&new, t);
@@ -86,7 +84,6 @@ static t_array *convert_format(t_agv *fmt, va_list *ap)
 		new = make_fhex(fmt, ft_islower(t), ap);
 	else if (t == '%' || t == 'k' || t == 'p' || t == '~' || t == 'r')
 		new = make_utils(fmt, t, ap);
-	//printf("CONV '%s'\n", (char *)new->data);
 	return (new);
 }
 
@@ -124,7 +121,6 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 	va_list	tmp;
 
 	current = 0;
-	//printf("var found!\n");
 	fmt->width = fmt->width < 0 ? va_arg(ap, int) : fmt->width;
 	fmt->prec = fmt->prec < 0 ? va_arg(ap, int) : fmt->prec;
 	if (fmt->param > 1)
@@ -136,17 +132,11 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		va_end(tmp);
 	}
 	else
-	{
-		//printf("using og list\n");
-		//printf("lst '%p'\n", ap);
 		current = convert_format(fmt, (va_list *)ap);
-		//printf("from og '%s'\n", (char *)current->data);
-	}
 	if (fmt->type == 'n')
-		send_length(*len, &current);
-	else if (current)
+		send_length(*len, current);
+	else if (current && current->d_size)
 	{
-		//printf("adding '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}
@@ -169,7 +159,6 @@ t_lst	*listof_vars(const char *s, va_list ap)
 			if (!fmt || !fmt->type)
 				return (vars);
 			var_found(vars, &i, fmt, ap);
-		//	printf("looping more vars!\n");
 			s = skip_fmt(s);
 			ft_strdel(&fmt->l_mod);
 			ft_strdel(&fmt->flgs);
