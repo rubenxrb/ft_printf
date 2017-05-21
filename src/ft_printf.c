@@ -54,7 +54,7 @@ int		ft_printf(const char *s, ...)
 	len = 0;
 	while (*s)
 	{
-		if (*s == '%' && curr)
+		if (*s == '%')
 		{
 			len += print_var(&curr, 1, *++s);
 			s = skip_fmt(s);

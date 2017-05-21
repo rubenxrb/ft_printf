@@ -19,7 +19,7 @@ size_t			print_var(t_node **node, const int fd, const char nxt)
 	t_array	*str;
 	wchar_t *lol;
 
-	if (nxt == 'n')
+	if (nxt == 'n' || !*node)
 		return (0);
 	str = (*node)->data;
 	*node = (*node)->next;
