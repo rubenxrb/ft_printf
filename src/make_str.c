@@ -21,38 +21,13 @@ t_array	*make_str(t_agv *fmt, va_list *ap)
 	{
 		ft_memset(str->data, sp && *sp == '0' ? *sp : ' ', str->bytes);
 		if (ft_strchr(fmt->flgs, '-'))
-			ft_strncpy(str->data, agv, len);	//check if ' '|'0' -> preappend to the right
+			ft_strncpy(str->data, agv, len);
 		else
 			ft_strncpy(str->data + (str->bytes - len), agv, len);
 	}
 	ft_strdel(&agv);
 	return (str);
 }
-
-/*
-char	*str;
-char	*agv;
-size_t	spc;
-int		size;
-
-agv = va_arg(*ap, char *);
-size = ft_strlen(agv);
-if (!fmt->prec || (fmt->prec > size))
-	fmt->prec = size;
-spc = fmt->width > fmt->prec ? fmt->width - fmt->prec : 0;
-str = ft_strnew(spc + fmt->prec);
-if (spc)
-	str = ft_memset(str, ' ', spc + fmt->prec);
-if (fmt->flgs && fmt->flgs[0] == '-')
-	ft_strncpy(str, agv, fmt->prec);
-else
-	ft_strncpy(str + spc, agv, fmt->prec);
-return (str);
-
-if prec
-
-*/
-
 
 t_array	*make_wstr(va_list *ap)
 {

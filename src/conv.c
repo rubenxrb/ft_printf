@@ -12,8 +12,8 @@
 
 #include "ft_printf.h"
 #include <stdlib.h>
-/*
 
+/*
 static void testing_agv(t_agv *fmt)
 {
 	static int count = 1;
@@ -27,26 +27,6 @@ static void testing_agv(t_agv *fmt)
 	printf("fmt->param [%d]\n", fmt->param);
 	printf("-----------------\n");
 }
-
-STRING
-s, S[l] = char * , wchar *
-
-INTEGERS: [hh, h, l, ll, j, z, t]		<if 'l' used in c, convert to uns char>
-c,C[l], d,D, i, n = signed numbers			<note: c can just have 'l' lenmod>
-o-O, x-X, u = unsigned numbers
-
-FLOATS: [l,L]
-f-F, e-E, a-A, g-G = floating point numbers
-prec default: 6
-g, G = max # of number as chars
-
-POINTER: (none)
-p = void *
-
-'yyyy'-'MM'-'dd'-'T'-'HH':'mm':'ss'.
-
-type var = va_arg(lst, type);
-
 */
 
 static void		send_length(int len, t_array *var)
@@ -111,7 +91,6 @@ static t_agv *extract_fmt(const char *s)
 	if (!isSpecifier(ret->type))
 		ft_memdel((void **)&*ret);
 	ret->base = set_base((ret->type = *t));
-	//testing_agv(ret);
 	ft_strdel(&fmt);
 	return (ret);
 }
@@ -138,7 +117,6 @@ static void var_found(t_lst *vars, int *len, t_agv *fmt, va_list ap)
 		send_length(*len, current);
 	else if (current && current->d_size)
 	{
-	//	printf("adding to list '%s'\n", (char *)current->data);
 		lst_addarray(vars, current);
 		*len += SUM_SIZE(current->d_size);
 	}

@@ -12,8 +12,6 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# define MAX(a, b) (a > b ? a : b)
-# define MIN(a, b) (a < b ? a : b)
 
 # include <stdarg.h>		//<...> args
 # include <stdio.h>			//actual printf
@@ -37,7 +35,8 @@ typedef struct	s_agv		//data in list
 /* ft_printf.c */
 int				ft_printf(const char *s, ...);
 int				printf_fd(const int fd, const char *s, ...);
-int				printf_buf(void **dest, const char *s, ...);
+int				printf_str(void **dest, const char *s, ...);
+t_lst			*printf_lst(const char *s, ...);
 
 /* conv.c	*/
 t_lst			*listof_vars(const char *s, va_list ap);

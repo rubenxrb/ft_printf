@@ -119,11 +119,6 @@ int					uctoutf8(const char *dest, wchar_t ch);			/* [ok] */
 int					ft_hextoi(const char *hex);
 char				*ft_ulltoa_base(unsigned long long n, int b);
 
-//	convert3
-char				*ulint_tostr(unsigned long long num, int b);
-char				*uint_tostr(unsigned int num, int b);
-						/* [ok] */
-
 //	identifiers
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
