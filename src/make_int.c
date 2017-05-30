@@ -17,15 +17,15 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	if (fmt->flgs && fmt->flgs[skip] == '0' && (fmt->prec == 1))
 		sp = '0';
 	if (fmt->prec > (int)(*ret)->bytes)
-		append_atchar(ret, skip + (num < 0 ? 1 : 0), fmt->prec - ((*ret)->bytes - (num < 0 ? 1 : 0)) + skip, '0');
+		append_atchar(ret, skip + ISNEG(num), fmt->prec - ((*ret)->bytes - ISNEG(num)) + skip, '0');
 	if (fmt->width > (int)(*ret)->bytes)
 	{
 		if (fmt->flgs && fmt->flgs[0] == '-')
 			cat_char(ret, fmt->width - (int)(*ret)->bytes, sp);
 		else
-			append_atchar(ret, skip + (num < 0 ? 1 : 0), fmt->width - (int)(*ret)->bytes, sp);
+			append_atchar(ret, skip + ISNEG(num), fmt->width - (int)(*ret)->bytes, sp);
 	}
-	if (fmt->flgs && fmt->flgs[0] == '+' && num >= 0)
+	if (fmt->flgs && fmt->flgs[0] == '+' && !ISNEG(num))
 		ft_memset((*ret)->data, '+', 1);
 }
 

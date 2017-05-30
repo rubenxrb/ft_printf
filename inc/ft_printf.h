@@ -20,6 +20,7 @@
 # include <limits.h>
 
 # define SUM_SIZE(d_size) (d_size == 1 ? current->bytes : current->len)
+# define ISNEG(num) (num < 0 ? 1 : 0)
 
 typedef struct	s_agv		//data in list
 {
