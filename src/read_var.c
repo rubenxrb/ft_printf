@@ -17,10 +17,9 @@ size_t			set_flags(t_agv *ret, char *fmt)
 {
 	char	*tmp;
 	size_t	size;
+	//char	t;
 
 	size = 0;
-	tmp = 0;
-	printf("setflags fmt '%s'\n", fmt);
 	if (fmt && *(fmt + 1) == '$')
 	{
 		ret->param = ft_atoi(fmt);
@@ -30,7 +29,7 @@ size_t			set_flags(t_agv *ret, char *fmt)
 	tmp = fmt;
 	if (tmp)
 	{
-		while (tmp && isFlag(*tmp))
+		while (isFlag(*tmp))
 		{
 			tmp++;
 			size++;
