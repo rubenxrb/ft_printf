@@ -11,7 +11,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	sp = ' ';
 	num = ft_atoi((*ret)->data);
 	if (fmt->flgs && fmt->flgs[0] == '+' && num >= 0)
-		append_char(ret, ++skip, get_sign((*ret)->data));
+		append_char(ret, ++skip, '+');
 	else if (fmt->flgs && fmt->flgs[0] == ' ' && num >= 0)
 		append_char(ret, ++skip, ' ');
 	if (fmt->flgs && fmt->flgs[skip] == '0' && (fmt->prec == 1))
