@@ -31,6 +31,7 @@ size_t			set_flags(t_agv *ret, char *fmt)
 	{
 		while (tmp && isFlag(*tmp))
 		{
+			ft_printf("*tmp in loop '%c'", *tmp);
 			tmp++;
 			size++;
 		}
