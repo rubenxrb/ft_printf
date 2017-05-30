@@ -51,7 +51,7 @@ char	isFlag(char c)
 	char	*p;
 
 	p = valid;
-	while (*p)
+	while (p && *p)
 		if (c == *p++)
 			return (c);
 	return (0);
