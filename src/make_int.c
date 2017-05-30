@@ -25,8 +25,8 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		else
 			append_atchar(ret, skip + ISNEG(num), fmt->width - (int)(*ret)->bytes, sp);
 	}
-	if (fmt->flgs && fmt->flgs[0] == '+' && !ISNEG(num))
-		ft_memset((*ret)->data, '+', 1);
+	//if (fmt->flgs && fmt->flgs[0] == '+' && !ISNEG(num))
+	//	ft_memset((*ret)->data, '+', 1);
 }
 
 /* if pl append '+' or '-' according to sign */
