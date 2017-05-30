@@ -12,7 +12,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	num = ft_atoi((*ret)->data);
 	if (fmt->flgs)
 		printf("fmt->flgs '%s'\n", fmt->flgs);
-	if (fmt->flgs && fmt->flgs[0] == '+' && num >= 0)
+	if (fmt->flgs && ft_strnchr(fmt->flgs, '+', 2) && num >= 0)
 		append_char(ret, ++skip, '+');
 	else if (fmt->flgs && fmt->flgs[0] == ' ' && num >= 0)
 		append_char(ret, ++skip, ' ');

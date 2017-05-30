@@ -25,3 +25,22 @@ char	*printfstrdup(const char *s1)
 	p = ft_strcpy(p, s1);
 	return (p);
 }
+
+char	*ft_strnchr(const char *s, int c, size_t len)
+{
+	int		i;
+
+	i = 0;
+	if (s && len)
+	{
+		while (s[i] && len--)
+		{
+			if (s[i] == c)
+				return ((char *)&s[i]);
+			i++;
+		}
+		if (s[i] == c)
+			return ((char *)&s[i]);
+	}
+	return (0);
+}

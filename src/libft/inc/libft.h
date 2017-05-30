@@ -168,6 +168,7 @@ void				free_tab(char **ap);
 char				*ft_chardup(const int ch);
 char				*strtolower(char *str);
 char				*printfstrdup(const char *s1);
+char				*ft_strnchr(const char *s, int c, size_t len);
 
 //	prints
 size_t				ft_putchar(const char ch);				/* [ok] */
