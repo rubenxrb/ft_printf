@@ -20,6 +20,7 @@ char	*get_format(const char *fmt)
 
 	p = 0;
 	size = ((p = (char *)fmt) ? 1 : 0);
+	printf("get_format-> fmt '%s', size '%zu'\n", fmt, size);
 	while (!isSpecifier(*p))
 	{
 		p++;

@@ -20,7 +20,7 @@ size_t			set_flags(t_agv *ret, char *fmt)
 
 	size = 0;
 	tmp = 0;
-	ft_printf("setflags fmt '%s'\n", fmt);
+	printf("setflags fmt '%s'\n", fmt);
 	if (fmt && *(fmt + 1) == '$')
 	{
 		ret->param = ft_atoi(fmt);
