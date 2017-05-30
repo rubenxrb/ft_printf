@@ -37,6 +37,7 @@ size_t			set_flags(t_agv *ret, char *fmt)
 		if (size && (ret->flgs = ft_strnew(size)))
 			ft_strncpy(ret->flgs, fmt, size);
 	}
+	ft_printf("set flags returning '%zu'\n", size);
 	return (size);
 }
 
