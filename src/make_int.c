@@ -10,8 +10,8 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	skip = 0;
 	sp = ' ';
 	num = ft_atoi((*ret)->data);
-	if (fmt->flgs && !ft_strcmp(fmt->flgs, "+0"))
-		printf("test 1-> '%s'\n", (char *)(*ret)->data);
+	if (fmt->flgs)
+		printf("fmt->flgs '%s'\n", fmt->flgs);
 	if (fmt->flgs && fmt->flgs[0] == '+' && num >= 0)
 		append_char(ret, ++skip, '+');
 	else if (fmt->flgs && fmt->flgs[0] == ' ' && num >= 0)
