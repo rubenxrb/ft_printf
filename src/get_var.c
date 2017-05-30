@@ -12,19 +12,20 @@
 
 #include "ft_printf.h"
 
-char	*get_format(const char *_format)
+char	*get_format(const char *fmt)
 {
-	char	*format;
+	char	*ret;
 	char	*p;
 	size_t	size;
 
-	size = ((p = (char *)_format) ? 1 : 0);
+	p = 0;
+	size = ((p = (char *)fmt) ? 1 : 0);
 	while (!isSpecifier(*p))
 	{
 		p++;
 		size++;
 	}
-	format = ft_strnew(size);
-	format = ft_strncpy(format, _format, size);
-	return (format);
+	ret = ft_strnew(size);
+	ret = ft_strncpy(ret, fmt, size);
+	return (ret);
 }
