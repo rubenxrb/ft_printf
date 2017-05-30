@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <ft_printf.h>
 #include <stdlib.h>
 
 const char	*skip_fmt(const char *s)

@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   make_int.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rromero <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/10 20:27:37 by rromero           #+#    #+#             */
+/*   Updated: 2017/02/10 20:27:38 by rromero          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <inttypes.h>
 
-static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
+static void	format_integer(t_agv *fmt, t_array **ret)
 {
 	int		num;
 	size_t	skip;
@@ -10,8 +22,6 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 	skip = 0;
 	sp = ' ';
 	num = ft_atoi((*ret)->data);
-	if (fmt->flgs)
-		printf("fmt->flgs '%s'\n", fmt->flgs);
 	if (fmt->flgs && ft_strnchr(fmt->flgs, '+', 2) && num >= 0)
 		append_char(ret, ++skip, '+');
 	else if (fmt->flgs && fmt->flgs[0] == ' ' && num >= 0)
@@ -27,20 +37,12 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 			cat_char(ret, fmt->width - (int)(*ret)->bytes, sp);
 		else
 		{
-			printf("data-> '%s'\n", (char *)(*ret)->data);
 			append_atchar(ret, skip + ISNEG(num), fmt->width -
 				(int)(*ret)->bytes, sp);
 		}
 	}
 }
 
-/* if pl append '+' or '-' according to sign */
-/* manage adding 0 to str->data if needed as prec */
-/* if width > len append min width */
-	/* get value of spaces ' ' or '0' */
-	/* if '-' flag is set append spaces to the left, else; to the right*/
-
-/* SIGNED INTEGERS */
 static t_array	*make_sint(t_agv *fmt, char *lmod, va_list *ap)
 {
 	t_array	tmp;
@@ -112,7 +114,6 @@ t_array	*make_signed(t_agv *fmt, char type, va_list *ap)
 	return (ret);
 }
 
-/* UNSIGNED INTS */
 t_array	*make_uint(t_agv *fmt, char *lmod, va_list *ap)
 {
 	t_array			tmp;

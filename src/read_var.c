@@ -9,15 +9,13 @@
 /*   Updated: 2017/02/16 21:33:37 by rromero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//hola%2$-6.4ldl%1$n
-#include "ft_printf.h"
 
-/* FIX $ ADDING MORE TO POINTERS */
+#include <ft_printf.h>
+
 size_t			set_flags(t_agv *ret, char *fmt)
 {
 	char	*tmp;
 	size_t	size;
-	//char	t;
 
 	size = 0;
 	if (fmt && *(fmt + 1) == '$')
@@ -65,10 +63,8 @@ size_t			set_lmod(t_agv *ret, const char *fmt)
 	char	*tmp;
 
 	tmp = (char *)fmt;
-//	printf("tmp '%s'\n", tmp);
 	if (*tmp == *(tmp + 1))
 	{
-	//	printf("setting double\n");
 		if (*tmp == 'l')
 			ret->l_mod = ft_strdup("ll");
 		else if (*tmp == 'h')
