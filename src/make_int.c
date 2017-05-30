@@ -24,8 +24,11 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		if (fmt->flgs && fmt->flgs[0] == '-')
 			cat_char(ret, fmt->width - (int)(*ret)->bytes, sp);
 		else
+		{
+			printf("data-> '%s'\n", (char *)(*ret)->data);
 			append_atchar(ret, skip + ISNEG(num), fmt->width -
 				(int)(*ret)->bytes, sp);
+		}
 	}
 }
 
