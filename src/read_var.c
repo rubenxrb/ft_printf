@@ -29,7 +29,7 @@ size_t			set_flags(t_agv *ret, char *fmt)
 	tmp = fmt;
 	if (tmp)
 	{
-		while (isFlag(*tmp))
+		while (tmp && isFlag(*tmp))
 		{
 			tmp++;
 			size++;
