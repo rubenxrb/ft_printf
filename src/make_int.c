@@ -16,7 +16,7 @@ static void	format_integer(t_agv *fmt, t_array **ret)//free old integer
 		append_char(ret, ++skip, '+');
 	else if (fmt->flgs && fmt->flgs[0] == ' ' && num >= 0)
 		append_char(ret, ++skip, ' ');
-	if (fmt->flgs && fmt->flgs[skip] == '0' && (fmt->prec == 1))
+	if (fmt->flgs && ft_strnchr(fmt->flgs, '0', 2) && (fmt->prec == 1))
 		sp = '0';
 	if (fmt->prec > (int)(*ret)->bytes)
 		append_atchar(ret, skip + ISNEG(num), (fmt->prec -
